@@ -1,0 +1,454 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.yamaha-musiccast",
+  "version": "0.1.0",
+  "name": {
+    "en": "Yamaha MusicCast",
+    "es": "Yamaha MusicCast"
+  },
+  "description": {
+    "en": "Power, volume, inputs, sound programs and Clear Voice for Yamaha MusicCast receivers and soundbars.",
+    "es": "Encendido, volumen, entradas, programas de sonido y Clear Voice para equipos Yamaha MusicCast."
+  },
+  "vendor": "Yamaha",
+  "author": "Made with Best Practice",
+  "icon": "receiver",
+  "accent": "purple",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Receiver address",
+        "es": "Dirección del receptor"
+      },
+      "placeholder": "192.168.1.45"
+    },
+    {
+      "id": "zone",
+      "scope": "pack",
+      "type": "choice",
+      "label": {
+        "en": "Zone",
+        "es": "Zona"
+      },
+      "default": "main",
+      "options": [
+        {
+          "value": "main",
+          "label": {
+            "en": "Main zone",
+            "es": "Zona principal"
+          }
+        },
+        {
+          "value": "zone2",
+          "label": {
+            "en": "Zone 2",
+            "es": "Zona 2"
+          }
+        },
+        {
+          "value": "zone3",
+          "label": {
+            "en": "Zone 3",
+            "es": "Zona 3"
+          }
+        },
+        {
+          "value": "zone4",
+          "label": {
+            "en": "Zone 4",
+            "es": "Zona 4"
+          }
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "id": "power_toggle",
+      "label": {
+        "en": "Power",
+        "es": "Encender/apagar"
+      },
+      "icon": "power",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setPower?power=toggle"
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setVolume?volume=up"
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setVolume?volume=down"
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setMute?enable=true"
+      }
+    },
+    {
+      "id": "unmute",
+      "label": {
+        "en": "Unmute",
+        "es": "Quitar silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setMute?enable=false"
+      }
+    },
+    {
+      "id": "input",
+      "label": {
+        "en": "Input",
+        "es": "Entrada"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "input",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "options": [
+            {
+              "value": "hdmi1",
+              "label": {
+                "en": "HDMI 1",
+                "es": "HDMI 1"
+              }
+            },
+            {
+              "value": "hdmi2",
+              "label": {
+                "en": "HDMI 2",
+                "es": "HDMI 2"
+              }
+            },
+            {
+              "value": "hdmi3",
+              "label": {
+                "en": "HDMI 3",
+                "es": "HDMI 3"
+              }
+            },
+            {
+              "value": "hdmi4",
+              "label": {
+                "en": "HDMI 4",
+                "es": "HDMI 4"
+              }
+            },
+            {
+              "value": "tv",
+              "label": {
+                "en": "TV",
+                "es": "TV"
+              }
+            },
+            {
+              "value": "av1",
+              "label": {
+                "en": "AV 1",
+                "es": "AV 1"
+              }
+            },
+            {
+              "value": "audio1",
+              "label": {
+                "en": "Audio 1",
+                "es": "Audio 1"
+              }
+            },
+            {
+              "value": "optical",
+              "label": {
+                "en": "Optical",
+                "es": "Óptica"
+              }
+            },
+            {
+              "value": "coaxial",
+              "label": {
+                "en": "Coaxial",
+                "es": "Coaxial"
+              }
+            },
+            {
+              "value": "bluetooth",
+              "label": {
+                "en": "Bluetooth",
+                "es": "Bluetooth"
+              }
+            },
+            {
+              "value": "airplay",
+              "label": {
+                "en": "AirPlay",
+                "es": "AirPlay"
+              }
+            },
+            {
+              "value": "spotify",
+              "label": {
+                "en": "Spotify",
+                "es": "Spotify"
+              }
+            },
+            {
+              "value": "net_radio",
+              "label": {
+                "en": "Net radio",
+                "es": "Radio por internet"
+              }
+            },
+            {
+              "value": "server",
+              "label": {
+                "en": "Media server",
+                "es": "Servidor multimedia"
+              }
+            },
+            {
+              "value": "usb",
+              "label": {
+                "en": "USB",
+                "es": "USB"
+              }
+            },
+            {
+              "value": "tuner",
+              "label": {
+                "en": "Tuner",
+                "es": "Sintonizador"
+              }
+            },
+            {
+              "value": "phono",
+              "label": {
+                "en": "Phono",
+                "es": "Tocadiscos"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setInput?input={{input}}"
+      }
+    },
+    {
+      "id": "sound_program",
+      "label": {
+        "en": "Sound program",
+        "es": "Programa de sonido"
+      },
+      "icon": "audio_track",
+      "variables": [
+        {
+          "id": "program",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Sound program",
+            "es": "Programa de sonido"
+          },
+          "options": [
+            {
+              "value": "straight",
+              "label": {
+                "en": "Straight",
+                "es": "Directo"
+              }
+            },
+            {
+              "value": "surr_decoder",
+              "label": {
+                "en": "Surround decoder",
+                "es": "Decodificador surround"
+              }
+            },
+            {
+              "value": "2ch_stereo",
+              "label": {
+                "en": "2ch Stereo",
+                "es": "Estéreo 2 canales"
+              }
+            },
+            {
+              "value": "7ch_stereo",
+              "label": {
+                "en": "7ch Stereo",
+                "es": "Estéreo 7 canales"
+              }
+            },
+            {
+              "value": "standard",
+              "label": {
+                "en": "Standard",
+                "es": "Estándar"
+              }
+            },
+            {
+              "value": "spectacle",
+              "label": {
+                "en": "Spectacle",
+                "es": "Espectáculo"
+              }
+            },
+            {
+              "value": "sci-fi",
+              "label": {
+                "en": "Sci-Fi",
+                "es": "Ciencia ficción"
+              }
+            },
+            {
+              "value": "adventure",
+              "label": {
+                "en": "Adventure",
+                "es": "Aventura"
+              }
+            },
+            {
+              "value": "drama",
+              "label": {
+                "en": "Drama",
+                "es": "Drama"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sports",
+                "es": "Deportes"
+              }
+            },
+            {
+              "value": "action_game",
+              "label": {
+                "en": "Action game",
+                "es": "Juego de acción"
+              }
+            },
+            {
+              "value": "music_video",
+              "label": {
+                "en": "Music video",
+                "es": "Video musical"
+              }
+            },
+            {
+              "value": "movie",
+              "label": {
+                "en": "Movie",
+                "es": "Película"
+              }
+            },
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "game",
+              "label": {
+                "en": "Game",
+                "es": "Juego"
+              }
+            },
+            {
+              "value": "tv_program",
+              "label": {
+                "en": "TV program",
+                "es": "Programa de TV"
+              }
+            },
+            {
+              "value": "stereo",
+              "label": {
+                "en": "Stereo",
+                "es": "Estéreo"
+              }
+            },
+            {
+              "value": "enhanced",
+              "label": {
+                "en": "Enhanced",
+                "es": "Mejorado"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setSoundProgram?program={{program}}"
+      }
+    },
+    {
+      "id": "clear_voice_on",
+      "label": {
+        "en": "Clear Voice on",
+        "es": "Activar Clear Voice"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setClearVoice?enable=true"
+      }
+    },
+    {
+      "id": "clear_voice_off",
+      "label": {
+        "en": "Clear Voice off",
+        "es": "Desactivar Clear Voice"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/YamahaExtendedControl/v1/{{zone}}/setClearVoice?enable=false"
+      }
+    }
+  ]
+}

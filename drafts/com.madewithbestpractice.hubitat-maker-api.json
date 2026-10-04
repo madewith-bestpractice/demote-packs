@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.hubitat-maker-api",
+  "version": "0.1.0",
+  "name": {
+    "en": "Hubitat Maker API",
+    "es": "Hubitat Maker API"
+  },
+  "description": {
+    "en": "Turn Hubitat devices on and off and set dimmer levels through the Maker API app.",
+    "es": "Enciende y apaga dispositivos Hubitat y ajusta atenuadores con la app Maker API."
+  },
+  "vendor": "Hubitat",
+  "author": "Made with Best Practice",
+  "icon": "plug",
+  "accent": "blue",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Hub address",
+        "es": "Dirección del hub"
+      },
+      "placeholder": "192.168.1.80"
+    },
+    {
+      "id": "app_id",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Maker API app ID",
+        "es": "ID de la app Maker API"
+      },
+      "placeholder": "12"
+    },
+    {
+      "id": "token",
+      "scope": "pack",
+      "type": "secret",
+      "label": {
+        "en": "Access token",
+        "es": "Token de acceso"
+      }
+    }
+  ],
+  "buttons": [
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "device_id",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Device ID",
+            "es": "ID del dispositivo"
+          },
+          "min": 1,
+          "max": 999999
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/apps/api/{{app_id}}/devices/{{device_id}}/on?access_token={{token}}"
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "device_id",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Device ID",
+            "es": "ID del dispositivo"
+          },
+          "min": 1,
+          "max": 999999
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/apps/api/{{app_id}}/devices/{{device_id}}/off?access_token={{token}}"
+      }
+    },
+    {
+      "id": "set_level",
+      "label": {
+        "en": "Set level",
+        "es": "Ajustar nivel"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "device_id",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Device ID",
+            "es": "ID del dispositivo"
+          },
+          "min": 1,
+          "max": 999999
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Level (%)",
+            "es": "Nivel (%)"
+          },
+          "min": 0,
+          "max": 100,
+          "default": 50
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/apps/api/{{app_id}}/devices/{{device_id}}/setLevel/{{level}}?access_token={{token}}"
+      }
+    }
+  ]
+}

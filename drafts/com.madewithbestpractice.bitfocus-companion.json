@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.bitfocus-companion",
+  "version": "0.1.0",
+  "name": {
+    "en": "Bitfocus Companion",
+    "es": "Bitfocus Companion"
+  },
+  "description": {
+    "en": "Press any Companion button by its page, row and column.",
+    "es": "Pulsa cualquier botón de Companion por su página, fila y columna."
+  },
+  "vendor": "Bitfocus",
+  "author": "Made with Best Practice",
+  "icon": "grid",
+  "accent": "red",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Companion address",
+        "es": "Dirección de Companion"
+      },
+      "placeholder": "192.168.1.60"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Port",
+        "es": "Puerto"
+      },
+      "default": 8000
+    }
+  ],
+  "buttons": [
+    {
+      "id": "press",
+      "label": {
+        "en": "Press button",
+        "es": "Pulsar botón"
+      },
+      "icon": "grid",
+      "variables": [
+        {
+          "id": "page",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Page",
+            "es": "Página"
+          },
+          "min": 1,
+          "max": 99,
+          "default": 1
+        },
+        {
+          "id": "row",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Row (from 0)",
+            "es": "Fila (desde 0)"
+          },
+          "min": 0,
+          "max": 99,
+          "default": 0
+        },
+        {
+          "id": "column",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Column (from 0)",
+            "es": "Columna (desde 0)"
+          },
+          "min": 0,
+          "max": 99,
+          "default": 0
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/api/location/{{page}}/{{row}}/{{column}}/press"
+      }
+    }
+  ]
+}

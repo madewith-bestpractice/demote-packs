@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.sonos",
+  "version": "0.1.0",
+  "name": {
+    "en": "Sonos",
+    "es": "Sonos"
+  },
+  "description": {
+    "en": "Play, volume, night mode, speech enhancement and TV input for a Sonos soundbar.",
+    "es": "Reproducción, volumen, modo nocturno, mejora de voz y entrada de TV para una barra Sonos."
+  },
+  "vendor": "Sonos",
+  "author": "Made with Best Practice",
+  "icon": "speaker",
+  "accent": "amber",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Soundbar address",
+        "es": "Dirección de la barra de sonido"
+      },
+      "placeholder": "192.168.1.30"
+    },
+    {
+      "id": "speech_eq",
+      "scope": "pack",
+      "type": "choice",
+      "label": {
+        "en": "Soundbar model",
+        "es": "Modelo de barra de sonido"
+      },
+      "default": "DialogLevel",
+      "options": [
+        {
+          "value": "DialogLevel",
+          "label": {
+            "en": "Arc, Beam, Ray, Playbar or Amp",
+            "es": "Arc, Beam, Ray, Playbar o Amp"
+          }
+        },
+        {
+          "value": "SpeechEnhanceEnabled",
+          "label": {
+            "en": "Arc Ultra or Beam Ultra",
+            "es": "Arc Ultra o Beam Ultra"
+          }
+        }
+      ]
+    },
+    {
+      "id": "player_id",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Player ID (for Switch to TV)",
+        "es": "ID del reproductor (para Cambiar a TV)"
+      },
+      "optional": true,
+      "placeholder": "RINCON_000000000000001400"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "play",
+      "label": {
+        "en": "Play",
+        "es": "Reproducir"
+      },
+      "icon": "play",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/AVTransport/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:AVTransport:1#Play\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:Play xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>0</InstanceID><Speed>1</Speed></u:Play></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "pause",
+      "label": {
+        "en": "Pause",
+        "es": "Pausar"
+      },
+      "icon": "pause",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/AVTransport/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:AVTransport:1#Pause\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:Pause xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>0</InstanceID></u:Pause></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetRelativeVolume\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetRelativeVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><Channel>Master</Channel><Adjustment>2</Adjustment></u:SetRelativeVolume></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetRelativeVolume\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetRelativeVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><Channel>Master</Channel><Adjustment>-2</Adjustment></u:SetRelativeVolume></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetMute\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetMute xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><Channel>Master</Channel><DesiredMute>1</DesiredMute></u:SetMute></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "unmute",
+      "label": {
+        "en": "Unmute",
+        "es": "Quitar silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetMute\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetMute xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><Channel>Master</Channel><DesiredMute>0</DesiredMute></u:SetMute></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "night_on",
+      "label": {
+        "en": "Night mode on",
+        "es": "Activar modo nocturno"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetEQ\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetEQ xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><EQType>NightMode</EQType><DesiredValue>1</DesiredValue></u:SetEQ></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "night_off",
+      "label": {
+        "en": "Night mode off",
+        "es": "Desactivar modo nocturno"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetEQ\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetEQ xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><EQType>NightMode</EQType><DesiredValue>0</DesiredValue></u:SetEQ></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "speech_on",
+      "label": {
+        "en": "Speech enhancement on",
+        "es": "Activar mejora de voz"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetEQ\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetEQ xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><EQType>{{speech_eq}}</EQType><DesiredValue>1</DesiredValue></u:SetEQ></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "speech_off",
+      "label": {
+        "en": "Speech enhancement off",
+        "es": "Desactivar mejora de voz"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/RenderingControl/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:RenderingControl:1#SetEQ\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetEQ xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\"><InstanceID>0</InstanceID><EQType>{{speech_eq}}</EQType><DesiredValue>0</DesiredValue></u:SetEQ></s:Body></s:Envelope>"
+      }
+    },
+    {
+      "id": "switch_to_tv",
+      "label": {
+        "en": "Switch to TV",
+        "es": "Cambiar a TV"
+      },
+      "icon": "input",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:1400/MediaRenderer/AVTransport/Control",
+        "headers": [
+          {
+            "name": "SOAPACTION",
+            "value": "\"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\""
+          }
+        ],
+        "contentType": "text/xml",
+        "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:SetAVTransportURI xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>0</InstanceID><CurrentURI>x-sonos-htastream:{{player_id}}:spdif</CurrentURI><CurrentURIMetaData></CurrentURIMetaData></u:SetAVTransportURI></s:Body></s:Envelope>"
+      }
+    }
+  ]
+}

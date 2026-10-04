@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.shelly",
+  "version": "0.1.0",
+  "name": {
+    "en": "Shelly",
+    "es": "Shelly"
+  },
+  "description": {
+    "en": "Switch and dim Shelly Gen2 and newer relays and dimmers on your network.",
+    "es": "Enciende, apaga y regula relés y atenuadores Shelly Gen2 o más nuevos en tu red."
+  },
+  "vendor": "Shelly",
+  "author": "Made with Best Practice",
+  "icon": "switch",
+  "accent": "teal",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Shelly address",
+        "es": "Dirección del Shelly"
+      },
+      "placeholder": "192.168.1.70"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "toggle",
+      "label": {
+        "en": "Toggle",
+        "es": "Alternar"
+      },
+      "icon": "switch",
+      "variables": [
+        {
+          "id": "channel",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Channel (from 0)",
+            "es": "Canal (desde 0)"
+          },
+          "min": 0,
+          "max": 15,
+          "default": 0
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/rpc/Switch.Toggle?id={{channel}}"
+      }
+    },
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "channel",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Channel (from 0)",
+            "es": "Canal (desde 0)"
+          },
+          "min": 0,
+          "max": 15,
+          "default": 0
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/rpc/Switch.Set?id={{channel}}&on=true"
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "channel",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Channel (from 0)",
+            "es": "Canal (desde 0)"
+          },
+          "min": 0,
+          "max": 15,
+          "default": 0
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/rpc/Switch.Set?id={{channel}}&on=false"
+      }
+    },
+    {
+      "id": "dimmer_level",
+      "label": {
+        "en": "Dimmer level",
+        "es": "Nivel del atenuador"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "channel",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Channel (from 0)",
+            "es": "Canal (desde 0)"
+          },
+          "min": 0,
+          "max": 15,
+          "default": 0
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 50
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/rpc/Light.Set?id={{channel}}&on=true&brightness={{level}}"
+      }
+    }
+  ]
+}

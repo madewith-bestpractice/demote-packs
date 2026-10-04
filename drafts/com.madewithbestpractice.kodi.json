@@ -1,0 +1,320 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.kodi",
+  "version": "0.1.0",
+  "name": {
+    "en": "Kodi",
+    "es": "Kodi"
+  },
+  "description": {
+    "en": "Navigation, playback and volume for Kodi over its web server's JSON-RPC.",
+    "es": "Navegación, reproducción y volumen para Kodi con JSON-RPC por su servidor web."
+  },
+  "vendor": "Kodi",
+  "author": "Made with Best Practice",
+  "icon": "menu",
+  "accent": "blue",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Kodi address",
+        "es": "Dirección de Kodi"
+      },
+      "placeholder": "192.168.1.50"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Web server port",
+        "es": "Puerto del servidor web"
+      },
+      "default": 8080
+    },
+    {
+      "id": "login",
+      "scope": "pack",
+      "type": "basic_auth",
+      "label": {
+        "en": "Web server sign-in",
+        "es": "Inicio de sesión del servidor web"
+      },
+      "placeholder": "kodi"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "up",
+      "label": {
+        "en": "Up",
+        "es": "Arriba"
+      },
+      "icon": "dpad_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Up",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "down",
+      "label": {
+        "en": "Down",
+        "es": "Abajo"
+      },
+      "icon": "dpad_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Down",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "left",
+      "label": {
+        "en": "Left",
+        "es": "Izquierda"
+      },
+      "icon": "dpad_left",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Left",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "right",
+      "label": {
+        "en": "Right",
+        "es": "Derecha"
+      },
+      "icon": "dpad_right",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Right",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "select",
+      "label": {
+        "en": "Select",
+        "es": "Seleccionar"
+      },
+      "icon": "dpad_center",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Select",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "back",
+      "label": {
+        "en": "Back",
+        "es": "Atrás"
+      },
+      "icon": "back",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Back",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "home",
+      "label": {
+        "en": "Home",
+        "es": "Inicio"
+      },
+      "icon": "home",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Home",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "context_menu",
+      "label": {
+        "en": "Context menu",
+        "es": "Menú contextual"
+      },
+      "icon": "menu",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.ContextMenu",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "info",
+      "label": {
+        "en": "Info",
+        "es": "Información"
+      },
+      "icon": "info",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.Info",
+          "id": 1
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "play_pause",
+      "label": {
+        "en": "Play/pause",
+        "es": "Reproducir/pausar"
+      },
+      "icon": "play_pause",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Input.ExecuteAction",
+          "id": 1,
+          "params": {
+            "action": "playpause"
+          }
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Application.SetVolume",
+          "id": 1,
+          "params": {
+            "volume": "increment"
+          }
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc",
+        "contentType": "application/json",
+        "body": {
+          "jsonrpc": "2.0",
+          "method": "Application.SetVolume",
+          "id": 1,
+          "params": {
+            "volume": "decrement"
+          }
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.movie-night",
+  "version": "0.1.0",
+  "name": {
+    "en": "Movie night",
+    "es": "Noche de película"
+  },
+  "description": {
+    "en": "Dim the lights, close the blinds and set the receiver with your Home Assistant devices.",
+    "es": "Baja las luces, cierra las persianas y prepara el receptor con tus equipos de Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "scene",
+  "accent": "purple",
+  "engine": "home_assistant",
+  "network": "local",
+  "buttons": [
+    {
+      "id": "dim_lights",
+      "label": {
+        "en": "Dim lights",
+        "es": "Atenuar luces"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 20
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "lights_up",
+      "label": {
+        "en": "Lights up",
+        "es": "Luces al máximo"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": 100
+        }
+      }
+    },
+    {
+      "id": "close_blinds",
+      "label": {
+        "en": "Close blinds",
+        "es": "Cerrar persianas"
+      },
+      "icon": "blinds",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Blinds",
+            "es": "Persianas"
+          },
+          "domain": "cover"
+        }
+      ],
+      "service": {
+        "action": "cover.close_cover",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "open_blinds",
+      "label": {
+        "en": "Open blinds",
+        "es": "Abrir persianas"
+      },
+      "icon": "blinds",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Blinds",
+            "es": "Persianas"
+          },
+          "domain": "cover"
+        }
+      ],
+      "service": {
+        "action": "cover.open_cover",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "tv_light_on",
+      "label": {
+        "en": "Behind-TV light on",
+        "es": "Encender luz tras la TV"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Light behind the TV",
+            "es": "Luz detrás de la TV"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "tv_light_off",
+      "label": {
+        "en": "Behind-TV light off",
+        "es": "Apagar luz tras la TV"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Light behind the TV",
+            "es": "Luz detrás de la TV"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "receiver_input",
+      "label": {
+        "en": "Receiver input",
+        "es": "Entrada del receptor"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Receiver",
+            "es": "Receptor"
+          },
+          "domain": "media_player"
+        },
+        {
+          "id": "source",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Input name",
+            "es": "Nombre de la entrada"
+          },
+          "placeholder": "TV"
+        }
+      ],
+      "service": {
+        "action": "media_player.select_source",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "source": "{{source}}"
+        }
+      }
+    },
+    {
+      "id": "fan_off",
+      "label": {
+        "en": "Fan off",
+        "es": "Apagar ventilador"
+      },
+      "icon": "fan",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Fan",
+            "es": "Ventilador"
+          },
+          "domain": "fan"
+        }
+      ],
+      "service": {
+        "action": "fan.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    }
+  ]
+}

@@ -19,7 +19,7 @@ jobs:
       - run: pip install "jsonschema>=4.18,<5"
       - name: Validator self-test
         run: python tools/test_validator.py
-      - name: Validate every pack
+      - name: Validate every pack, draft and example
         run: python tools/validate.py
       - name: Index is up to date
         run: python tools/build_index.py --check

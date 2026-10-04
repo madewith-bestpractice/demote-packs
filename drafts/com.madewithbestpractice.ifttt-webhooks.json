@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.ifttt-webhooks",
+  "version": "0.1.0",
+  "name": {
+    "en": "IFTTT webhooks",
+    "es": "Webhooks de IFTTT"
+  },
+  "description": {
+    "en": "Trigger your IFTTT applets with the Webhooks service, which needs IFTTT Pro.",
+    "es": "Activa tus applets de IFTTT con el servicio Webhooks, que requiere IFTTT Pro."
+  },
+  "vendor": "IFTTT",
+  "author": "Made with Best Practice",
+  "icon": "link",
+  "accent": "teal",
+  "engine": "http",
+  "network": "internet",
+  "variables": [
+    {
+      "id": "key",
+      "scope": "pack",
+      "type": "secret",
+      "label": {
+        "en": "Webhooks key",
+        "es": "Clave de Webhooks"
+      }
+    }
+  ],
+  "buttons": [
+    {
+      "id": "trigger",
+      "label": {
+        "en": "Trigger event",
+        "es": "Activar evento"
+      },
+      "icon": "script",
+      "variables": [
+        {
+          "id": "event",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Event name",
+            "es": "Nombre del evento"
+          },
+          "placeholder": "movie_night"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "https://maker.ifttt.com/trigger/{{event}}/with/key/{{key}}"
+      }
+    }
+  ]
+}

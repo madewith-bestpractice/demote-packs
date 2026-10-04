@@ -1,0 +1,534 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.denon-marantz",
+  "version": "0.1.0",
+  "name": {
+    "en": "Denon & Marantz receiver",
+    "es": "Receptor Denon y Marantz"
+  },
+  "description": {
+    "en": "Power, volume, inputs and sound modes for networked Denon and Marantz receivers.",
+    "es": "Encendido, volumen, entradas y modos de sonido para receptores Denon y Marantz en red."
+  },
+  "vendor": "Denon / Marantz",
+  "author": "Made with Best Practice",
+  "icon": "receiver",
+  "accent": "amber",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Receiver address",
+        "es": "Dirección del receptor"
+      },
+      "placeholder": "192.168.1.40"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Port (80 on models before 2016)",
+        "es": "Puerto (80 en modelos anteriores a 2016)"
+      },
+      "default": 8080
+    }
+  ],
+  "buttons": [
+    {
+      "id": "power_on",
+      "label": {
+        "en": "Power on",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?PWON"
+      }
+    },
+    {
+      "id": "standby",
+      "label": {
+        "en": "Standby",
+        "es": "En espera"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?PWSTANDBY"
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?MVUP"
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?MVDOWN"
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?MUON"
+      }
+    },
+    {
+      "id": "unmute",
+      "label": {
+        "en": "Unmute",
+        "es": "Quitar silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?MUOFF"
+      }
+    },
+    {
+      "id": "input",
+      "label": {
+        "en": "Input",
+        "es": "Entrada"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "source",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "options": [
+            {
+              "value": "GAME",
+              "label": {
+                "en": "Game",
+                "es": "Juego"
+              }
+            },
+            {
+              "value": "BD",
+              "label": {
+                "en": "Blu-ray",
+                "es": "Blu-ray"
+              }
+            },
+            {
+              "value": "TV",
+              "label": {
+                "en": "TV audio",
+                "es": "Audio de TV"
+              }
+            },
+            {
+              "value": "SAT/CBL",
+              "label": {
+                "en": "Cable/satellite",
+                "es": "Cable/satélite"
+              }
+            },
+            {
+              "value": "MPLAY",
+              "label": {
+                "en": "Media player",
+                "es": "Reproductor multimedia"
+              }
+            },
+            {
+              "value": "DVD",
+              "label": {
+                "en": "DVD",
+                "es": "DVD"
+              }
+            },
+            {
+              "value": "AUX1",
+              "label": {
+                "en": "AUX 1",
+                "es": "AUX 1"
+              }
+            },
+            {
+              "value": "CD",
+              "label": {
+                "en": "CD",
+                "es": "CD"
+              }
+            },
+            {
+              "value": "TUNER",
+              "label": {
+                "en": "Tuner",
+                "es": "Sintonizador"
+              }
+            },
+            {
+              "value": "PHONO",
+              "label": {
+                "en": "Phono",
+                "es": "Tocadiscos"
+              }
+            },
+            {
+              "value": "NET",
+              "label": {
+                "en": "Network",
+                "es": "Red"
+              }
+            },
+            {
+              "value": "BT",
+              "label": {
+                "en": "Bluetooth",
+                "es": "Bluetooth"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?SI{{source}}"
+      }
+    },
+    {
+      "id": "sound_mode",
+      "label": {
+        "en": "Sound mode",
+        "es": "Modo de sonido"
+      },
+      "icon": "audio_track",
+      "variables": [
+        {
+          "id": "mode",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Sound mode",
+            "es": "Modo de sonido"
+          },
+          "options": [
+            {
+              "value": "AUTO",
+              "label": {
+                "en": "Auto",
+                "es": "Automático"
+              }
+            },
+            {
+              "value": "MOVIE",
+              "label": {
+                "en": "Movie",
+                "es": "Película"
+              }
+            },
+            {
+              "value": "MUSIC",
+              "label": {
+                "en": "Music",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "GAME",
+              "label": {
+                "en": "Game",
+                "es": "Juego"
+              }
+            },
+            {
+              "value": "DIRECT",
+              "label": {
+                "en": "Direct",
+                "es": "Directo"
+              }
+            },
+            {
+              "value": "PURE DIRECT",
+              "label": {
+                "en": "Pure Direct",
+                "es": "Pure Direct"
+              }
+            },
+            {
+              "value": "STEREO",
+              "label": {
+                "en": "Stereo",
+                "es": "Estéreo"
+              }
+            },
+            {
+              "value": "MCH STEREO",
+              "label": {
+                "en": "Multichannel stereo",
+                "es": "Estéreo multicanal"
+              }
+            },
+            {
+              "value": "DOLBY DIGITAL",
+              "label": {
+                "en": "Dolby Digital",
+                "es": "Dolby Digital"
+              }
+            },
+            {
+              "value": "DTS SURROUND",
+              "label": {
+                "en": "DTS Surround",
+                "es": "DTS Surround"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?MS{{mode}}"
+      }
+    },
+    {
+      "id": "dialogue_enhancer",
+      "label": {
+        "en": "Dialogue enhancer",
+        "es": "Mejora de diálogos"
+      },
+      "icon": "captions",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Level",
+            "es": "Nivel"
+          },
+          "default": "MED",
+          "options": [
+            {
+              "value": "OFF",
+              "label": {
+                "en": "Off",
+                "es": "Apagado"
+              }
+            },
+            {
+              "value": "LOW",
+              "label": {
+                "en": "Low",
+                "es": "Bajo"
+              }
+            },
+            {
+              "value": "MED",
+              "label": {
+                "en": "Medium",
+                "es": "Medio"
+              }
+            },
+            {
+              "value": "HIGH",
+              "label": {
+                "en": "High",
+                "es": "Alto"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?PSDEH%20{{level}}"
+      }
+    },
+    {
+      "id": "z2_power_on",
+      "label": {
+        "en": "Zone 2 on",
+        "es": "Encender zona 2"
+      },
+      "icon": "power",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?Z2ON"
+      }
+    },
+    {
+      "id": "z2_off",
+      "label": {
+        "en": "Zone 2 off",
+        "es": "Apagar zona 2"
+      },
+      "icon": "power",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?Z2OFF"
+      }
+    },
+    {
+      "id": "z2_volume_up",
+      "label": {
+        "en": "Zone 2 volume up",
+        "es": "Subir volumen zona 2"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?Z2UP"
+      }
+    },
+    {
+      "id": "z2_volume_down",
+      "label": {
+        "en": "Zone 2 volume down",
+        "es": "Bajar volumen zona 2"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?Z2DOWN"
+      }
+    },
+    {
+      "id": "z2_input",
+      "label": {
+        "en": "Zone 2 input",
+        "es": "Entrada zona 2"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "source",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "options": [
+            {
+              "value": "GAME",
+              "label": {
+                "en": "Game",
+                "es": "Juego"
+              }
+            },
+            {
+              "value": "BD",
+              "label": {
+                "en": "Blu-ray",
+                "es": "Blu-ray"
+              }
+            },
+            {
+              "value": "TV",
+              "label": {
+                "en": "TV audio",
+                "es": "Audio de TV"
+              }
+            },
+            {
+              "value": "SAT/CBL",
+              "label": {
+                "en": "Cable/satellite",
+                "es": "Cable/satélite"
+              }
+            },
+            {
+              "value": "MPLAY",
+              "label": {
+                "en": "Media player",
+                "es": "Reproductor multimedia"
+              }
+            },
+            {
+              "value": "DVD",
+              "label": {
+                "en": "DVD",
+                "es": "DVD"
+              }
+            },
+            {
+              "value": "AUX1",
+              "label": {
+                "en": "AUX 1",
+                "es": "AUX 1"
+              }
+            },
+            {
+              "value": "CD",
+              "label": {
+                "en": "CD",
+                "es": "CD"
+              }
+            },
+            {
+              "value": "TUNER",
+              "label": {
+                "en": "Tuner",
+                "es": "Sintonizador"
+              }
+            },
+            {
+              "value": "PHONO",
+              "label": {
+                "en": "Phono",
+                "es": "Tocadiscos"
+              }
+            },
+            {
+              "value": "NET",
+              "label": {
+                "en": "Network",
+                "es": "Red"
+              }
+            },
+            {
+              "value": "BT",
+              "label": {
+                "en": "Bluetooth",
+                "es": "Bluetooth"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}:{{port}}/goform/formiPhoneAppDirect.xml?Z2{{source}}"
+      }
+    }
+  ]
+}

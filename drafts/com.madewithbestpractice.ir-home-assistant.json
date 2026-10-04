@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.ir-home-assistant",
+  "version": "0.1.0",
+  "name": {
+    "en": "IR devices via Home Assistant",
+    "es": "Equipos IR con Home Assistant"
+  },
+  "description": {
+    "en": "Send learned IR commands through a Home Assistant remote, such as a Broadlink.",
+    "es": "Envía comandos IR aprendidos con un control de Home Assistant, como un Broadlink."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "link",
+  "accent": "blue",
+  "engine": "home_assistant",
+  "network": "local",
+  "variables": [
+    {
+      "id": "hub",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "IR hub",
+        "es": "Emisor IR"
+      },
+      "domain": "remote"
+    },
+    {
+      "id": "device",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Device name",
+        "es": "Nombre del equipo"
+      },
+      "placeholder": "television"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "power",
+      "label": {
+        "en": "Power",
+        "es": "Encender/apagar"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "default": "power",
+          "placeholder": "power"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "default": "volume_up",
+          "placeholder": "volume_up"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "default": "volume_down",
+          "placeholder": "volume_down"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "default": "mute",
+          "placeholder": "mute"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "input",
+      "label": {
+        "en": "Input",
+        "es": "Entrada"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "default": "input",
+          "placeholder": "input"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "custom",
+      "label": {
+        "en": "Custom command",
+        "es": "Comando personalizado"
+      },
+      "icon": "script",
+      "variables": [
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          }
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.wled",
+  "version": "0.1.0",
+  "name": {
+    "en": "WLED",
+    "es": "WLED"
+  },
+  "description": {
+    "en": "On, off, brightness and presets for WLED lights, like the strip behind your TV.",
+    "es": "Encendido, brillo y preajustes para luces WLED, como la tira detrás de la TV."
+  },
+  "vendor": "WLED",
+  "author": "Made with Best Practice",
+  "icon": "lightbulb",
+  "accent": "orange",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "WLED address",
+        "es": "Dirección de WLED"
+      },
+      "placeholder": "192.168.1.90"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "toggle",
+      "label": {
+        "en": "Toggle",
+        "es": "Alternar"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": {
+          "on": "t"
+        }
+      }
+    },
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": {
+          "on": true
+        }
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": {
+          "on": false
+        }
+      }
+    },
+    {
+      "id": "dim",
+      "label": {
+        "en": "Dim",
+        "es": "Atenuar"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (1–255)",
+            "es": "Brillo (1–255)"
+          },
+          "min": 1,
+          "max": 255,
+          "default": 64
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": "{\"on\":true,\"bri\":{{level}}}"
+      }
+    },
+    {
+      "id": "brightness_up",
+      "label": {
+        "en": "Brightness up",
+        "es": "Subir brillo"
+      },
+      "icon": "brightness_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": {
+          "bri": "~25"
+        }
+      }
+    },
+    {
+      "id": "brightness_down",
+      "label": {
+        "en": "Brightness down",
+        "es": "Bajar brillo"
+      },
+      "icon": "brightness_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": {
+          "bri": "~-25"
+        }
+      }
+    },
+    {
+      "id": "preset",
+      "label": {
+        "en": "Preset",
+        "es": "Preajuste"
+      },
+      "icon": "scene",
+      "variables": [
+        {
+          "id": "preset",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Preset number",
+            "es": "Número de preajuste"
+          },
+          "min": 1,
+          "max": 250,
+          "default": 1
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/json/state",
+        "contentType": "application/json",
+        "body": "{\"ps\":{{preset}}}"
+      }
+    }
+  ]
+}
