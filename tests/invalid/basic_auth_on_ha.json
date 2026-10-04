@@ -1,0 +1,42 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "variables": [
+  {
+   "id": "login",
+   "scope": "pack",
+   "type": "basic_auth",
+   "label": {
+    "en": "Sign-in",
+    "es": "Inicio de sesión"
+   },
+   "placeholder": "kodi"
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go"
+   },
+   "icon": "play",
+   "service": {
+    "action": "light.turn_on"
+   }
+  }
+ ]
+}

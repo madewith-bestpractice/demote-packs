@@ -32,7 +32,15 @@ conditionals, and Demote never reads replies. The full format is in
   - `method`: `GET`, `POST` or `PUT`;
   - `url`;
   - optional `headers`;
-  - optional `body`, with a `contentType`.
+  - optional `body`, with a `contentType`: `application/json`, `text/plain`,
+    `text/xml` or `application/x-www-form-urlencoded`. Only
+    `application/json` takes a JSON value; the others take a string;
+  - optional `auth`, for HTTP Basic sign-in (see `basic_auth` below):
+    ```json
+    "auth": { "basic": "{{login}}" }
+    ```
+    Demote builds the `Authorization: Basic …` header from the variable's
+    username and password. Don't also write an `Authorization` header.
 
   Any 2xx reply counts as success. Requests time out after 8 seconds.
 - **`home_assistant`**: each button has a `service`, which runs through the
@@ -74,13 +82,39 @@ address, a key, an input name.
   `host`, `port`;
 - `secret`: masked, stored in the phone's secure storage, and never included
   when buttons are copied or shared;
+- `basic_auth`: a username plus a secret password, asked as one setting. The
+  password is kept like a `secret`. `http` packs only, scope `pack` only, no
+  `default`. It can only be used as `"auth": {"basic": "{{id}}"}` on a
+  request, never written into a URL, header or body;
 - `ha_entity`: picked from the user's Home Assistant, with a `domain`. Home
   Assistant packs only.
+
+**Optional variables**
+
+Add `"optional": true` to let the user leave a variable empty. A button
+whose request or service uses an empty optional variable shows as needing
+setup and isn't sent; the pack's other buttons work as usual. Use it for a
+setting only some buttons need, such as a Sonos player id that only "Switch
+to TV" uses.
+
+```json
+{ "id": "player_id", "scope": "pack", "type": "text", "optional": true,
+  "label": { "en": "Player ID (for Switch to TV)", "es": "ID del reproductor (para Cambiar a TV)" } }
+```
+
+Any type can be optional, except a variable written into a URL's host
+(the `host` or `port` part of `http://{{host}}:{{port}}/…`). Every request
+must have somewhere to go, and the disclosure sheet names it.
 
 **Using a variable**
 - Write `{{id}}` in a URL, header value, body, `target` or `data`.
 - Demote escapes the value for where it appears: URL-encoded in a URL,
-  JSON-escaped in JSON.
+  JSON-escaped in JSON, XML-escaped in a `text/xml` body, and as-is in
+  `text/plain`.
+- In a JSON value body, a slot always lands inside a JSON string, so
+  `"bri": "{{level}}"` sends `"bri": "128"`. When the device needs a real
+  number, write the body as a string with `contentType: "application/json"`,
+  such as `"{\"bri\":{{level}}}"`, and use a `number` variable.
 - In a URL's host, only `host` and `port` variables are allowed.
 
 ### Network

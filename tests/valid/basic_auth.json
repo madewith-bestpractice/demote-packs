@@ -1,0 +1,72 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "http",
+ "network": "local",
+ "variables": [
+  {
+   "id": "host",
+   "scope": "pack",
+   "type": "host",
+   "label": {
+    "en": "Address",
+    "es": "Dirección"
+   }
+  },
+  {
+   "id": "port",
+   "scope": "pack",
+   "type": "port",
+   "label": {
+    "en": "Port",
+    "es": "Puerto"
+   },
+   "default": 8080
+  },
+  {
+   "id": "login",
+   "scope": "pack",
+   "type": "basic_auth",
+   "label": {
+    "en": "Sign-in",
+    "es": "Inicio de sesión"
+   },
+   "placeholder": "kodi"
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "play",
+   "request": {
+    "method": "POST",
+    "url": "http://{{host}}:{{port}}/jsonrpc",
+    "contentType": "application/json",
+    "body": {
+     "jsonrpc": "2.0",
+     "method": "Input.Select",
+     "id": 1
+    },
+    "auth": {
+     "basic": "{{login}}"
+    }
+   }
+  }
+ ]
+}

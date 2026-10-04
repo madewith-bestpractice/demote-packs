@@ -1,0 +1,89 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "http",
+ "network": "local",
+ "variables": [
+  {
+   "id": "host",
+   "scope": "pack",
+   "type": "host",
+   "label": {
+    "en": "Address",
+    "es": "Dirección"
+   }
+  },
+  {
+   "id": "player_id",
+   "scope": "pack",
+   "type": "text",
+   "optional": true,
+   "label": {
+    "en": "Player ID",
+    "es": "ID del reproductor"
+   }
+  },
+  {
+   "id": "key",
+   "scope": "pack",
+   "type": "secret",
+   "label": {
+    "en": "Key",
+    "es": "Clave"
+   },
+   "optional": true
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "play",
+   "request": {
+    "method": "POST",
+    "url": "http://{{host}}:1400/x",
+    "contentType": "text/xml",
+    "body": "<a>{{player_id}}</a>"
+   }
+  },
+  {
+   "id": "c",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "play",
+   "request": {
+    "method": "GET",
+    "url": "http://{{host}}/{{path}}?k={{key}}"
+   },
+   "variables": [
+    {
+     "id": "path",
+     "scope": "button",
+     "type": "text",
+     "optional": true,
+     "label": {
+      "en": "Path",
+      "es": "Ruta"
+     }
+    }
+   ]
+  }
+ ]
+}

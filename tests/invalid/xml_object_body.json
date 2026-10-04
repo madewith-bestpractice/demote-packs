@@ -1,0 +1,53 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "http",
+ "network": "local",
+ "variables": [
+  {
+   "id": "host",
+   "scope": "pack",
+   "type": "host",
+   "label": {
+    "en": "Address",
+    "es": "Dirección"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "play",
+   "request": {
+    "method": "POST",
+    "url": "http://{{host}}:1400/MediaRenderer/AVTransport/Control",
+    "headers": [
+     {
+      "name": "SOAPACTION",
+      "value": "\"urn:schemas-upnp-org:service:AVTransport:1#Play\""
+     }
+    ],
+    "contentType": "text/xml",
+    "body": {
+     "a": 1
+    }
+   }
+  }
+ ]
+}

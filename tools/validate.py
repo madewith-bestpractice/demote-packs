@@ -2,12 +2,15 @@
 """Validate Demote button packs.
 
 Usage: python tools/validate.py [FILE ...]
-With no arguments, validates every packs/*.json and examples/*.json.
+With no arguments, validates every packs/*.json, drafts/*.json and
+examples/*.json.
 
 Runs the JSON Schema in schema/pack.schema.json, then the rules a schema
 can't express: file name matches id, unique ids, known icons, every {{slot}}
 defined in scope, engine-specific variable types, text lengths, the size
-limit, and that a "local" pack names no public host.
+limit, that a "local" pack names no public host, that "auth" names a
+basic_auth variable (and nothing else does), and that no variable in a URL's
+host is optional.
 """
 
 from __future__ import annotations
@@ -31,6 +34,7 @@ MAX_DESCRIPTION = 120
 MAX_LABEL = 24
 SLOT = re.compile(r"\{\{\s*([^}]*?)\s*\}\}")
 SLOT_ID = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
+PUBLISHED_DIRS = ("packs", "drafts")  # file name must match id; ids unique across both
 
 
 def _strings(value):
@@ -79,7 +83,7 @@ def check_pack(path: Path) -> list[str]:
     if errors:
         return errors  # the rules below assume the shape is right
 
-    if path.parent.name == "packs" and path.stem != pack["id"]:
+    if path.parent.name in PUBLISHED_DIRS and path.stem != pack["id"]:
         errors.append(f'file name must be "{pack["id"]}.json"')
 
     for lang, text in pack["name"].items():
@@ -125,18 +129,39 @@ def check_pack(path: Path) -> list[str]:
             errors.append(f'{where}: a "home_assistant" pack needs "service" on every button')
 
         action = b.get("request") or b.get("service")
-        for s in _strings(action):
+        req = b.get("request")
+        # auth.basic is checked on its own below; every other string is a
+        # place a value is written into the request.
+        plain = {k: v for k, v in action.items() if k != "auth"} if req else action
+        for s in _strings(plain):
             for slot in SLOT.findall(s):
                 if not SLOT_ID.match(slot):
                     errors.append(f'{where}: "{{{{{slot}}}}}" is not a plain variable name')
                 elif slot not in in_scope:
                     errors.append(f'{where}: "{{{{{slot}}}}}" is not a variable of this pack or button')
+                elif in_scope[slot]["type"] == "basic_auth":
+                    errors.append(f'{where}: "{{{{{slot}}}}}" is a basic_auth variable; use it only in "auth": {{"basic": ...}}')
 
-        req = b.get("request")
         if req:
             if req.get("contentType") != "application/json" and not isinstance(req.get("body", ""), str):
                 errors.append(f'{where}: a JSON body needs contentType "application/json"')
+            errors += _check_auth(where, req, in_scope)
             errors += _check_host(where, req["url"], in_scope, pack["network"])
+    return errors
+
+
+def _check_auth(where: str, req: dict, in_scope: dict) -> list[str]:
+    auth = req.get("auth")
+    if not auth:
+        return []
+    errors = []
+    slot = SLOT.findall(auth["basic"])[0]
+    if slot not in in_scope:
+        errors.append(f'{where}: auth "{{{{{slot}}}}}" is not a variable of this pack or button')
+    elif in_scope[slot]["type"] != "basic_auth":
+        errors.append(f'{where}: auth "{{{{{slot}}}}}" must be a basic_auth variable, not {in_scope[slot]["type"]}')
+    if any(h["name"].lower() == "authorization" for h in req.get("headers", [])):
+        errors.append(f'{where}: an "Authorization" header conflicts with "auth"')
     return errors
 
 
@@ -149,8 +174,12 @@ def _check_variables(where: str, variables: list[dict], engine: str) -> list[str
         seen.add(v["id"])
         if v["type"] == "ha_entity" and engine != "home_assistant":
             errors.append(f'{where}/{v["id"]}: ha_entity is only for "home_assistant" packs')
-        if v["type"] == "secret" and "default" in v:
-            errors.append(f'{where}/{v["id"]}: a secret cannot have a default')
+        if v["type"] in ("secret", "basic_auth") and "default" in v:
+            errors.append(f'{where}/{v["id"]}: a {v["type"]} cannot have a default')
+        if v["type"] == "basic_auth" and engine != "http":
+            errors.append(f'{where}/{v["id"]}: basic_auth is only for "http" packs')
+        if v["type"] == "basic_auth" and v["scope"] != "pack":
+            errors.append(f'{where}/{v["id"]}: a basic_auth variable must have scope "pack"')
     return errors
 
 
@@ -162,6 +191,9 @@ def _check_host(where: str, url: str, in_scope: dict, network: str) -> list[str]
         bad = [s for s in slots if s in in_scope and in_scope[s]["type"] not in ("host", "port")]
         if bad:
             return [f'{where}: the URL host may only use "host" or "port" variables ({", ".join(bad)})']
+        opt = [s for s in slots if s in in_scope and in_scope[s].get("optional")]
+        if opt:
+            return [f'{where}: a variable in the URL host cannot be optional ({", ".join(opt)})']
         return []
     if network == "local" and not _is_local_host(host_part):
         return [f'{where}: "{host_part}" is not a local address, so this pack must be "network": "internet"']
@@ -169,7 +201,8 @@ def _check_host(where: str, url: str, in_scope: dict, network: str) -> list[str]
 
 
 def main(argv: list[str]) -> int:
-    files = [Path(a) for a in argv] or sorted([*ROOT.glob("packs/*.json"), *ROOT.glob("examples/*.json")])
+    files = [Path(a) for a in argv] or sorted(
+        [*ROOT.glob("packs/*.json"), *ROOT.glob("drafts/*.json"), *ROOT.glob("examples/*.json")])
     ids: dict[str, Path] = {}
     failed = 0
     for f in files:
@@ -178,7 +211,7 @@ def main(argv: list[str]) -> int:
             pid = json.loads(f.read_text()).get("id")
         except Exception:
             pid = None
-        if pid and f.parent.name == "packs":
+        if pid and f.parent.name in PUBLISHED_DIRS:
             if pid in ids:
                 errs.append(f"id {pid} is also used by {ids[pid].name}")
             ids[pid] = f

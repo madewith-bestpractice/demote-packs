@@ -58,9 +58,13 @@
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$" },
         "scope": { "enum": ["pack", "button"] },
-        "type": { "enum": ["text", "number", "choice", "host", "port", "secret", "ha_entity"] },
+        "type": { "enum": ["text", "number", "choice", "host", "port", "secret", "basic_auth", "ha_entity"] },
         "label": { "$ref": "#/$defs/localized" },
         "placeholder": { "type": "string", "maxLength": 60 },
+        "optional": {
+          "description": "The user may leave it empty. A button whose action uses an empty optional variable shows as needing setup and isn't sent. Not allowed on a variable used in a URL's host.",
+          "type": "boolean"
+        },
         "default": { "type": ["string", "number"] },
         "min": { "type": "number" },
         "max": { "type": "number" },
@@ -131,10 +135,19 @@
             }
           }
         },
-        "contentType": { "enum": ["application/json", "text/plain", "application/x-www-form-urlencoded"] },
+        "contentType": { "enum": ["application/json", "text/plain", "text/xml", "application/x-www-form-urlencoded"] },
         "body": {
           "description": "A string, or a JSON value when contentType is application/json.",
           "type": ["string", "object", "array"]
+        },
+        "auth": {
+          "description": "HTTP authentication the app adds. basic: a {{slot}} naming a basic_auth variable; the app sends Authorization: Basic from its username and password.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["basic"],
+          "properties": {
+            "basic": { "type": "string", "pattern": "^\\{\\{\\s*[a-z][a-z0-9_]{0,31}\\s*\\}\\}$" }
+          }
         }
       }
     },
