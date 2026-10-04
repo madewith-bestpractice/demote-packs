@@ -9,8 +9,9 @@ Runs the JSON Schema in schema/pack.schema.json, then the rules a schema
 can't express: file name matches id, unique ids, known icons, every {{slot}}
 defined in scope, engine-specific variable types, text lengths, the size
 limit, that a "local" pack names no public host, that "auth" names a
-basic_auth variable (and nothing else does), and that no variable in a URL's
-host is optional.
+basic_auth variable (and nothing else does), that no variable in a URL's
+host is optional, and that macro steps name a known TV key or a non-macro
+button of the same pack, with at least one step that always runs.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = json.loads((ROOT / "schema" / "pack.schema.json").read_text())
 ICONS = set(json.loads((ROOT / "schema" / "icons.json").read_text())["icons"])
+KEYS = set(json.loads((ROOT / "schema" / "keys.json").read_text())["keys"])
 
 MAX_BYTES = 64 * 1024
 MAX_NAME = 32
@@ -72,8 +74,17 @@ def check_pack(path: Path) -> list[str]:
         return [f"not valid JSON: {e}"]
 
     for i, b in enumerate(pack.get("buttons", []) if isinstance(pack, dict) else []):
-        if isinstance(b, dict) and ("request" in b) == ("service" in b):
-            errors.append(f"buttons/{i}: a button needs exactly one of \"request\" (http) or \"service\" (home_assistant)")
+        if not isinstance(b, dict):
+            continue
+        if sum(k in b for k in ("request", "service", "steps")) != 1:
+            errors.append(f"buttons/{i}: a button needs exactly one of \"request\" (http), \"service\" (home_assistant) or \"steps\" (a macro)")
+        elif "steps" in b:
+            for k in ("variables", "repeat"):
+                if k in b:
+                    errors.append(f'buttons/{i}: a macro can\'t have "{k}"; its steps\' buttons carry their own settings')
+            for n, step in enumerate(b["steps"] if isinstance(b["steps"], list) else []):
+                if isinstance(step, dict) and ("button" in step) == ("key" in step):
+                    errors.append(f'buttons/{i}/steps/{n}: a step needs exactly one of "button" or "key"')
     if errors:
         return errors
 
@@ -103,6 +114,9 @@ def check_pack(path: Path) -> list[str]:
     errors += _check_variables("variables", pack.get("variables", []), engine)
 
     seen_buttons: set[str] = set()
+    # Per non-macro button: does its action use an optional variable? Such a
+    # step is skipped when that variable is empty.
+    skippable: dict[str, bool] = {}
     for i, b in enumerate(pack["buttons"]):
         where = f'buttons/{b["id"]}'
         if b["id"] in seen_buttons:
@@ -123,6 +137,8 @@ def check_pack(path: Path) -> list[str]:
         errors += _check_variables(f"{where}/variables", b.get("variables", []), engine)
         in_scope = {**pack_vars, **button_vars}
 
+        if "steps" in b:
+            continue  # checked below, once every button is known
         if engine == "http" and "request" not in b:
             errors.append(f'{where}: an "http" pack needs "request" on every button')
         if engine == "home_assistant" and "service" not in b:
@@ -142,11 +158,44 @@ def check_pack(path: Path) -> list[str]:
                 elif in_scope[slot]["type"] == "basic_auth":
                     errors.append(f'{where}: "{{{{{slot}}}}}" is a basic_auth variable; use it only in "auth": {{"basic": ...}}')
 
+        skippable[b["id"]] = any(
+            in_scope.get(slot, {}).get("optional")
+            for s in _strings(action) for slot in SLOT.findall(s))
+
         if req:
             if req.get("contentType") != "application/json" and not isinstance(req.get("body", ""), str):
                 errors.append(f'{where}: a JSON body needs contentType "application/json"')
             errors += _check_auth(where, req, in_scope)
             errors += _check_host(where, req["url"], in_scope, pack["network"])
+
+    macro_ids = {b["id"] for b in pack["buttons"] if "steps" in b}
+    for b in pack["buttons"]:
+        if "steps" in b:
+            errors += _check_steps(f'buttons/{b["id"]}', b, skippable, macro_ids)
+    return errors
+
+
+def _check_steps(where: str, b: dict, skippable: dict[str, bool], macro_ids: set[str]) -> list[str]:
+    errors = []
+    always_runs = False
+    for n, step in enumerate(b["steps"]):
+        if "key" in step:
+            if step["key"] not in KEYS:
+                errors.append(f'{where}/steps/{n}: "{step["key"]}" is not a key in schema/keys.json')
+            always_runs = True
+            continue
+        ref = step["button"]
+        if ref == b["id"]:
+            errors.append(f'{where}/steps/{n}: a macro can\'t run itself')
+        elif ref in macro_ids:
+            errors.append(f'{where}/steps/{n}: "{ref}" is a macro; a macro can\'t run another macro')
+        elif ref not in skippable:
+            errors.append(f'{where}/steps/{n}: "{ref}" is not a button of this pack')
+        elif not skippable[ref]:
+            always_runs = True
+    if not errors and not always_runs:
+        errors.append(f"{where}: every step uses an optional setting, so the macro could do nothing; "
+                      "add a TV key or a button without optional settings")
     return errors
 
 

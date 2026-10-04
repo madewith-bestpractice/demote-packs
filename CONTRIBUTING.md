@@ -22,7 +22,7 @@ The examples in `examples/` show both engines.
 ## What a pack is
 
 A pack is a JSON file. It describes buttons that send requests through one
-of Demote's engines. It's data only: no scripts, no expressions, no
+of Demote's engines, and macro buttons that run several of them in a row. It's data only: no scripts, no expressions, no
 conditionals, and Demote never reads replies. The full format is in
 [`schema/pack.schema.json`](schema/pack.schema.json).
 
@@ -48,6 +48,10 @@ conditionals, and Demote never reads replies. The full format is in
   - `action`, such as `media_player.select_source`;
   - optional `target`;
   - optional `data`.
+
+A button in either engine can instead be a macro, with `steps` (see
+[Macro buttons](#macro-buttons)). Every button has exactly one of
+`request`, `service` or `steps`.
 
 ### Metadata
 
@@ -102,6 +106,11 @@ to TV" uses.
   "label": { "en": "Player ID (for Switch to TV)", "es": "ID del reproductor (para Cambiar a TV)" } }
 ```
 
+In a [macro](#macro-buttons), a step whose button uses an empty optional
+variable is skipped, not failed, and the macro's other steps run. That's how
+"Start movie" still works in a room with no blinds: the user leaves the
+blinds empty and that step is skipped.
+
 Any type can be optional, except a variable written into a URL's host
 (the `host` or `port` part of `http://{{host}}:{{port}}/…`). Every request
 must have somewhere to go, and the disclosure sheet names it.
@@ -116,6 +125,65 @@ must have somewhere to go, and the disclosure sheet names it.
   number, write the body as a string with `contentType: "application/json"`,
   such as `"{\"bri\":{{level}}}"`, and use a `number` variable.
 - In a URL's host, only `host` and `port` variables are allowed.
+
+### Macro buttons
+
+A macro button runs up to 8 steps in order, on the phone, with one tap. It
+has `steps` instead of a `request` or `service`:
+
+```json
+{ "id": "intermission", "label": { "en": "Intermission", "es": "Intermedio" }, "icon": "pause",
+  "steps": [
+    { "key": "pause" },
+    { "button": "lights_half" }
+  ] }
+```
+
+**Steps**
+- `{"button": "<id>"}` runs another button of the same pack, with that
+  button's own settings.
+- `{"key": "<name>"}` sends a standard TV key to whichever TV the remote is
+  on, exactly as that key's button on the remote does. The TV doesn't need
+  to be in Home Assistant. Names come from
+  [`schema/keys.json`](schema/keys.json): `power`, `volume_up`,
+  `volume_down`, `mute`, `play`, `pause`, `play_pause`, `stop`, `home`,
+  `back`, `dpad_up`, `dpad_down`, `dpad_left`, `dpad_right`, `dpad_center`
+  (OK), `channel_up`, `channel_down`. `power` and `mute` are toggles, like
+  the remote's own buttons.
+- Optional `delayMs`, 0 to 5000, default 400: the pause after the step, and
+  between its repeats. The last step's pause is skipped.
+- Optional `repeat`, 1 to 10, default 1: how many times the step runs, such
+  as `{"key": "volume_down", "repeat": 5}`.
+
+The app's macro editor offers pauses of 0, 200, 400, 600, 1000, 1500, 2000
+and 3000 ms, and repeats of 1, 2, 3, 4, 5, 8 and 10. Prefer those, so a
+customized copy shows the same values.
+
+**Rules** (the validator checks them)
+- A step names exactly one of `button` or `key`.
+- A `button` step names another button of the same pack that isn't a macro.
+  A macro can't run itself or another macro, so there's no nesting or
+  looping.
+- A macro has no `variables` and no hold-to-`repeat`. Its steps' buttons
+  carry the settings.
+- At least one step must always run: a TV key, or a button with no
+  optional variable. A macro made only of skippable steps could do nothing.
+
+**Settings.** When the user places a macro, Demote asks once for the
+settings of every button its steps run. Give the buttons a macro uses clear
+setting labels, and make a device that some homes won't have `optional`.
+If that button has other settings, make them optional too or give them a
+`default`, so the user can leave the whole step empty.
+
+**Placing a macro**
+- **Placed as-is**, it stays linked to the pack. Pack updates flow in, and
+  it shows "Pack required" if the pack is turned off, like any pack button.
+- **Customize** copies it into the user's own macros, unlinked. Its pack
+  steps stay pack steps, the user can add their own (such as opening an app
+  at the end), and pack updates no longer change it.
+
+Steps run on the phone, one after another, so a macro isn't a Home
+Assistant script and needs nothing set up in Home Assistant.
 
 ### Network
 
@@ -163,7 +231,8 @@ Requests get the `pack request` label.
 
 Bump `version`. Don't remove or rename a button `id` that people may have
 placed: Demote shows those buttons as "Pack required" rather than guessing.
-Add new ids instead.
+Add new ids instead. A macro placed as-is picks up changes to its steps, so
+change a macro's steps only in ways its users would expect.
 
 ## License
 

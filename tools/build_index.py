@@ -5,8 +5,9 @@ Usage:
   python tools/build_index.py          rewrite index.json
   python tools/build_index.py --check  exit 1 if index.json is out of date
 
-The index lists each pack's metadata, button list and the SHA-256 of its
-file. The app downloads a pack from `path` and refuses it if the hash
+The index lists each pack's metadata, button list (with whether each button
+asks for a setting when placed, and whether it's a macro) and the SHA-256 of
+its file. The app downloads a pack from `path` and refuses it if the hash
 doesn't match.
 """
 
@@ -20,6 +21,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.json"
 FIRST_PARTY = "Made with Best Practice"
+
+
+def _asks(button: dict, buttons: list[dict]) -> bool:
+    """Whether placing the button asks for a setting. A macro asks for its
+    steps' buttons' settings."""
+    if "steps" not in button:
+        return bool(button.get("variables"))
+    by_id = {b["id"]: b for b in buttons}
+    return any(bool(by_id[s["button"]].get("variables"))
+               for s in button["steps"] if "button" in s)
 
 
 def build() -> str:
@@ -42,7 +53,7 @@ def build() -> str:
             "network": p["network"],
             "buttons": [
                 {"id": b["id"], "label": b["label"], "icon": b["icon"],
-                 "asks": bool(b.get("variables"))}
+                 "asks": _asks(b, p["buttons"]), "macro": "steps" in b}
                 for b in p["buttons"]
             ],
         })

@@ -1,0 +1,60 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "http",
+ "network": "local",
+ "variables": [
+  {
+   "id": "host",
+   "scope": "pack",
+   "type": "host",
+   "label": {
+    "en": "Address",
+    "es": "Dirección"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "input_tv",
+   "label": {
+    "en": "TV input",
+    "es": "Entrada TV"
+   },
+   "icon": "input",
+   "request": {
+    "method": "GET",
+    "url": "http://{{host}}/input?tv"
+   }
+  },
+  {
+   "id": "watch",
+   "label": {
+    "en": "Macro",
+    "es": "Macro"
+   },
+   "icon": "scene",
+   "steps": [
+    {
+     "button": "input_tv",
+     "delayMs": 1000
+    },
+    {
+     "key": "home"
+    }
+   ]
+  }
+ ]
+}

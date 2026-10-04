@@ -1,0 +1,63 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "variables": [
+  {
+   "id": "fan",
+   "scope": "pack",
+   "type": "ha_entity",
+   "domain": "fan",
+   "optional": true,
+   "label": {
+    "en": "Fan",
+    "es": "Ventilador"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "fan_off",
+   "label": {
+    "en": "Fan off",
+    "es": "Apagar ventilador"
+   },
+   "icon": "fan",
+   "service": {
+    "action": "fan.turn_off",
+    "target": {
+     "entity_id": "{{fan}}"
+    }
+   }
+  },
+  {
+   "id": "night",
+   "label": {
+    "en": "Macro",
+    "es": "Macro"
+   },
+   "icon": "scene",
+   "steps": [
+    {
+     "button": "fan_off"
+    },
+    {
+     "key": "mute"
+    }
+   ]
+  }
+ ]
+}

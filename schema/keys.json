@@ -1,0 +1,10 @@
+{
+  "comment": "TV key names a macro step may send with {\"key\": \"<name>\"}. Each name is the id of the same remote action in the Demote app (_remoteActionOptions in remote_screen.dart), so a key step is exactly what that key's button does on the remote. Names added here must exist in the app first.",
+  "keys": [
+    "power", "volume_up", "volume_down", "mute",
+    "play", "pause", "play_pause", "stop",
+    "home", "back",
+    "dpad_up", "dpad_down", "dpad_left", "dpad_right", "dpad_center",
+    "channel_up", "channel_down"
+  ]
+}

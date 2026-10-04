@@ -62,7 +62,7 @@
         "label": { "$ref": "#/$defs/localized" },
         "placeholder": { "type": "string", "maxLength": 60 },
         "optional": {
-          "description": "The user may leave it empty. A button whose action uses an empty optional variable shows as needing setup and isn't sent. Not allowed on a variable used in a URL's host.",
+          "description": "The user may leave it empty. A button whose action uses an empty optional variable shows as needing setup and isn't sent; in a macro, that button's step is skipped and the other steps run. Not allowed on a variable used in a URL's host.",
           "type": "boolean"
         },
         "default": { "type": ["string", "number"] },
@@ -101,18 +101,40 @@
         "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$" },
         "label": { "$ref": "#/$defs/localized", "description": "At most 24 characters per language." },
         "icon": { "type": "string" },
-        "repeat": { "type": "boolean", "description": "Hold to repeat, like the TV volume keys." },
+        "repeat": { "type": "boolean", "description": "Hold to repeat, like the TV volume keys. Not on a macro." },
         "variables": {
           "type": "array",
           "maxItems": 5,
           "items": { "$ref": "#/$defs/variable" }
         },
         "request": { "$ref": "#/$defs/httpRequest" },
-        "service": { "$ref": "#/$defs/haService" }
+        "service": { "$ref": "#/$defs/haService" },
+        "steps": {
+          "description": "A macro: 1 to 8 steps run in order on the phone. Each step runs another button of this pack (not a macro) or sends a standard TV key from schema/keys.json.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/step" }
+        }
       },
       "oneOf": [
-        { "required": ["request"], "not": { "required": ["service"] } },
-        { "required": ["service"], "not": { "required": ["request"] } }
+        { "required": ["request"], "not": { "anyOf": [{ "required": ["service"] }, { "required": ["steps"] }] } },
+        { "required": ["service"], "not": { "anyOf": [{ "required": ["request"] }, { "required": ["steps"] }] } },
+        { "required": ["steps"], "not": { "anyOf": [{ "required": ["request"] }, { "required": ["service"] }, { "required": ["variables"] }, { "required": ["repeat"] }] } }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "button": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$", "description": "The id of another button in this pack. It can't be a macro." },
+        "key": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$", "description": "A TV key name from schema/keys.json, sent to whichever TV the remote is on." },
+        "delayMs": { "type": "integer", "minimum": 0, "maximum": 5000, "default": 400, "description": "The pause after this step (and between its repeats), in milliseconds." },
+        "repeat": { "type": "integer", "minimum": 1, "maximum": 10, "default": 1, "description": "How many times the step runs before the macro moves on." }
+      },
+      "oneOf": [
+        { "required": ["button"], "not": { "required": ["key"] } },
+        { "required": ["key"], "not": { "required": ["button"] } }
       ]
     },
     "httpRequest": {

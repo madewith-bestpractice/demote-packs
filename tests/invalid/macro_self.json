@@ -1,0 +1,92 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "buttons": [
+  {
+   "id": "lights_half",
+   "label": {
+    "en": "Lights to 50%",
+    "es": "Luces al 50 %"
+   },
+   "icon": "lightbulb",
+   "variables": [
+    {
+     "id": "entity",
+     "scope": "button",
+     "type": "ha_entity",
+     "domain": "light",
+     "label": {
+      "en": "Lights",
+      "es": "Luces"
+     }
+    }
+   ],
+   "service": {
+    "action": "light.turn_on",
+    "target": {
+     "entity_id": "{{entity}}"
+    },
+    "data": {
+     "brightness_pct": 50
+    }
+   }
+  },
+  {
+   "id": "close_blinds",
+   "label": {
+    "en": "Close blinds",
+    "es": "Cerrar persianas"
+   },
+   "icon": "blinds",
+   "variables": [
+    {
+     "id": "entity",
+     "scope": "button",
+     "type": "ha_entity",
+     "domain": "cover",
+     "label": {
+      "en": "Blinds",
+      "es": "Persianas"
+     },
+     "optional": true
+    }
+   ],
+   "service": {
+    "action": "cover.close_cover",
+    "target": {
+     "entity_id": "{{entity}}"
+    }
+   }
+  },
+  {
+   "id": "a",
+   "label": {
+    "en": "Macro",
+    "es": "Macro"
+   },
+   "icon": "scene",
+   "steps": [
+    {
+     "key": "play"
+    },
+    {
+     "button": "a"
+    }
+   ]
+  }
+ ]
+}
