@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.tasmota",
+  "version": "0.1.0",
+  "name": {
+    "en": "Tasmota",
+    "es": "Tasmota"
+  },
+  "description": {
+    "en": "Switch relays and dim lights on Tasmota plugs, switches and bulbs over the local HTTP API.",
+    "es": "Enciende relés y regula luces en enchufes, interruptores y focos Tasmota por la API HTTP local."
+  },
+  "vendor": "Tasmota",
+  "author": "Made with Best Practice",
+  "icon": "plug",
+  "accent": "teal",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Tasmota address",
+        "es": "Dirección de Tasmota"
+      },
+      "placeholder": "192.168.1.80"
+    },
+    {
+      "id": "password",
+      "scope": "pack",
+      "type": "secret",
+      "label": {
+        "en": "Web password, if set",
+        "es": "Contraseña web, si tiene una"
+      },
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "toggle",
+      "label": {
+        "en": "Toggle",
+        "es": "Alternar"
+      },
+      "icon": "switch",
+      "variables": [
+        {
+          "id": "relay",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Relay (0 = all)",
+            "es": "Relé (0 = todos)"
+          },
+          "min": 0,
+          "max": 32,
+          "default": 1
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Power{{relay}}%20Toggle"
+      }
+    },
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "relay",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Relay (0 = all)",
+            "es": "Relé (0 = todos)"
+          },
+          "min": 0,
+          "max": 32,
+          "default": 1
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Power{{relay}}%20On"
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "relay",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Relay (0 = all)",
+            "es": "Relé (0 = todos)"
+          },
+          "min": 0,
+          "max": 32,
+          "default": 1
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Power{{relay}}%20Off"
+      }
+    },
+    {
+      "id": "dimmer",
+      "label": {
+        "en": "Brightness level",
+        "es": "Nivel de brillo"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 50
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Dimmer%20{{level}}"
+      }
+    },
+    {
+      "id": "brightness_up",
+      "label": {
+        "en": "Brightness up",
+        "es": "Subir brillo"
+      },
+      "icon": "brightness_up",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Dimmer%20%2B"
+      }
+    },
+    {
+      "id": "brightness_down",
+      "label": {
+        "en": "Brightness down",
+        "es": "Bajar brillo"
+      },
+      "icon": "brightness_down",
+      "repeat": true,
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/cm?user=admin&password={{password}}&cmnd=Dimmer%20-"
+      }
+    }
+  ]
+}
