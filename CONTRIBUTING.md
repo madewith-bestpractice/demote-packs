@@ -120,10 +120,16 @@ must have somewhere to go, and the disclosure sheet names it.
 - Demote escapes the value for where it appears: URL-encoded in a URL,
   JSON-escaped in JSON, XML-escaped in a `text/xml` body, and as-is in
   `text/plain`.
-- In a JSON value body, a slot always lands inside a JSON string, so
-  `"bri": "{{level}}"` sends `"bri": "128"`. When the device needs a real
-  number, write the body as a string with `contentType: "application/json"`,
-  such as `"{\"bri\":{{level}}}"`, and use a `number` variable.
+- In a JSON value body, and in `target` and `data`, a value that is exactly
+  one slot keeps the variable's type. A `number` variable gives a JSON
+  number, so `"bri": "{{level}}"` sends `"bri": 128`. Every other type
+  (`text`, `choice`, `ha_entity` and so on) gives a string. A slot inside a
+  longer string, such as `"Bearer {{key}}"`, always gives a string.
+- Home Assistant fields that take a number, such as `brightness_pct`,
+  `percentage` and `temperature`, must be a number or exactly one `number`
+  slot. The validator checks the common ones.
+- In a string body, slots are replaced as text, escaped for the content
+  type.
 - In a URL's host, only `host` and `port` variables are allowed.
 
 ### Macro buttons

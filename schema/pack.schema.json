@@ -159,7 +159,7 @@
         },
         "contentType": { "enum": ["application/json", "text/plain", "text/xml", "application/x-www-form-urlencoded"] },
         "body": {
-          "description": "A string, or a JSON value when contentType is application/json.",
+          "description": "A string, or a JSON value when contentType is application/json. In a JSON value, a value that is exactly one {{slot}} keeps the variable's type (number gives a JSON number, every other type a string); a slot inside a longer string gives a string. In a string body, slots are replaced as text.",
           "type": ["string", "object", "array"]
         },
         "auth": {
@@ -180,7 +180,7 @@
       "properties": {
         "action": { "type": "string", "pattern": "^[a-z_]+\\.[a-z0-9_]+$", "description": "domain.service, e.g. media_player.select_source." },
         "target": { "type": "object" },
-        "data": { "type": "object" }
+        "data": { "type": "object", "description": "A value that is exactly one {{slot}} keeps the variable's type (number gives a JSON number, every other type a string); a slot inside a longer string gives a string." }
       }
     }
   }

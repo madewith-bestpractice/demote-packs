@@ -1,0 +1,62 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "variables": [
+  {
+   "id": "light",
+   "scope": "pack",
+   "type": "ha_entity",
+   "domain": "light",
+   "label": {
+    "en": "Light",
+    "es": "Luz"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "lightbulb",
+   "variables": [
+    {
+     "id": "level",
+     "scope": "button",
+     "type": "number",
+     "label": {
+      "en": "Level",
+      "es": "Nivel"
+     }
+    }
+   ],
+   "service": {
+    "action": "light.turn_on",
+    "target": {
+     "entity_id": "{{light}}"
+    },
+    "data": {
+     "brightness_pct": "{{level}}",
+     "transition": 2,
+     "color_name": "{{ level }}"
+    }
+   }
+  }
+ ]
+}

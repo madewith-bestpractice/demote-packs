@@ -10,7 +10,8 @@ can't express: file name matches id, unique ids, known icons, every {{slot}}
 defined in scope, engine-specific variable types, text lengths, the size
 limit, that a "local" pack names no public host, that "auth" names a
 basic_auth variable (and nothing else does), that no variable in a URL's
-host is optional, and that macro steps name a known TV key or a non-macro
+host is optional, that Home Assistant numeric data fields get a number,
+and that macro steps name a known TV key or a non-macro
 button of the same pack, with at least one step that always runs.
 """
 
@@ -36,7 +37,17 @@ MAX_DESCRIPTION = 120
 MAX_LABEL = 24
 SLOT = re.compile(r"\{\{\s*([^}]*?)\s*\}\}")
 SLOT_ID = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
-PUBLISHED_DIRS = ("packs", "drafts")  # file name must match id; ids unique across both
+PUBLISHED_DIRS = ("packs", "drafts")
+# Home Assistant data fields that take a number: each must be a number or
+# exactly one {{slot}} naming a number variable (which is sent as a number).
+HA_NUMERIC = {
+    "brightness", "brightness_pct", "brightness_step", "brightness_step_pct",
+    "color_temp_kelvin", "transition", "percentage", "percentage_step",
+    "temperature", "target_temp_high", "target_temp_low", "humidity",
+    "position", "tilt_position", "volume_level", "num_repeats", "delay_secs",
+    "hold_secs",
+}
+WHOLE_SLOT = re.compile(r"^\{\{\s*([a-z][a-z0-9_]{0,31})\s*\}\}$")  # file name must match id; ids unique across both
 
 
 def _strings(value):
@@ -161,6 +172,14 @@ def check_pack(path: Path) -> list[str]:
         skippable[b["id"]] = any(
             in_scope.get(slot, {}).get("optional")
             for s in _strings(action) for slot in SLOT.findall(s))
+
+        if "service" in b:
+            for field, value in b["service"].get("data", {}).items():
+                if field not in HA_NUMERIC or isinstance(value, (int, float)) and not isinstance(value, bool):
+                    continue
+                m = WHOLE_SLOT.match(value) if isinstance(value, str) else None
+                if not m or in_scope.get(m.group(1), {}).get("type") != "number":
+                    errors.append(f'{where}: data.{field} takes a number; use a number or exactly one {{{{slot}}}} of a "number" variable')
 
         if req:
             if req.get("contentType") != "application/json" and not isinstance(req.get("body", ""), str):

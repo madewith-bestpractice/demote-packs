@@ -1,0 +1,62 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "http",
+ "network": "local",
+ "variables": [
+  {
+   "id": "host",
+   "scope": "pack",
+   "type": "host",
+   "label": {
+    "en": "Address",
+    "es": "Dirección"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "b",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "lightbulb",
+   "variables": [
+    {
+     "id": "level",
+     "scope": "button",
+     "type": "number",
+     "min": 1,
+     "max": 255,
+     "label": {
+      "en": "Level",
+      "es": "Nivel"
+     }
+    }
+   ],
+   "request": {
+    "method": "POST",
+    "url": "http://{{host}}/json/state",
+    "contentType": "application/json",
+    "body": {
+     "on": true,
+     "bri": "{{level}}",
+     "note": "level {{level}}"
+    }
+   }
+  }
+ ]
+}
