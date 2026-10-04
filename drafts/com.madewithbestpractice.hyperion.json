@@ -1,0 +1,402 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.hyperion",
+  "version": "0.1.0",
+  "name": {
+    "en": "Hyperion and HyperHDR",
+    "es": "Hyperion y HyperHDR"
+  },
+  "description": {
+    "en": "On, off, colour, effects and back to video for Hyperion and HyperHDR TV backlights.",
+    "es": "Encendido, color, efectos y vuelta al video para luces de TV con Hyperion y HyperHDR."
+  },
+  "vendor": "Hyperion / HyperHDR",
+  "author": "Made with Best Practice",
+  "icon": "lightbulb",
+  "accent": "purple",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Hyperion or HyperHDR address",
+        "es": "Dirección de Hyperion o HyperHDR"
+      },
+      "placeholder": "192.168.1.60"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Web server port",
+        "es": "Puerto del servidor web"
+      },
+      "default": 8090
+    },
+    {
+      "id": "token",
+      "scope": "pack",
+      "type": "secret",
+      "label": {
+        "en": "API token, if local API authentication is on",
+        "es": "Token de la API, si la autenticación local está activa"
+      },
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "componentstate",
+          "componentstate": {
+            "component": "ALL",
+            "state": true
+          }
+        }
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "componentstate",
+          "componentstate": {
+            "component": "ALL",
+            "state": false
+          }
+        }
+      }
+    },
+    {
+      "id": "video",
+      "label": {
+        "en": "Back to video",
+        "es": "Volver al video"
+      },
+      "icon": "input",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "clear",
+          "priority": 50
+        }
+      }
+    },
+    {
+      "id": "colour",
+      "label": {
+        "en": "Solid colour",
+        "es": "Color fijo"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "red",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Red (0–255)",
+            "es": "Rojo (0–255)"
+          },
+          "min": 0,
+          "max": 255,
+          "default": 255
+        },
+        {
+          "id": "green",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Green (0–255)",
+            "es": "Verde (0–255)"
+          },
+          "min": 0,
+          "max": 255,
+          "default": 140
+        },
+        {
+          "id": "blue",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Blue (0–255)",
+            "es": "Azul (0–255)"
+          },
+          "min": 0,
+          "max": 255,
+          "default": 40
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "color",
+          "color": [
+            "{{red}}",
+            "{{green}}",
+            "{{blue}}"
+          ],
+          "priority": 50,
+          "origin": "Demote"
+        }
+      }
+    },
+    {
+      "id": "effect",
+      "label": {
+        "en": "Effect",
+        "es": "Efecto"
+      },
+      "icon": "scene",
+      "variables": [
+        {
+          "id": "effect",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Effect",
+            "es": "Efecto"
+          },
+          "options": [
+            {
+              "value": "Rainbow swirl",
+              "label": {
+                "en": "Rainbow swirl",
+                "es": "Remolino arcoíris"
+              }
+            },
+            {
+              "value": "Rainbow swirl fast",
+              "label": {
+                "en": "Rainbow swirl fast",
+                "es": "Remolino arcoíris rápido"
+              }
+            },
+            {
+              "value": "Atomic swirl",
+              "label": {
+                "en": "Atomic swirl",
+                "es": "Remolino atómico"
+              }
+            },
+            {
+              "value": "Double swirl",
+              "label": {
+                "en": "Double swirl",
+                "es": "Remolino doble"
+              }
+            },
+            {
+              "value": "Candle",
+              "label": {
+                "en": "Candle",
+                "es": "Vela"
+              }
+            },
+            {
+              "value": "Warm mood blobs",
+              "label": {
+                "en": "Warm mood blobs",
+                "es": "Manchas cálidas"
+              }
+            },
+            {
+              "value": "Cold mood blobs",
+              "label": {
+                "en": "Cold mood blobs",
+                "es": "Manchas frías"
+              }
+            },
+            {
+              "value": "Blue mood blobs",
+              "label": {
+                "en": "Blue mood blobs",
+                "es": "Manchas azules"
+              }
+            },
+            {
+              "value": "Sea waves",
+              "label": {
+                "en": "Sea waves",
+                "es": "Olas del mar"
+              }
+            },
+            {
+              "value": "Plasma",
+              "label": {
+                "en": "Plasma",
+                "es": "Plasma"
+              }
+            },
+            {
+              "value": "Breath",
+              "label": {
+                "en": "Breath",
+                "es": "Respiración"
+              }
+            },
+            {
+              "value": "Sparks",
+              "label": {
+                "en": "Sparks",
+                "es": "Chispas"
+              }
+            },
+            {
+              "value": "Knight rider",
+              "label": {
+                "en": "Knight rider",
+                "es": "Knight rider"
+              }
+            }
+          ],
+          "default": "Rainbow swirl"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "effect",
+          "effect": {
+            "name": "{{effect}}"
+          },
+          "priority": 50,
+          "origin": "Demote"
+        }
+      }
+    },
+    {
+      "id": "brightness",
+      "label": {
+        "en": "Brightness (Hyperion)",
+        "es": "Brillo (Hyperion)"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 0,
+          "max": 100,
+          "default": 60
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/json-rpc",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "token {{token}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "command": "adjustment",
+          "adjustment": {
+            "brightness": "{{level}}"
+          }
+        }
+      }
+    },
+    {
+      "id": "tv_on",
+      "label": {
+        "en": "TV and LEDs on",
+        "es": "Encender TV y LED"
+      },
+      "icon": "wakeup",
+      "steps": [
+        {
+          "key": "wakeup",
+          "delayMs": 1000
+        },
+        {
+          "button": "on"
+        },
+        {
+          "button": "video"
+        }
+      ]
+    },
+    {
+      "id": "tv_off",
+      "label": {
+        "en": "TV and LEDs off",
+        "es": "Apagar TV y LED"
+      },
+      "icon": "sleep",
+      "steps": [
+        {
+          "button": "off"
+        },
+        {
+          "key": "sleep"
+        }
+      ]
+    }
+  ]
+}
