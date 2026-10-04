@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "com.example.hold",
+  "version": "0.1.0",
+  "name": {
+    "en": "Hold test"
+  },
+  "description": {
+    "en": "A macro that holds a key."
+  },
+  "vendor": "Test",
+  "author": "Test",
+  "icon": "power",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Host"
+      }
+    }
+  ],
+  "buttons": [
+    {
+      "id": "ping",
+      "label": {
+        "en": "Ping"
+      },
+      "icon": "power",
+      "request": {
+        "method": "GET",
+        "url": "http://{{host}}/x"
+      }
+    },
+    {
+      "id": "options",
+      "label": {
+        "en": "Options"
+      },
+      "icon": "menu",
+      "steps": [
+        {
+          "key": "dpad_center",
+          "hold": 2000
+        }
+      ]
+    }
+  ]
+}

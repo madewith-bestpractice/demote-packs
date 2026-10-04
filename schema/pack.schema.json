@@ -137,11 +137,12 @@
       "properties": {
         "button": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$", "description": "The id of another button in this pack. It can't be a macro." },
         "key": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$", "description": "A TV key name from schema/keys.json, sent to whichever TV the remote is on." },
-        "delayMs": { "type": "integer", "minimum": 0, "maximum": 5000, "default": 400, "description": "The pause after this step (and between its repeats), in milliseconds." },
-        "repeat": { "type": "integer", "minimum": 1, "maximum": 10, "default": 1, "description": "How many times the step runs before the macro moves on." }
+        "delayMs": { "type": "integer", "minimum": 0, "maximum": 15000, "default": 400, "description": "The pause after this step (and between its repeats), in milliseconds." },
+        "repeat": { "type": "integer", "minimum": 1, "maximum": 10, "default": 1, "description": "How many times the step runs before the macro moves on." },
+        "hold": { "type": "integer", "minimum": 250, "maximum": 5000, "description": "Key steps only: hold the key down this long, in milliseconds, like a long press on the TV's own remote. Where a TV can't hold a key, Demote repeats it for that long instead." }
       },
       "oneOf": [
-        { "required": ["button"], "not": { "required": ["key"] } },
+        { "required": ["button"], "not": { "anyOf": [{ "required": ["key"] }, { "required": ["hold"] }] } },
         { "required": ["key"], "not": { "required": ["button"] } }
       ]
     },

@@ -177,6 +177,13 @@ Use `wakeup` and `sleep` rather than `power` in macros. On most TVs `power` is
 a toggle, so a macro that starts with it turns off a TV that's already on.
 `wakeup` turns a TV on without turning it off, and `sleep` turns it off.
 
+To press and hold a key, the way you would on the TV's own remote (hold OK
+for options, hold Power for the power menu), give a key step a `hold` in
+milliseconds, from 250 to 5000: `{ "key": "dpad_center", "hold": 2000 }`.
+Where a TV can't hold a key, Demote repeats it for that long instead. A macro
+with a single held key is a fine button on its own. Long press on a button
+in Demote is kept for customizing it, so a hold is always a step like this.
+
 **Steps**
 - `{"button": "<id>"}` runs another button of the same pack, with that
   button's own settings.
@@ -188,7 +195,7 @@ a toggle, so a macro that starts with it turns off a TV that's already on.
   `back`, `dpad_up`, `dpad_down`, `dpad_left`, `dpad_right`, `dpad_center`
   (OK), `channel_up`, `channel_down`. `power` and `mute` are toggles, like
   the remote's own buttons.
-- Optional `delayMs`, 0 to 5000, default 400: the pause after the step, and
+- Optional `delayMs`, 0 to 15000, default 400: the pause after the step, and
   between its repeats. The last step's pause is skipped.
 - Optional `repeat`, 1 to 10, default 1: how many times the step runs, such
   as `{"key": "volume_down", "repeat": 5}`.

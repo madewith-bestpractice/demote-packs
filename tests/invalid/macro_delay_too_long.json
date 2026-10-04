@@ -82,7 +82,7 @@
    "steps": [
     {
      "key": "pause",
-     "delayMs": 5001
+     "delayMs": 20000
     },
     {
      "key": "play"
