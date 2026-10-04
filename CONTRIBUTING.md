@@ -190,7 +190,7 @@ in Demote is kept for customizing it, so a hold is always a step like this.
 - `{"key": "<name>"}` sends a standard TV key to whichever TV the remote is
   on, exactly as that key's button on the remote does. The TV doesn't need
   to be in Home Assistant. Names come from
-  [`schema/keys.json`](schema/keys.json): `power`, `volume_up`,
+  [`schema/keys.json`](schema/keys.json): `wakeup`, `sleep`, `power`, `volume_up`,
   `volume_down`, `mute`, `play`, `pause`, `play_pause`, `stop`, `home`,
   `back`, `dpad_up`, `dpad_down`, `dpad_left`, `dpad_right`, `dpad_center`
   (OK), `channel_up`, `channel_down`. `power` and `mute` are toggles, like

@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, ValidationError, validators
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = json.loads((ROOT / "schema" / "pack.schema.json").read_text())
@@ -48,6 +48,17 @@ HA_NUMERIC = {
     "position", "tilt_position", "volume_level", "num_repeats", "delay_secs",
     "hold_secs",
 }
+
+
+def _strict_pattern(validator, patrn, instance, schema):
+    # Python's re.search lets "$" match before a final newline, so
+    # "input_tv\n" passed as an id. A pattern's "$" means the very end
+    # here, as it does in the app (and in ECMAScript).
+    if validator.is_type(instance, "string") and not re.search(re.sub(r"\$$", r"\\Z", patrn), instance):
+        yield ValidationError(f"{instance!r} does not match {patrn!r}")
+
+
+PackValidator = validators.extend(Draft202012Validator, {"pattern": _strict_pattern})
 WHOLE_SLOT = re.compile(r"^\{\{\s*([a-z][a-z0-9_]{0,31})\s*\}\}$")  # file name must match id; ids unique across both
 
 
@@ -64,6 +75,12 @@ def _strings(value):
             yield from _strings(v)
 
 
+LOCAL_NETWORKS = [ipaddress.ip_network(n) for n in (
+    "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "169.254.0.0/16",
+    "127.0.0.0/8", "::1/128", "fc00::/7", "fe80::/10",
+)]
+
+
 def _is_local_host(host: str) -> bool:
     host = host.strip("[]").lower()
     if host.endswith(".local") or host == "localhost":
@@ -72,7 +89,12 @@ def _is_local_host(host: str) -> bool:
         ip = ipaddress.ip_address(host)
     except ValueError:
         return False
-    return ip.is_private or ip.is_link_local or ip.is_loopback
+    if isinstance(ip, ipaddress.IPv6Address) and ip.ipv4_mapped:
+        ip = ip.ipv4_mapped
+    # Narrower than ip.is_private, which also counts 6to4, NAT64,
+    # benchmarking and documentation ranges, several of which reach the
+    # internet. The app uses this same list.
+    return any(ip in net for net in LOCAL_NETWORKS)
 
 
 def check_pack(path: Path) -> list[str]:
@@ -85,7 +107,8 @@ def check_pack(path: Path) -> list[str]:
     except json.JSONDecodeError as e:
         return [f"not valid JSON: {e}"]
 
-    for i, b in enumerate(pack.get("buttons", []) if isinstance(pack, dict) else []):
+    buttons = pack.get("buttons") if isinstance(pack, dict) else None
+    for i, b in enumerate(buttons if isinstance(buttons, list) else []):
         if not isinstance(b, dict):
             continue
         if sum(k in b for k in ("request", "service", "steps")) != 1:
@@ -100,7 +123,7 @@ def check_pack(path: Path) -> list[str]:
     if errors:
         return errors
 
-    for e in sorted(Draft202012Validator(SCHEMA).iter_errors(pack), key=lambda e: list(e.path)):
+    for e in sorted(PackValidator(SCHEMA).iter_errors(pack), key=lambda e: list(e.path)):
         where = "/".join(str(p) for p in e.path) or "(root)"
         errors.append(f"{where}: {e.message}")
     if errors:
