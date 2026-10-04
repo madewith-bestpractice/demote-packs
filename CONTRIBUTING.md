@@ -144,6 +144,13 @@ We may ask for changes, or decline packs that duplicate a better one or
 control something unsafe to trigger by accident, such as door locks or
 alarms.
 
+## Requesting a pack
+
+Can't build it yourself? [Request a pack](https://github.com/madewith-bestpractice/demote-packs/issues/new?template=request-a-pack.yml)
+with the device or service, its models, a link to its local API docs if you
+know one, the buttons you want, and whether you can test on real hardware.
+Requests get the `pack request` label.
+
 ## Updating a pack
 
 Bump `version`. Don't remove or rename a button `id` that people may have

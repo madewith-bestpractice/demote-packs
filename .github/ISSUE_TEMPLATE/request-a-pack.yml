@@ -1,0 +1,48 @@
+name: Request a pack
+description: Ask for a button pack for a device or service Demote doesn't control yet.
+title: "Pack request: "
+labels: ["pack request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Packs can only send simple requests to a device or service, so the most useful thing you can give us is a link to its local API docs. Please don't include IP addresses, passwords or keys.
+  - type: input
+    id: device
+    attributes:
+      label: Device or service
+      description: The brand and product, such as "Denon AVR" or "Philips WiZ".
+    validations:
+      required: true
+  - type: input
+    id: models
+    attributes:
+      label: Model(s)
+      description: The models you have or want covered, if you know them.
+    validations:
+      required: false
+  - type: input
+    id: docs
+    attributes:
+      label: Link to its local API docs
+      description: The vendor's or project's documentation for its local network API, if you know it.
+      placeholder: https://
+    validations:
+      required: false
+  - type: textarea
+    id: buttons
+    attributes:
+      label: Buttons wanted
+      description: "One per line, such as \"Power on\", \"Volume up\" or \"Input: Game\"."
+    validations:
+      required: false
+  - type: dropdown
+    id: can_test
+    attributes:
+      label: Can you test it on real hardware?
+      description: Every pack is tested on real hardware before it's published.
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: false
