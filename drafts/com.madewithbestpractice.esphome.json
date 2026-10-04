@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.esphome",
+  "version": "0.1.0",
+  "name": {
+    "en": "ESPHome",
+    "es": "ESPHome"
+  },
+  "description": {
+    "en": "Switches, lights, fans and buttons on ESPHome devices with the web server component.",
+    "es": "Interruptores, luces, ventiladores y botones en equipos ESPHome con el servidor web."
+  },
+  "vendor": "ESPHome",
+  "author": "Made with Best Practice",
+  "icon": "switch",
+  "accent": "blue",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Device address",
+        "es": "Dirección del equipo"
+      },
+      "placeholder": "192.168.1.85"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Web server port",
+        "es": "Puerto del servidor web"
+      },
+      "default": 80
+    },
+    {
+      "id": "login",
+      "scope": "pack",
+      "type": "basic_auth",
+      "label": {
+        "en": "Web server sign-in, if auth is set",
+        "es": "Inicio de sesión del servidor web, si tiene auth"
+      },
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "switch_toggle",
+      "label": {
+        "en": "Switch toggle",
+        "es": "Alternar interruptor"
+      },
+      "icon": "switch",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Relay"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/switch/{{entity}}/toggle",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "switch_on",
+      "label": {
+        "en": "Switch on",
+        "es": "Encender interruptor"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Relay"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/switch/{{entity}}/turn_on",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "switch_off",
+      "label": {
+        "en": "Switch off",
+        "es": "Apagar interruptor"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Relay"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/switch/{{entity}}/turn_off",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "light_toggle",
+      "label": {
+        "en": "Light toggle",
+        "es": "Alternar luz"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Desk Lamp"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/light/{{entity}}/toggle",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "light_on",
+      "label": {
+        "en": "Light brightness",
+        "es": "Brillo de la luz"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Desk Lamp"
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (1–255)",
+            "es": "Brillo (1–255)"
+          },
+          "min": 1,
+          "max": 255,
+          "default": 128
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/light/{{entity}}/turn_on?brightness={{level}}",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "light_off",
+      "label": {
+        "en": "Light off",
+        "es": "Apagar luz"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Desk Lamp"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/light/{{entity}}/turn_off",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "fan_toggle",
+      "label": {
+        "en": "Fan toggle",
+        "es": "Alternar ventilador"
+      },
+      "icon": "fan",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Fan"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/fan/{{entity}}/toggle",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "press",
+      "label": {
+        "en": "Press button",
+        "es": "Presionar botón"
+      },
+      "icon": "dpad_center",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Entity name, as on the device's web page",
+            "es": "Nombre de la entidad, como en la página web del equipo"
+          },
+          "placeholder": "Restart"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/button/{{entity}}/press",
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    }
+  ]
+}
