@@ -1,0 +1,341 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.game-night",
+  "version": "0.1.0",
+  "name": {
+    "en": "Game night",
+    "es": "Noche de juegos"
+  },
+  "description": {
+    "en": "Set game lighting, the receiver's game input and sound mode, and the fan with Home Assistant.",
+    "es": "Pon luces de juego, la entrada y el modo de sonido de juego del receptor y el ventilador con Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "scene",
+  "accent": "pink",
+  "engine": "home_assistant",
+  "network": "local",
+  "buttons": [
+    {
+      "id": "game_on",
+      "label": {
+        "en": "Game on",
+        "es": "A jugar"
+      },
+      "icon": "scene",
+      "steps": [
+        { "button": "game_lights" },
+        { "button": "tv_light_on" },
+        { "button": "game_input", "delayMs": 1000 },
+        { "button": "game_sound" }
+      ]
+    },
+    {
+      "id": "game_lights",
+      "label": {
+        "en": "Game lights",
+        "es": "Luces de juego"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        },
+        {
+          "id": "color",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Colour",
+            "es": "Color"
+          },
+          "options": [
+            {
+              "value": "purple",
+              "label": {
+                "en": "Purple",
+                "es": "Morado"
+              }
+            },
+            {
+              "value": "blue",
+              "label": {
+                "en": "Blue",
+                "es": "Azul"
+              }
+            },
+            {
+              "value": "red",
+              "label": {
+                "en": "Red",
+                "es": "Rojo"
+              }
+            },
+            {
+              "value": "lime",
+              "label": {
+                "en": "Green",
+                "es": "Verde"
+              }
+            },
+            {
+              "value": "cyan",
+              "label": {
+                "en": "Cyan",
+                "es": "Cian"
+              }
+            },
+            {
+              "value": "orange",
+              "label": {
+                "en": "Orange",
+                "es": "Naranja"
+              }
+            },
+            {
+              "value": "deeppink",
+              "label": {
+                "en": "Pink",
+                "es": "Rosa"
+              }
+            }
+          ],
+          "default": "purple"
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 60
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "color_name": "{{color}}",
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "tv_light_on",
+      "label": {
+        "en": "Behind-TV light on",
+        "es": "Encender luz tras la TV"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Light behind the TV, if any",
+            "es": "Luz detrás de la TV, si tienes"
+          },
+          "domain": "light",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "game_input",
+      "label": {
+        "en": "Game input",
+        "es": "Entrada de juego"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Receiver, if any",
+            "es": "Receptor, si tienes"
+          },
+          "domain": "media_player",
+          "optional": true
+        },
+        {
+          "id": "source",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Input name",
+            "es": "Nombre de la entrada"
+          },
+          "placeholder": "Game",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "media_player.select_source",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "source": "{{source}}"
+        }
+      }
+    },
+    {
+      "id": "game_sound",
+      "label": {
+        "en": "Game sound mode",
+        "es": "Modo de sonido de juego"
+      },
+      "icon": "speaker",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Receiver, if any",
+            "es": "Receptor, si tienes"
+          },
+          "domain": "media_player",
+          "optional": true
+        },
+        {
+          "id": "mode",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Sound mode name",
+            "es": "Nombre del modo de sonido"
+          },
+          "placeholder": "GAME",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "media_player.select_sound_mode",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "sound_mode": "{{mode}}"
+        }
+      }
+    },
+    {
+      "id": "lights_normal",
+      "label": {
+        "en": "Lights normal",
+        "es": "Luces normales"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 80
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "color_temp_kelvin": 3000,
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "fan_on",
+      "label": {
+        "en": "Fan on",
+        "es": "Encender ventilador"
+      },
+      "icon": "fan",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Fan",
+            "es": "Ventilador"
+          },
+          "domain": "fan"
+        }
+      ],
+      "service": {
+        "action": "fan.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "fan_off",
+      "label": {
+        "en": "Fan off",
+        "es": "Apagar ventilador"
+      },
+      "icon": "fan",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Fan",
+            "es": "Ventilador"
+          },
+          "domain": "fan"
+        }
+      ],
+      "service": {
+        "action": "fan.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    }
+  ]
+}

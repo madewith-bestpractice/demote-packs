@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.projector-night",
+  "version": "0.1.0",
+  "name": {
+    "en": "Projector night",
+    "es": "Noche de proyector"
+  },
+  "description": {
+    "en": "Lower the screen, turn on the projector, dim the room and set the receiver with Home Assistant.",
+    "es": "Baja la pantalla, enciende el proyector, oscurece la sala y prepara el receptor con Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "scene",
+  "accent": "teal",
+  "engine": "home_assistant",
+  "network": "local",
+  "buttons": [
+    {
+      "id": "showtime",
+      "label": {
+        "en": "Showtime",
+        "es": "Empieza la función"
+      },
+      "icon": "scene",
+      "steps": [
+        { "button": "screen_down" },
+        { "button": "projector_on" },
+        { "button": "projector_on_ir" },
+        { "button": "lights_off" },
+        { "button": "receiver_input" }
+      ]
+    },
+    {
+      "id": "screen_down",
+      "label": {
+        "en": "Screen down",
+        "es": "Bajar pantalla"
+      },
+      "icon": "blinds",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Projector screen, if motorized",
+            "es": "Pantalla del proyector, si es motorizada"
+          },
+          "domain": "cover",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "cover.close_cover",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "screen_up",
+      "label": {
+        "en": "Screen up",
+        "es": "Subir pantalla"
+      },
+      "icon": "blinds",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Projector screen, if motorized",
+            "es": "Pantalla del proyector, si es motorizada"
+          },
+          "domain": "cover",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "cover.open_cover",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "projector_on",
+      "label": {
+        "en": "Projector on",
+        "es": "Encender proyector"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Projector switch, if any",
+            "es": "Interruptor del proyector, si tienes"
+          },
+          "domain": "switch",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "switch.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "projector_on_ir",
+      "label": {
+        "en": "Projector on (IR)",
+        "es": "Encender proyector (IR)"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "hub",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "IR hub, if the projector uses one",
+            "es": "Emisor IR, si el proyector usa uno"
+          },
+          "domain": "remote",
+          "optional": true
+        },
+        {
+          "id": "device",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Device name",
+            "es": "Nombre del equipo"
+          },
+          "placeholder": "projector",
+          "optional": true
+        },
+        {
+          "id": "command",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Command name",
+            "es": "Nombre del comando"
+          },
+          "placeholder": "power",
+          "default": "power"
+        }
+      ],
+      "service": {
+        "action": "remote.send_command",
+        "target": {
+          "entity_id": "{{hub}}"
+        },
+        "data": {
+          "device": "{{device}}",
+          "command": "{{command}}"
+        }
+      }
+    },
+    {
+      "id": "lights_off",
+      "label": {
+        "en": "Lights off",
+        "es": "Apagar luces"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "lights_up",
+      "label": {
+        "en": "Lights up",
+        "es": "Luces al máximo"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": 100
+        }
+      }
+    },
+    {
+      "id": "receiver_input",
+      "label": {
+        "en": "Receiver input",
+        "es": "Entrada del receptor"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Receiver, if any",
+            "es": "Receptor, si tienes"
+          },
+          "domain": "media_player",
+          "optional": true
+        },
+        {
+          "id": "source",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Input name",
+            "es": "Nombre de la entrada"
+          },
+          "placeholder": "TV",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "media_player.select_source",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "source": "{{source}}"
+        }
+      }
+    }
+  ]
+}

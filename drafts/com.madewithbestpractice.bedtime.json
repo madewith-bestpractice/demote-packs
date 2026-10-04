@@ -1,0 +1,268 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.bedtime",
+  "version": "0.1.0",
+  "name": {
+    "en": "Bedtime",
+    "es": "Hora de dormir"
+  },
+  "description": {
+    "en": "Turn off the TV and lights, leave the hall light low, and set the fan and thermostat with Home Assistant.",
+    "es": "Apaga la TV y las luces, deja el pasillo tenue y ajusta ventilador y termostato con Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "sleep",
+  "accent": "blue",
+  "engine": "home_assistant",
+  "network": "local",
+  "buttons": [
+    {
+      "id": "bedtime",
+      "label": {
+        "en": "Bedtime",
+        "es": "A dormir"
+      },
+      "icon": "sleep",
+      "steps": [
+        { "button": "tv_off" },
+        { "button": "lights_off" },
+        { "button": "hall_light" },
+        { "button": "fan_low" },
+        { "button": "thermostat" }
+      ]
+    },
+    {
+      "id": "wind_down",
+      "label": {
+        "en": "Wind down",
+        "es": "Relajarse"
+      },
+      "icon": "brightness_down",
+      "steps": [
+        { "button": "dim_lights" },
+        { "key": "volume_down", "repeat": 5, "delayMs": 200 }
+      ]
+    },
+    {
+      "id": "hall_light",
+      "label": {
+        "en": "Hall light",
+        "es": "Luz del pasillo"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Hall light, if any",
+            "es": "Luz del pasillo, si tienes"
+          },
+          "domain": "light",
+          "optional": true
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 10
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "tv_off",
+      "label": {
+        "en": "TV off",
+        "es": "Apagar TV"
+      },
+      "icon": "power",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "TV in Home Assistant, if any",
+            "es": "TV en Home Assistant, si está"
+          },
+          "domain": "media_player",
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "media_player.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "lights_off",
+      "label": {
+        "en": "Lights off",
+        "es": "Apagar luces"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights to turn off (a light or group)",
+            "es": "Luces que apagar (una luz o un grupo)"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_off",
+        "target": {
+          "entity_id": "{{entity}}"
+        }
+      }
+    },
+    {
+      "id": "dim_lights",
+      "label": {
+        "en": "Dim lights",
+        "es": "Atenuar luces"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        },
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 30
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "fan_low",
+      "label": {
+        "en": "Fan low",
+        "es": "Ventilador bajo"
+      },
+      "icon": "fan",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Fan, if any",
+            "es": "Ventilador, si tienes"
+          },
+          "domain": "fan",
+          "optional": true
+        },
+        {
+          "id": "speed",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Speed (%)",
+            "es": "Velocidad (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 33
+        }
+      ],
+      "service": {
+        "action": "fan.set_percentage",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "percentage": "{{speed}}"
+        }
+      }
+    },
+    {
+      "id": "thermostat",
+      "label": {
+        "en": "Set thermostat",
+        "es": "Ajustar termostato"
+      },
+      "icon": "settings",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Thermostat, if any",
+            "es": "Termostato, si tienes"
+          },
+          "domain": "climate",
+          "optional": true
+        },
+        {
+          "id": "temperature",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Temperature (in Home Assistant's units)",
+            "es": "Temperatura (en las unidades de Home Assistant)"
+          },
+          "min": 5,
+          "max": 95,
+          "optional": true
+        }
+      ],
+      "service": {
+        "action": "climate.set_temperature",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "temperature": "{{temperature}}"
+        }
+      }
+    }
+  ]
+}

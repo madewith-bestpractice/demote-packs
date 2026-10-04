@@ -1,14 +1,14 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.movie-night",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": {
     "en": "Movie night",
     "es": "Noche de película"
   },
   "description": {
-    "en": "Dim the lights, close the blinds and set the receiver with your Home Assistant devices.",
-    "es": "Baja las luces, cierra las persianas y prepara el receptor con tus equipos de Home Assistant."
+    "en": "Dim the lights, close the blinds and set the receiver, one at a time or in one tap.",
+    "es": "Baja las luces, cierra las persianas y prepara el receptor, de uno en uno o con un toque."
   },
   "vendor": "Home Assistant",
   "author": "Made with Best Practice",
@@ -17,6 +17,56 @@
   "engine": "home_assistant",
   "network": "local",
   "buttons": [
+    {
+      "id": "start_movie",
+      "label": {
+        "en": "Start movie",
+        "es": "Empezar película"
+      },
+      "icon": "scene",
+      "steps": [
+        { "button": "dim_lights" },
+        { "button": "close_blinds" },
+        { "button": "tv_light_on" },
+        { "button": "receiver_input" }
+      ]
+    },
+    {
+      "id": "intermission",
+      "label": {
+        "en": "Intermission",
+        "es": "Intermedio"
+      },
+      "icon": "pause",
+      "steps": [
+        { "key": "pause" },
+        { "button": "lights_half" }
+      ]
+    },
+    {
+      "id": "resume",
+      "label": {
+        "en": "Resume",
+        "es": "Reanudar"
+      },
+      "icon": "play",
+      "steps": [
+        { "button": "dim_lights", "delayMs": 1000 },
+        { "key": "play" }
+      ]
+    },
+    {
+      "id": "end_movie",
+      "label": {
+        "en": "End movie",
+        "es": "Terminar película"
+      },
+      "icon": "stop",
+      "steps": [
+        { "button": "lights_up" },
+        { "button": "open_blinds" }
+      ]
+    },
     {
       "id": "dim_lights",
       "label": {
@@ -88,6 +138,35 @@
       }
     },
     {
+      "id": "lights_half",
+      "label": {
+        "en": "Lights to 50%",
+        "es": "Luces al 50 %"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "entity",
+          "scope": "button",
+          "type": "ha_entity",
+          "label": {
+            "en": "Lights",
+            "es": "Luces"
+          },
+          "domain": "light"
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{entity}}"
+        },
+        "data": {
+          "brightness_pct": 50
+        }
+      }
+    },
+    {
       "id": "close_blinds",
       "label": {
         "en": "Close blinds",
@@ -100,10 +179,11 @@
           "scope": "button",
           "type": "ha_entity",
           "label": {
-            "en": "Blinds",
-            "es": "Persianas"
+            "en": "Blinds, if any",
+            "es": "Persianas, si tienes"
           },
-          "domain": "cover"
+          "domain": "cover",
+          "optional": true
         }
       ],
       "service": {
@@ -126,10 +206,11 @@
           "scope": "button",
           "type": "ha_entity",
           "label": {
-            "en": "Blinds",
-            "es": "Persianas"
+            "en": "Blinds, if any",
+            "es": "Persianas, si tienes"
           },
-          "domain": "cover"
+          "domain": "cover",
+          "optional": true
         }
       ],
       "service": {
@@ -152,10 +233,11 @@
           "scope": "button",
           "type": "ha_entity",
           "label": {
-            "en": "Light behind the TV",
-            "es": "Luz detrás de la TV"
+            "en": "Light behind the TV, if any",
+            "es": "Luz detrás de la TV, si tienes"
           },
-          "domain": "light"
+          "domain": "light",
+          "optional": true
         }
       ],
       "service": {
@@ -178,10 +260,11 @@
           "scope": "button",
           "type": "ha_entity",
           "label": {
-            "en": "Light behind the TV",
-            "es": "Luz detrás de la TV"
+            "en": "Light behind the TV, if any",
+            "es": "Luz detrás de la TV, si tienes"
           },
-          "domain": "light"
+          "domain": "light",
+          "optional": true
         }
       ],
       "service": {
@@ -204,10 +287,11 @@
           "scope": "button",
           "type": "ha_entity",
           "label": {
-            "en": "Receiver",
-            "es": "Receptor"
+            "en": "Receiver, if any",
+            "es": "Receptor, si tienes"
           },
-          "domain": "media_player"
+          "domain": "media_player",
+          "optional": true
         },
         {
           "id": "source",
@@ -217,7 +301,8 @@
             "en": "Input name",
             "es": "Nombre de la entrada"
           },
-          "placeholder": "TV"
+          "placeholder": "TV",
+          "optional": true
         }
       ],
       "service": {
