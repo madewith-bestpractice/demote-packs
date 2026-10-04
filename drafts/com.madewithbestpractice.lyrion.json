@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.lyrion",
+  "version": "0.1.0",
+  "name": {
+    "en": "Lyrion Music Server",
+    "es": "Lyrion Music Server"
+  },
+  "description": {
+    "en": "Play, skip, volume, power and presets for one Squeezebox or squeezelite player on Lyrion.",
+    "es": "Reproducción, volumen, encendido y preajustes para un reproductor Squeezebox o squeezelite en Lyrion."
+  },
+  "vendor": "Lyrion Music Server",
+  "author": "Made with Best Practice",
+  "icon": "speaker",
+  "accent": "green",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Lyrion server address",
+        "es": "Dirección del servidor Lyrion"
+      },
+      "placeholder": "192.168.1.20"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Web port",
+        "es": "Puerto web"
+      },
+      "default": 9000
+    },
+    {
+      "id": "player",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Player MAC address",
+        "es": "Dirección MAC del reproductor"
+      },
+      "placeholder": "00:04:20:12:34:56"
+    },
+    {
+      "id": "login",
+      "scope": "pack",
+      "type": "basic_auth",
+      "label": {
+        "en": "Server sign-in, if password protection is on",
+        "es": "Inicio de sesión, si la protección con contraseña está activa"
+      },
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "play_pause",
+      "label": {
+        "en": "Play/pause",
+        "es": "Reproducir/pausar"
+      },
+      "icon": "play_pause",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "pause"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "next",
+      "label": {
+        "en": "Next",
+        "es": "Siguiente"
+      },
+      "icon": "next",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "playlist",
+              "index",
+              "+1"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "previous",
+      "label": {
+        "en": "Previous",
+        "es": "Anterior"
+      },
+      "icon": "previous",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "playlist",
+              "index",
+              "-1"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "mixer",
+              "volume",
+              "+5"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "mixer",
+              "volume",
+              "-5"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "mixer",
+              "muting",
+              "toggle"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "power_on",
+      "label": {
+        "en": "Power on",
+        "es": "Encender"
+      },
+      "icon": "wakeup",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "power",
+              "1"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "power_off",
+      "label": {
+        "en": "Power off",
+        "es": "Apagar"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "power",
+              "0"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "preset",
+      "label": {
+        "en": "Preset",
+        "es": "Preajuste"
+      },
+      "icon": "scene",
+      "variables": [
+        {
+          "id": "preset",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Preset",
+            "es": "Preajuste"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "en": "Preset 1",
+                "es": "Preajuste 1"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "en": "Preset 2",
+                "es": "Preajuste 2"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "en": "Preset 3",
+                "es": "Preajuste 3"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "en": "Preset 4",
+                "es": "Preajuste 4"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "en": "Preset 5",
+                "es": "Preajuste 5"
+              }
+            },
+            {
+              "value": "6",
+              "label": {
+                "en": "Preset 6",
+                "es": "Preajuste 6"
+              }
+            },
+            {
+              "value": "7",
+              "label": {
+                "en": "Preset 7",
+                "es": "Preajuste 7"
+              }
+            },
+            {
+              "value": "8",
+              "label": {
+                "en": "Preset 8",
+                "es": "Preajuste 8"
+              }
+            },
+            {
+              "value": "9",
+              "label": {
+                "en": "Preset 9",
+                "es": "Preajuste 9"
+              }
+            },
+            {
+              "value": "0",
+              "label": {
+                "en": "Preset 10",
+                "es": "Preajuste 10"
+              }
+            }
+          ],
+          "default": "1"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/jsonrpc.js",
+        "contentType": "application/json",
+        "body": {
+          "id": 1,
+          "method": "slim.request",
+          "params": [
+            "{{player}}",
+            [
+              "button",
+              "preset_{{preset}}.single"
+            ]
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    }
+  ]
+}
