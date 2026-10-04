@@ -1,0 +1,13 @@
+{
+  "comment": "Icon names a pack may use. They map to glyphs inside the Demote app; packs never ship images. Names added here must be added to the app's icon table in the same release.",
+  "icons": [
+    "audio_track", "back", "brightness_down", "brightness_up", "captions",
+    "channel_down", "channel_up", "dpad_center", "dpad_down", "dpad_left",
+    "dpad_right", "dpad_up", "forward", "guide", "home", "info", "input",
+    "menu", "mute", "next", "page_down", "page_up", "pause", "play",
+    "play_pause", "power", "previous", "record", "rewind", "search",
+    "settings", "sleep", "stop", "volume_down", "volume_up", "wakeup",
+    "blinds", "fan", "grid", "lightbulb", "link", "plug", "receiver",
+    "scene", "script", "speaker", "switch"
+  ]
+}

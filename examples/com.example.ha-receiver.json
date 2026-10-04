@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "com.example.ha-receiver",
+  "version": "0.1.0",
+  "name": { "en": "Receiver via Home Assistant", "es": "Receptor con Home Assistant" },
+  "description": {
+    "en": "Inputs and volume for any receiver or soundbar Home Assistant controls.",
+    "es": "Entradas y volumen para cualquier receptor o barra de sonido en Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Example",
+  "icon": "speaker",
+  "engine": "home_assistant",
+  "network": "local",
+  "variables": [
+    {
+      "id": "receiver",
+      "scope": "pack",
+      "type": "ha_entity",
+      "domain": "media_player",
+      "label": { "en": "Receiver", "es": "Receptor" }
+    }
+  ],
+  "buttons": [
+    {
+      "id": "source",
+      "label": { "en": "Input", "es": "Entrada" },
+      "icon": "input",
+      "variables": [
+        { "id": "name", "scope": "button", "type": "text", "label": { "en": "Input name", "es": "Nombre de la entrada" } }
+      ],
+      "service": {
+        "action": "media_player.select_source",
+        "target": { "entity_id": "{{receiver}}" },
+        "data": { "source": "{{name}}" }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": { "en": "Volume up", "es": "Subir volumen" },
+      "icon": "volume_up",
+      "repeat": true,
+      "service": { "action": "media_player.volume_up", "target": { "entity_id": "{{receiver}}" } }
+    }
+  ]
+}
