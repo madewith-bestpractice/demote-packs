@@ -173,6 +173,10 @@ has `steps` instead of a `request` or `service`:
   ] }
 ```
 
+Use `wakeup` and `sleep` rather than `power` in macros. On most TVs `power` is
+a toggle, so a macro that starts with it turns off a TV that's already on.
+`wakeup` turns a TV on without turning it off, and `sleep` turns it off.
+
 **Steps**
 - `{"button": "<id>"}` runs another button of the same pack, with that
   button's own settings.
