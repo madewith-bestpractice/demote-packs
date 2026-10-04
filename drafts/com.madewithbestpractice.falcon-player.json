@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.falcon-player",
+  "version": "0.1.0",
+  "name": {
+    "en": "Falcon Player",
+    "es": "Falcon Player"
+  },
+  "description": {
+    "en": "Start, stop and skip your light show playlists and set the volume on Falcon Player (FPP).",
+    "es": "Inicia, detén y salta listas de tu show de luces y ajusta el volumen en Falcon Player (FPP)."
+  },
+  "vendor": "Falcon Player (FPP)",
+  "author": "Made with Best Practice",
+  "icon": "play",
+  "accent": "red",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "FPP address",
+        "es": "Dirección de FPP"
+      },
+      "placeholder": "192.168.1.100"
+    },
+    {
+      "id": "login",
+      "scope": "pack",
+      "type": "basic_auth",
+      "label": {
+        "en": "UI password sign-in, if set (user admin)",
+        "es": "Inicio de sesión de la interfaz, si tiene contraseña (usuario admin)"
+      },
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "start",
+      "label": {
+        "en": "Start show",
+        "es": "Iniciar espectáculo"
+      },
+      "icon": "play",
+      "variables": [
+        {
+          "id": "playlist",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Playlist name",
+            "es": "Nombre de la lista"
+          },
+          "placeholder": "Christmas Show"
+        },
+        {
+          "id": "repeat",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "When it ends",
+            "es": "Al terminar"
+          },
+          "options": [
+            {
+              "value": "false",
+              "label": {
+                "en": "Stop",
+                "es": "Detener"
+              }
+            },
+            {
+              "value": "true",
+              "label": {
+                "en": "Repeat",
+                "es": "Repetir"
+              }
+            }
+          ],
+          "default": "false"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Start Playlist",
+          "args": [
+            "{{playlist}}",
+            "{{repeat}}"
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "stop_now",
+      "label": {
+        "en": "Stop now",
+        "es": "Detener ya"
+      },
+      "icon": "stop",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Stop Now",
+          "args": []
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "stop_gracefully",
+      "label": {
+        "en": "Stop gracefully",
+        "es": "Detener al terminar"
+      },
+      "icon": "stop",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Stop Gracefully",
+          "args": []
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "next",
+      "label": {
+        "en": "Next item",
+        "es": "Siguiente elemento"
+      },
+      "icon": "next",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Next Playlist Item",
+          "args": []
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "previous",
+      "label": {
+        "en": "Previous item",
+        "es": "Elemento anterior"
+      },
+      "icon": "previous",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Prev Playlist Item",
+          "args": []
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Volume Increase",
+          "args": [
+            "5"
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Volume Decrease",
+          "args": [
+            "5"
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    },
+    {
+      "id": "volume_set",
+      "label": {
+        "en": "Set volume",
+        "es": "Fijar volumen"
+      },
+      "icon": "speaker",
+      "variables": [
+        {
+          "id": "volume",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Volume (0–100)",
+            "es": "Volumen (0–100)"
+          },
+          "min": 0,
+          "max": 100,
+          "default": 70
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}/api/command",
+        "contentType": "application/json",
+        "body": {
+          "command": "Volume Set",
+          "args": [
+            "{{volume}}"
+          ]
+        },
+        "auth": {
+          "basic": "{{login}}"
+        }
+      }
+    }
+  ]
+}
