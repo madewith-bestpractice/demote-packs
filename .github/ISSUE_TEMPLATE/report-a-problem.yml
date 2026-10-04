@@ -1,0 +1,64 @@
+name: Report a problem with a pack
+description: A pack's button doesn't work, does the wrong thing, or looks wrong.
+title: "Problem: "
+labels: ["pack problem"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for letting us know. If you came from Demote, the pack and version are already filled in.
+        **Please don't include IP addresses, passwords, keys or tokens.** We never need them to look into a problem.
+  - type: input
+    id: pack
+    attributes:
+      label: Pack id
+      description: Shown on the pack's page in Demote, such as com.madewithbestpractice.wled.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Pack version
+    validations:
+      required: false
+  - type: input
+    id: button
+    attributes:
+      label: Which button
+      description: The button's name, or "all of them".
+    validations:
+      required: false
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong
+      options:
+        - Nothing happens when I press it
+        - It shows an error
+        - It does the wrong thing
+        - The label, icon or translation is wrong
+        - The pack is misleading or unsafe
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Your device and model
+      description: The hardware or service the pack controls, with firmware version if you know it.
+    validations:
+      required: false
+  - type: input
+    id: app
+    attributes:
+      label: Demote version and phone
+      description: Such as "Demote 2.1.0 on iPhone, iOS 26".
+    validations:
+      required: false
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened
+      description: What you expected, and what happened instead. Include the error Demote showed, if any.
+    validations:
+      required: true

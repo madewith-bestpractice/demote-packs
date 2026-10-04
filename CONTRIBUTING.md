@@ -144,6 +144,14 @@ We may ask for changes, or decline packs that duplicate a better one or
 control something unsafe to trigger by accident, such as door locks or
 alarms.
 
+## Reporting a problem with a pack
+
+If a pack's button doesn't work, does the wrong thing, or a label is wrong,
+open a [problem report](../../issues/new?template=report-a-problem.yml).
+Demote's "Report a problem" link on each pack page opens this form with the
+pack id and version already filled in. Never include IP addresses,
+passwords or keys.
+
 ## Requesting a pack
 
 Can't build it yourself? [Request a pack](https://github.com/madewith-bestpractice/demote-packs/issues/new?template=request-a-pack.yml)
