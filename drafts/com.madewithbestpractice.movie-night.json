@@ -16,6 +16,73 @@
   "accent": "purple",
   "engine": "home_assistant",
   "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "blinds",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Blinds, if any",
+        "es": "Persianas, si tienes"
+      },
+      "domain": "cover",
+      "optional": true
+    },
+    {
+      "id": "tv_light",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Light behind the TV, if any",
+        "es": "Luz detrás de la TV, si tienes"
+      },
+      "domain": "light",
+      "optional": true
+    },
+    {
+      "id": "receiver",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Receiver, if any",
+        "es": "Receptor, si tienes"
+      },
+      "domain": "media_player",
+      "optional": true
+    },
+    {
+      "id": "movie_input",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Receiver input for movies",
+        "es": "Entrada del receptor para películas"
+      },
+      "placeholder": "TV",
+      "optional": true
+    },
+    {
+      "id": "fan",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Fan, if any",
+        "es": "Ventilador, si tienes"
+      },
+      "domain": "fan",
+      "optional": true
+    }
+  ],
   "buttons": [
     {
       "id": "start_movie",
@@ -76,16 +143,6 @@
       "icon": "brightness_down",
       "variables": [
         {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        },
-        {
           "id": "level",
           "scope": "button",
           "type": "number",
@@ -101,7 +158,7 @@
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "brightness_pct": "{{level}}"
@@ -115,22 +172,10 @@
         "es": "Luces al máximo"
       },
       "icon": "brightness_up",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        }
-      ],
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "brightness_pct": 100
@@ -144,22 +189,10 @@
         "es": "Luces al 50 %"
       },
       "icon": "lightbulb",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        }
-      ],
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "brightness_pct": 50
@@ -173,23 +206,10 @@
         "es": "Cerrar persianas"
       },
       "icon": "blinds",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Blinds, if any",
-            "es": "Persianas, si tienes"
-          },
-          "domain": "cover",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "cover.close_cover",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{blinds}}"
         }
       }
     },
@@ -200,23 +220,10 @@
         "es": "Abrir persianas"
       },
       "icon": "blinds",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Blinds, if any",
-            "es": "Persianas, si tienes"
-          },
-          "domain": "cover",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "cover.open_cover",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{blinds}}"
         }
       }
     },
@@ -227,23 +234,10 @@
         "es": "Encender luz tras la TV"
       },
       "icon": "lightbulb",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Light behind the TV, if any",
-            "es": "Luz detrás de la TV, si tienes"
-          },
-          "domain": "light",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{tv_light}}"
         }
       }
     },
@@ -254,23 +248,10 @@
         "es": "Apagar luz tras la TV"
       },
       "icon": "lightbulb",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Light behind the TV, if any",
-            "es": "Luz detrás de la TV, si tienes"
-          },
-          "domain": "light",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "light.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{tv_light}}"
         }
       }
     },
@@ -281,37 +262,13 @@
         "es": "Entrada del receptor"
       },
       "icon": "input",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Receiver, if any",
-            "es": "Receptor, si tienes"
-          },
-          "domain": "media_player",
-          "optional": true
-        },
-        {
-          "id": "source",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Input name",
-            "es": "Nombre de la entrada"
-          },
-          "placeholder": "TV",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "media_player.select_source",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{receiver}}"
         },
         "data": {
-          "source": "{{source}}"
+          "source": "{{movie_input}}"
         }
       }
     },
@@ -322,22 +279,10 @@
         "es": "Apagar ventilador"
       },
       "icon": "fan",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Fan",
-            "es": "Ventilador"
-          },
-          "domain": "fan"
-        }
-      ],
       "service": {
         "action": "fan.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{fan}}"
         }
       }
     }

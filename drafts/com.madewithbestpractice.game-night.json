@@ -16,6 +16,73 @@
   "accent": "pink",
   "engine": "home_assistant",
   "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "tv_light",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Light behind the TV, if any",
+        "es": "Luz detrás de la TV, si tienes"
+      },
+      "domain": "light",
+      "optional": true
+    },
+    {
+      "id": "receiver",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Receiver, if any",
+        "es": "Receptor, si tienes"
+      },
+      "domain": "media_player",
+      "optional": true
+    },
+    {
+      "id": "game_input",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Receiver input for games",
+        "es": "Entrada del receptor para juegos"
+      },
+      "placeholder": "Game",
+      "optional": true
+    },
+    {
+      "id": "game_sound",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Sound mode for games",
+        "es": "Modo de sonido para juegos"
+      },
+      "placeholder": "GAME",
+      "optional": true
+    },
+    {
+      "id": "fan",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Fan, if any",
+        "es": "Ventilador, si tienes"
+      },
+      "domain": "fan",
+      "optional": true
+    }
+  ],
   "buttons": [
     {
       "id": "game_on",
@@ -39,16 +106,6 @@
       },
       "icon": "lightbulb",
       "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        },
         {
           "id": "color",
           "scope": "button",
@@ -126,7 +183,7 @@
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "color_name": "{{color}}",
@@ -141,23 +198,10 @@
         "es": "Encender luz tras la TV"
       },
       "icon": "lightbulb",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Light behind the TV, if any",
-            "es": "Luz detrás de la TV, si tienes"
-          },
-          "domain": "light",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{tv_light}}"
         }
       }
     },
@@ -168,37 +212,13 @@
         "es": "Entrada de juego"
       },
       "icon": "input",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Receiver, if any",
-            "es": "Receptor, si tienes"
-          },
-          "domain": "media_player",
-          "optional": true
-        },
-        {
-          "id": "source",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Input name",
-            "es": "Nombre de la entrada"
-          },
-          "placeholder": "Game",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "media_player.select_source",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{receiver}}"
         },
         "data": {
-          "source": "{{source}}"
+          "source": "{{game_input}}"
         }
       }
     },
@@ -209,37 +229,13 @@
         "es": "Modo de sonido de juego"
       },
       "icon": "speaker",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Receiver, if any",
-            "es": "Receptor, si tienes"
-          },
-          "domain": "media_player",
-          "optional": true
-        },
-        {
-          "id": "mode",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Sound mode name",
-            "es": "Nombre del modo de sonido"
-          },
-          "placeholder": "GAME",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "media_player.select_sound_mode",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{receiver}}"
         },
         "data": {
-          "sound_mode": "{{mode}}"
+          "sound_mode": "{{game_sound}}"
         }
       }
     },
@@ -251,16 +247,6 @@
       },
       "icon": "brightness_up",
       "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        },
         {
           "id": "level",
           "scope": "button",
@@ -277,7 +263,7 @@
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "color_temp_kelvin": 3000,
@@ -292,22 +278,10 @@
         "es": "Encender ventilador"
       },
       "icon": "fan",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Fan",
-            "es": "Ventilador"
-          },
-          "domain": "fan"
-        }
-      ],
       "service": {
         "action": "fan.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{fan}}"
         }
       }
     },
@@ -318,22 +292,10 @@
         "es": "Apagar ventilador"
       },
       "icon": "fan",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Fan",
-            "es": "Ventilador"
-          },
-          "domain": "fan"
-        }
-      ],
       "service": {
         "action": "fan.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{fan}}"
         }
       }
     }

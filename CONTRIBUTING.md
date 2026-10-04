@@ -188,11 +188,14 @@ customized copy shows the same values.
   optional variable in its `target`. A macro made only of skippable steps
   could do nothing.
 
-**Settings.** When the user places a macro, Demote asks once for the
-settings of every button its steps run. Give the buttons a macro uses clear
-setting labels, and make a device that some homes won't have `optional`.
-If that button has other settings, make them optional too or give them a
-`default`, so the user can leave the whole step empty.
+**Settings.** Make each device a pack setting (`"scope": "pack"`), such
+as the lights, the blinds or the receiver. Turning the pack on then asks
+for them once, and no button or macro asks again. Make a device that some
+homes won't have `optional`, so the steps that use it in `target` are
+skipped. Keep button settings for real per-button choices, such as a
+brightness or a colour. A macro asks for the button settings of the
+buttons its steps run, so give each of those a `default`, and the macro
+can be placed without asking.
 
 **Placing a macro**
 - **Placed as-is**, it stays linked to the pack. Pack updates flow in, and

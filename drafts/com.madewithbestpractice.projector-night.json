@@ -16,6 +16,95 @@
   "accent": "teal",
   "engine": "home_assistant",
   "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "screen",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Projector screen, if motorized",
+        "es": "Pantalla del proyector, si es motorizada"
+      },
+      "domain": "cover",
+      "optional": true
+    },
+    {
+      "id": "projector_switch",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Projector switch, if any",
+        "es": "Interruptor del proyector, si tienes"
+      },
+      "domain": "switch",
+      "optional": true
+    },
+    {
+      "id": "ir_hub",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "IR hub, if the projector uses one",
+        "es": "Emisor IR, si el proyector usa uno"
+      },
+      "domain": "remote",
+      "optional": true
+    },
+    {
+      "id": "ir_device",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "IR device name, if your hub uses one",
+        "es": "Nombre del equipo IR, si tu emisor lo usa"
+      },
+      "placeholder": "projector",
+      "optional": true
+    },
+    {
+      "id": "ir_command",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "IR power command",
+        "es": "Comando IR de encendido"
+      },
+      "placeholder": "power",
+      "default": "power"
+    },
+    {
+      "id": "receiver",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Receiver, if any",
+        "es": "Receptor, si tienes"
+      },
+      "domain": "media_player",
+      "optional": true
+    },
+    {
+      "id": "movie_input",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Receiver input for the projector",
+        "es": "Entrada del receptor para el proyector"
+      },
+      "placeholder": "HDMI 1",
+      "optional": true
+    }
+  ],
   "buttons": [
     {
       "id": "showtime",
@@ -39,23 +128,10 @@
         "es": "Bajar pantalla"
       },
       "icon": "blinds",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Projector screen, if motorized",
-            "es": "Pantalla del proyector, si es motorizada"
-          },
-          "domain": "cover",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "cover.close_cover",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{screen}}"
         }
       }
     },
@@ -66,23 +142,10 @@
         "es": "Subir pantalla"
       },
       "icon": "blinds",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Projector screen, if motorized",
-            "es": "Pantalla del proyector, si es motorizada"
-          },
-          "domain": "cover",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "cover.open_cover",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{screen}}"
         }
       }
     },
@@ -93,23 +156,10 @@
         "es": "Encender proyector"
       },
       "icon": "power",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Projector switch, if any",
-            "es": "Interruptor del proyector, si tienes"
-          },
-          "domain": "switch",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "switch.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{projector_switch}}"
         }
       }
     },
@@ -120,49 +170,14 @@
         "es": "Encender proyector (IR)"
       },
       "icon": "power",
-      "variables": [
-        {
-          "id": "hub",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "IR hub, if the projector uses one",
-            "es": "Emisor IR, si el proyector usa uno"
-          },
-          "domain": "remote",
-          "optional": true
-        },
-        {
-          "id": "device",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Device name",
-            "es": "Nombre del equipo"
-          },
-          "placeholder": "projector",
-          "optional": true
-        },
-        {
-          "id": "command",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Command name",
-            "es": "Nombre del comando"
-          },
-          "placeholder": "power",
-          "default": "power"
-        }
-      ],
       "service": {
         "action": "remote.send_command",
         "target": {
-          "entity_id": "{{hub}}"
+          "entity_id": "{{ir_hub}}"
         },
         "data": {
-          "device": "{{device}}",
-          "command": "{{command}}"
+          "device": "{{ir_device}}",
+          "command": "{{ir_command}}"
         }
       }
     },
@@ -173,22 +188,10 @@
         "es": "Apagar luces"
       },
       "icon": "brightness_down",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        }
-      ],
       "service": {
         "action": "light.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         }
       }
     },
@@ -199,22 +202,10 @@
         "es": "Luces al máximo"
       },
       "icon": "brightness_up",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        }
-      ],
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "brightness_pct": 100
@@ -228,37 +219,13 @@
         "es": "Entrada del receptor"
       },
       "icon": "input",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Receiver, if any",
-            "es": "Receptor, si tienes"
-          },
-          "domain": "media_player",
-          "optional": true
-        },
-        {
-          "id": "source",
-          "scope": "button",
-          "type": "text",
-          "label": {
-            "en": "Input name",
-            "es": "Nombre de la entrada"
-          },
-          "placeholder": "TV",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "media_player.select_source",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{receiver}}"
         },
         "data": {
-          "source": "{{source}}"
+          "source": "{{movie_input}}"
         }
       }
     }

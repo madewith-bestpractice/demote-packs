@@ -16,6 +16,74 @@
   "accent": "blue",
   "engine": "home_assistant",
   "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "hall",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Hall light, if any",
+        "es": "Luz del pasillo, si tienes"
+      },
+      "domain": "light",
+      "optional": true
+    },
+    {
+      "id": "tv",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "TV in Home Assistant, if any",
+        "es": "TV en Home Assistant, si está"
+      },
+      "domain": "media_player",
+      "optional": true
+    },
+    {
+      "id": "fan",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Fan, if any",
+        "es": "Ventilador, si tienes"
+      },
+      "domain": "fan",
+      "optional": true
+    },
+    {
+      "id": "thermostat",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Thermostat, if any",
+        "es": "Termostato, si tienes"
+      },
+      "domain": "climate",
+      "optional": true
+    },
+    {
+      "id": "night_temp",
+      "scope": "pack",
+      "type": "number",
+      "optional": true,
+      "label": {
+        "en": "Night temperature (in Home Assistant's units)",
+        "es": "Temperatura de noche (en las unidades de Home Assistant)"
+      },
+      "min": 5,
+      "max": 95
+    }
+  ],
   "buttons": [
     {
       "id": "bedtime",
@@ -53,17 +121,6 @@
       "icon": "lightbulb",
       "variables": [
         {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Hall light, if any",
-            "es": "Luz del pasillo, si tienes"
-          },
-          "domain": "light",
-          "optional": true
-        },
-        {
           "id": "level",
           "scope": "button",
           "type": "number",
@@ -79,7 +136,7 @@
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{hall}}"
         },
         "data": {
           "brightness_pct": "{{level}}"
@@ -93,23 +150,10 @@
         "es": "Apagar TV"
       },
       "icon": "power",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "TV in Home Assistant, if any",
-            "es": "TV en Home Assistant, si está"
-          },
-          "domain": "media_player",
-          "optional": true
-        }
-      ],
       "service": {
         "action": "media_player.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{tv}}"
         }
       }
     },
@@ -120,22 +164,10 @@
         "es": "Apagar luces"
       },
       "icon": "brightness_down",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights to turn off (a light or group)",
-            "es": "Luces que apagar (una luz o un grupo)"
-          },
-          "domain": "light"
-        }
-      ],
       "service": {
         "action": "light.turn_off",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         }
       }
     },
@@ -147,16 +179,6 @@
       },
       "icon": "brightness_down",
       "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Lights",
-            "es": "Luces"
-          },
-          "domain": "light"
-        },
         {
           "id": "level",
           "scope": "button",
@@ -173,7 +195,7 @@
       "service": {
         "action": "light.turn_on",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{lights}}"
         },
         "data": {
           "brightness_pct": "{{level}}"
@@ -188,17 +210,6 @@
       },
       "icon": "fan",
       "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Fan, if any",
-            "es": "Ventilador, si tienes"
-          },
-          "domain": "fan",
-          "optional": true
-        },
         {
           "id": "speed",
           "scope": "button",
@@ -215,7 +226,7 @@
       "service": {
         "action": "fan.set_percentage",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{fan}}"
         },
         "data": {
           "percentage": "{{speed}}"
@@ -229,38 +240,13 @@
         "es": "Ajustar termostato"
       },
       "icon": "settings",
-      "variables": [
-        {
-          "id": "entity",
-          "scope": "button",
-          "type": "ha_entity",
-          "label": {
-            "en": "Thermostat, if any",
-            "es": "Termostato, si tienes"
-          },
-          "domain": "climate",
-          "optional": true
-        },
-        {
-          "id": "temperature",
-          "scope": "button",
-          "type": "number",
-          "label": {
-            "en": "Temperature (in Home Assistant's units)",
-            "es": "Temperatura (en las unidades de Home Assistant)"
-          },
-          "min": 5,
-          "max": 95,
-          "optional": true
-        }
-      ],
       "service": {
         "action": "climate.set_temperature",
         "target": {
-          "entity_id": "{{entity}}"
+          "entity_id": "{{thermostat}}"
         },
         "data": {
-          "temperature": "{{temperature}}"
+          "temperature": "{{night_temp}}"
         }
       }
     }
