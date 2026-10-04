@@ -62,7 +62,7 @@
         "label": { "$ref": "#/$defs/localized" },
         "placeholder": { "type": "string", "maxLength": 60 },
         "optional": {
-          "description": "The user may leave it empty. A button whose action uses an empty optional variable shows as needing setup and isn't sent; in a macro, that button's step is skipped and the other steps run. Not allowed on a variable used in a URL's host.",
+          "description": "The user may leave it empty. Empty in a Home Assistant target: the button isn't sent (it shows as needing setup; in a macro its step is skipped). Empty as a whole value in data or a JSON body: the key is left out. Empty in a header value: the header isn't sent. Empty inside a longer string: an empty string. Not allowed on a variable used in a URL's host.",
           "type": "boolean"
         },
         "default": { "type": ["string", "number"] },

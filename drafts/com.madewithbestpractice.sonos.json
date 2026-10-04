@@ -52,17 +52,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "player_id",
-      "scope": "pack",
-      "type": "text",
-      "label": {
-        "en": "Player ID (for Switch to TV)",
-        "es": "ID del reproductor (para Cambiar a TV)"
-      },
-      "optional": true,
-      "placeholder": "RINCON_000000000000001400"
     }
   ],
   "buttons": [
@@ -275,6 +264,18 @@
         "es": "Cambiar a TV"
       },
       "icon": "input",
+      "variables": [
+        {
+          "id": "player_id",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Player ID",
+            "es": "ID del reproductor"
+          },
+          "placeholder": "RINCON_000000000000001400"
+        }
+      ],
       "request": {
         "method": "POST",
         "url": "http://{{host}}:1400/MediaRenderer/AVTransport/Control",

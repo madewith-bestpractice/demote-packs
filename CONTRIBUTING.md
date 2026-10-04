@@ -95,21 +95,33 @@ address, a key, an input name.
 
 **Optional variables**
 
-Add `"optional": true` to let the user leave a variable empty. A button
-whose request or service uses an empty optional variable shows as needing
-setup and isn't sent; the pack's other buttons work as usual. Use it for a
-setting only some buttons need, such as a Sonos player id that only "Switch
-to TV" uses.
+Add `"optional": true` to let the user leave a variable empty. What an
+empty optional variable does depends on where it's used:
+
+- **In `target`**, usually an `ha_entity`, it decides where the action goes,
+  so the button isn't sent. On its own, the button shows as needing setup.
+  In a [macro](#macro-buttons), its step is skipped, not failed, and the
+  other steps run. That's how "Start movie" still works in a room with no
+  blinds.
+- **As a whole value** in `data` or a JSON body, such as
+  `"device": "{{device}}"`, the key is left out (or the array item).
+- **In a header value**, the header isn't sent. A `basic_auth` used in
+  `auth` sends no `Authorization` header.
+- **Inside a longer string**, such as a URL path or query, a string body,
+  or `"level {{x}}"`, it becomes an empty string.
+
+For example, an IR hub's device name, which Broadlink needs and some other
+hubs don't:
 
 ```json
-{ "id": "player_id", "scope": "pack", "type": "text", "optional": true,
-  "label": { "en": "Player ID (for Switch to TV)", "es": "ID del reproductor (para Cambiar a TV)" } }
+{ "id": "ir_device", "scope": "pack", "type": "text", "optional": true,
+  "label": { "en": "Device name, if your hub uses one", "es": "Nombre del equipo, si tu emisor lo usa" } }
 ```
 
-In a [macro](#macro-buttons), a step whose button uses an empty optional
-variable is skipped, not failed, and the macro's other steps run. That's how
-"Start movie" still works in a room with no blinds: the user leaves the
-blinds empty and that step is skipped.
+A setting that only one button needs and can't do without, such as the
+Sonos player id for "Switch to TV", belongs on that button
+(`"scope": "button"`), not optional at pack level: left empty inside a
+string, it would send a broken request.
 
 Any type can be optional, except a variable written into a URL's host
 (the `host` or `port` part of `http://{{host}}:{{port}}/…`). Every request
@@ -173,7 +185,8 @@ customized copy shows the same values.
 - A macro has no `variables` and no hold-to-`repeat`. Its steps' buttons
   carry the settings.
 - At least one step must always run: a TV key, or a button with no
-  optional variable. A macro made only of skippable steps could do nothing.
+  optional variable in its `target`. A macro made only of skippable steps
+  could do nothing.
 
 **Settings.** When the user places a macro, Demote asks once for the
 settings of every button its steps run. Give the buttons a macro uses clear

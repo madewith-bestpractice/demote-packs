@@ -32,10 +32,11 @@
       "scope": "pack",
       "type": "text",
       "label": {
-        "en": "Device name",
-        "es": "Nombre del equipo"
+        "en": "Device name, if your hub uses one",
+        "es": "Nombre del equipo, si tu emisor lo usa"
       },
-      "placeholder": "television"
+      "placeholder": "television",
+      "optional": true
     }
   ],
   "buttons": [

@@ -1,0 +1,73 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "variables": [
+  {
+   "id": "hub",
+   "scope": "pack",
+   "type": "ha_entity",
+   "domain": "remote",
+   "label": {
+    "en": "IR hub",
+    "es": "Emisor IR"
+   }
+  },
+  {
+   "id": "device",
+   "scope": "pack",
+   "type": "text",
+   "optional": true,
+   "label": {
+    "en": "Device name",
+    "es": "Nombre del equipo"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "power",
+   "label": {
+    "en": "Power",
+    "es": "Encender"
+   },
+   "icon": "power",
+   "service": {
+    "action": "remote.send_command",
+    "target": {
+     "entity_id": "{{hub}}"
+    },
+    "data": {
+     "device": "{{device}}",
+     "command": "power"
+    }
+   }
+  },
+  {
+   "id": "on",
+   "label": {
+    "en": "On",
+    "es": "Encender"
+   },
+   "icon": "power",
+   "steps": [
+    {
+     "button": "power"
+    }
+   ]
+  }
+ ]
+}

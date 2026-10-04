@@ -125,7 +125,7 @@ def check_pack(path: Path) -> list[str]:
     errors += _check_variables("variables", pack.get("variables", []), engine)
 
     seen_buttons: set[str] = set()
-    # Per non-macro button: does its action use an optional variable? Such a
+    # Per non-macro button: does its target use an optional variable? Such a
     # step is skipped when that variable is empty.
     skippable: dict[str, bool] = {}
     for i, b in enumerate(pack["buttons"]):
@@ -169,9 +169,12 @@ def check_pack(path: Path) -> list[str]:
                 elif in_scope[slot]["type"] == "basic_auth":
                     errors.append(f'{where}: "{{{{{slot}}}}}" is a basic_auth variable; use it only in "auth": {{"basic": ...}}')
 
+        # Only an empty optional variable that decides where the action goes
+        # stops it. A URL's host can't be optional (see _check_host), so that
+        # leaves a Home Assistant target. Elsewhere it's left out instead.
         skippable[b["id"]] = any(
             in_scope.get(slot, {}).get("optional")
-            for s in _strings(action) for slot in SLOT.findall(s))
+            for s in _strings(b.get("service", {}).get("target", {})) for slot in SLOT.findall(s))
 
         if "service" in b:
             for field, value in b["service"].get("data", {}).items():
@@ -213,8 +216,8 @@ def _check_steps(where: str, b: dict, skippable: dict[str, bool], macro_ids: set
         elif not skippable[ref]:
             always_runs = True
     if not errors and not always_runs:
-        errors.append(f"{where}: every step uses an optional setting, so the macro could do nothing; "
-                      "add a TV key or a button without optional settings")
+        errors.append(f"{where}: every step's target is an optional setting, so the macro could do nothing; "
+                      "add a TV key or a button whose target is always set")
     return errors
 
 
