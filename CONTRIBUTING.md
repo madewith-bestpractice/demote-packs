@@ -110,8 +110,24 @@ empty optional variable does depends on where it's used:
 - **Inside a longer string**, such as a URL path or query, a string body,
   or `"level {{x}}"`, it becomes an empty string.
 
-For example, an IR hub's device name, which Broadlink needs and some other
-hubs don't:
+When leaving a value out would make the call fail, list the variable in
+the button's `needs`. If any variable in `needs` is empty, the button is
+treated like one with an empty target: it shows "Needs setup", and in a
+macro its step is skipped. For example, a receiver can be set while its
+input name is empty, and `select_source` without a `source` fails:
+
+```json
+{ "id": "receiver_input", "label": { "en": "Receiver input", "es": "Entrada del receptor" }, "icon": "input",
+  "needs": ["movie_input"],
+  "service": { "action": "media_player.select_source",
+               "target": { "entity_id": "{{receiver}}" }, "data": { "source": "{{movie_input}}" } } }
+```
+
+`needs` lists optional variables of the pack or the button. Macros don't
+have it.
+
+Without `needs`, a value can simply be left out. For example, an IR hub's
+device name, which Broadlink needs and some other hubs don't:
 
 ```json
 { "id": "ir_device", "scope": "pack", "type": "text", "optional": true,
@@ -185,8 +201,8 @@ customized copy shows the same values.
 - A macro has no `variables` and no hold-to-`repeat`. Its steps' buttons
   carry the settings.
 - At least one step must always run: a TV key, or a button with no
-  optional variable in its `target`. A macro made only of skippable steps
-  could do nothing.
+  optional variable in its `target` and no `needs`. A macro made only of
+  skippable steps could do nothing.
 
 **Settings.** Make each device a pack setting (`"scope": "pack"`), such
 as the lights, the blinds or the receiver. Turning the pack on then asks
@@ -206,6 +222,12 @@ can be placed without asking.
 
 Steps run on the phone, one after another, so a macro isn't a Home
 Assistant script and needs nothing set up in Home Assistant.
+
+**When a step fails.** A failed step doesn't stop the macro, even when its
+device can't be reached at all: the remaining steps still run. When the
+macro finishes, Demote shows one summary naming the steps that failed or
+were skipped. So order steps so each one still makes sense if an earlier
+one didn't happen.
 
 ### Network
 

@@ -212,6 +212,9 @@
         "es": "Entrada de juego"
       },
       "icon": "input",
+      "needs": [
+        "game_input"
+      ],
       "service": {
         "action": "media_player.select_source",
         "target": {
@@ -229,6 +232,9 @@
         "es": "Modo de sonido de juego"
       },
       "icon": "speaker",
+      "needs": [
+        "game_sound"
+      ],
       "service": {
         "action": "media_player.select_sound_mode",
         "target": {

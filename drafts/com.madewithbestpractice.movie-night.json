@@ -262,6 +262,9 @@
         "es": "Entrada del receptor"
       },
       "icon": "input",
+      "needs": [
+        "movie_input"
+      ],
       "service": {
         "action": "media_player.select_source",
         "target": {

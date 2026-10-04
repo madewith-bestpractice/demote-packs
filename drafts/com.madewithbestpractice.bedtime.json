@@ -240,6 +240,9 @@
         "es": "Ajustar termostato"
       },
       "icon": "settings",
+      "needs": [
+        "night_temp"
+      ],
       "service": {
         "action": "climate.set_temperature",
         "target": {

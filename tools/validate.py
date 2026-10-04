@@ -10,7 +10,8 @@ can't express: file name matches id, unique ids, known icons, every {{slot}}
 defined in scope, engine-specific variable types, text lengths, the size
 limit, that a "local" pack names no public host, that "auth" names a
 basic_auth variable (and nothing else does), that no variable in a URL's
-host is optional, that Home Assistant numeric data fields get a number,
+host is optional, that "needs" lists optional variables in scope, that
+Home Assistant numeric data fields get a number,
 and that macro steps name a known TV key or a non-macro
 button of the same pack, with at least one step that always runs.
 """
@@ -90,7 +91,7 @@ def check_pack(path: Path) -> list[str]:
         if sum(k in b for k in ("request", "service", "steps")) != 1:
             errors.append(f"buttons/{i}: a button needs exactly one of \"request\" (http), \"service\" (home_assistant) or \"steps\" (a macro)")
         elif "steps" in b:
-            for k in ("variables", "repeat"):
+            for k in ("variables", "repeat", "needs"):
                 if k in b:
                     errors.append(f'buttons/{i}: a macro can\'t have "{k}"; its steps\' buttons carry their own settings')
             for n, step in enumerate(b["steps"] if isinstance(b["steps"], list) else []):
@@ -125,8 +126,8 @@ def check_pack(path: Path) -> list[str]:
     errors += _check_variables("variables", pack.get("variables", []), engine)
 
     seen_buttons: set[str] = set()
-    # Per non-macro button: does its target use an optional variable? Such a
-    # step is skipped when that variable is empty.
+    # Per non-macro button: does its target use an optional variable, or does
+    # it list one in "needs"? Such a step is skipped when that one is empty.
     skippable: dict[str, bool] = {}
     for i, b in enumerate(pack["buttons"]):
         where = f'buttons/{b["id"]}'
@@ -172,7 +173,13 @@ def check_pack(path: Path) -> list[str]:
         # Only an empty optional variable that decides where the action goes
         # stops it. A URL's host can't be optional (see _check_host), so that
         # leaves a Home Assistant target. Elsewhere it's left out instead.
-        skippable[b["id"]] = any(
+        # "needs" opts other variables into the same rule.
+        for n in b.get("needs", []):
+            if n not in in_scope:
+                errors.append(f'{where}: needs "{n}", which is not a variable of this pack or button')
+            elif not in_scope[n].get("optional"):
+                errors.append(f'{where}: needs "{n}", which isn\'t optional, so it is never empty')
+        skippable[b["id"]] = bool(b.get("needs")) or any(
             in_scope.get(slot, {}).get("optional")
             for s in _strings(b.get("service", {}).get("target", {})) for slot in SLOT.findall(s))
 
@@ -216,8 +223,8 @@ def _check_steps(where: str, b: dict, skippable: dict[str, bool], macro_ids: set
         elif not skippable[ref]:
             always_runs = True
     if not errors and not always_runs:
-        errors.append(f"{where}: every step's target is an optional setting, so the macro could do nothing; "
-                      "add a TV key or a button whose target is always set")
+        errors.append(f"{where}: every step can be skipped (an optional target or needs), so the macro could do nothing; "
+                      "add a TV key or a button that always runs")
     return errors
 
 

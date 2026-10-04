@@ -1,0 +1,87 @@
+{
+ "schema": 1,
+ "id": "com.example.format-test",
+ "version": "0.1.0",
+ "name": {
+  "en": "Format test",
+  "es": "Prueba de formato"
+ },
+ "description": {
+  "en": "Exercises one format rule.",
+  "es": "Prueba una regla del formato."
+ },
+ "vendor": "Example",
+ "author": "Example",
+ "icon": "link",
+ "engine": "home_assistant",
+ "network": "local",
+ "variables": [
+  {
+   "id": "receiver",
+   "scope": "pack",
+   "type": "ha_entity",
+   "domain": "media_player",
+   "label": {
+    "en": "Receiver",
+    "es": "Receptor"
+   }
+  },
+  {
+   "id": "input",
+   "scope": "pack",
+   "type": "text",
+   "optional": true,
+   "label": {
+    "en": "Input",
+    "es": "Entrada"
+   }
+  },
+  {
+   "id": "mode",
+   "scope": "pack",
+   "type": "text",
+   "label": {
+    "en": "Mode",
+    "es": "Modo"
+   }
+  }
+ ],
+ "buttons": [
+  {
+   "id": "input_btn",
+   "label": {
+    "en": "Input",
+    "es": "Entrada"
+   },
+   "icon": "input",
+   "needs": [
+    "input"
+   ],
+   "service": {
+    "action": "media_player.select_source",
+    "target": {
+     "entity_id": "{{receiver}}"
+    },
+    "data": {
+     "source": "{{input}}"
+    }
+   }
+  },
+  {
+   "id": "m",
+   "label": {
+    "en": "Go",
+    "es": "Ir"
+   },
+   "icon": "scene",
+   "needs": [
+    "input"
+   ],
+   "steps": [
+    {
+     "key": "play"
+    }
+   ]
+  }
+ ]
+}

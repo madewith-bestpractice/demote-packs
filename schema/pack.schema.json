@@ -62,7 +62,7 @@
         "label": { "$ref": "#/$defs/localized" },
         "placeholder": { "type": "string", "maxLength": 60 },
         "optional": {
-          "description": "The user may leave it empty. Empty in a Home Assistant target: the button isn't sent (it shows as needing setup; in a macro its step is skipped). Empty as a whole value in data or a JSON body: the key is left out. Empty in a header value: the header isn't sent. Empty inside a longer string: an empty string. Not allowed on a variable used in a URL's host.",
+          "description": "The user may leave it empty. Empty in a Home Assistant target, or listed in the button's needs: the button isn't sent (it shows as needing setup; in a macro its step is skipped). Empty as a whole value in data or a JSON body: the key is left out. Empty in a header value: the header isn't sent. Empty inside a longer string: an empty string. Not allowed on a variable used in a URL's host.",
           "type": "boolean"
         },
         "default": { "type": ["string", "number"] },
@@ -107,10 +107,18 @@
           "maxItems": 5,
           "items": { "$ref": "#/$defs/variable" }
         },
+        "needs": {
+          "description": "Ids of optional variables this button can't run without. If any is empty, the button shows as needing setup and isn't sent; in a macro its step is skipped. Not on a macro.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,31}$" }
+        },
         "request": { "$ref": "#/$defs/httpRequest" },
         "service": { "$ref": "#/$defs/haService" },
         "steps": {
-          "description": "A macro: 1 to 8 steps run in order on the phone. Each step runs another button of this pack (not a macro) or sends a standard TV key from schema/keys.json.",
+          "description": "A macro: 1 to 8 steps run in order on the phone. Each step runs another button of this pack (not a macro) or sends a standard TV key from schema/keys.json. A failed step, even one whose device can't be reached, doesn't stop the macro; the app shows one summary of failed and skipped steps at the end.",
           "type": "array",
           "minItems": 1,
           "maxItems": 8,
@@ -120,7 +128,7 @@
       "oneOf": [
         { "required": ["request"], "not": { "anyOf": [{ "required": ["service"] }, { "required": ["steps"] }] } },
         { "required": ["service"], "not": { "anyOf": [{ "required": ["request"] }, { "required": ["steps"] }] } },
-        { "required": ["steps"], "not": { "anyOf": [{ "required": ["request"] }, { "required": ["service"] }, { "required": ["variables"] }, { "required": ["repeat"] }] } }
+        { "required": ["steps"], "not": { "anyOf": [{ "required": ["request"] }, { "required": ["service"] }, { "required": ["variables"] }, { "required": ["repeat"] }, { "required": ["needs"] }] } }
       ]
     },
     "step": {
