@@ -1,4 +1,1191 @@
 {
   "schema": 1,
-  "packs": []
+  "packs": [
+    {
+      "id": "com.madewithbestpractice.bitfocus-companion",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.bitfocus-companion.json",
+      "sha256": "5289e3b7075a82b8712f155932d0305844109d8478eb7ea54fbdb875ea991372",
+      "name": {
+        "en": "Bitfocus Companion",
+        "es": "Bitfocus Companion"
+      },
+      "description": {
+        "en": "Press any Companion button by its page, row and column.",
+        "es": "Pulsa cualquier botón de Companion por su página, fila y columna."
+      },
+      "vendor": "Bitfocus",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "grid",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "press",
+          "label": {
+            "en": "Press button",
+            "es": "Pulsar botón"
+          },
+          "icon": "grid",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.denon-marantz",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.denon-marantz.json",
+      "sha256": "68014cd30841b0a0cfd86f817e5d5cfb187ceb086bb9908c422ceb0267acf435",
+      "name": {
+        "en": "Denon & Marantz receiver",
+        "es": "Receptor Denon y Marantz"
+      },
+      "description": {
+        "en": "Power, volume, inputs and sound modes for networked Denon and Marantz receivers.",
+        "es": "Encendido, volumen, entradas y modos de sonido para receptores Denon y Marantz en red."
+      },
+      "vendor": "Denon / Marantz",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "receiver",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "power_on",
+          "label": {
+            "en": "Power on",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "standby",
+          "label": {
+            "en": "Standby",
+            "es": "En espera"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "unmute",
+          "label": {
+            "en": "Unmute",
+            "es": "Quitar silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "input",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "icon": "input",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "sound_mode",
+          "label": {
+            "en": "Sound mode",
+            "es": "Modo de sonido"
+          },
+          "icon": "audio_track",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "dialogue_enhancer",
+          "label": {
+            "en": "Dialogue enhancer",
+            "es": "Mejora de diálogos"
+          },
+          "icon": "captions",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "z2_power_on",
+          "label": {
+            "en": "Zone 2 on",
+            "es": "Encender zona 2"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "z2_off",
+          "label": {
+            "en": "Zone 2 off",
+            "es": "Apagar zona 2"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "z2_volume_up",
+          "label": {
+            "en": "Zone 2 volume up",
+            "es": "Subir volumen zona 2"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "z2_volume_down",
+          "label": {
+            "en": "Zone 2 volume down",
+            "es": "Bajar volumen zona 2"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "z2_input",
+          "label": {
+            "en": "Zone 2 input",
+            "es": "Entrada zona 2"
+          },
+          "icon": "input",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.esphome",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.esphome.json",
+      "sha256": "30f2f61268593c188ea561297f32f553a69a82fca9389e32e7890cafe405c466",
+      "name": {
+        "en": "ESPHome",
+        "es": "ESPHome"
+      },
+      "description": {
+        "en": "Switches, lights, fans and buttons on ESPHome devices with the web server component.",
+        "es": "Interruptores, luces, ventiladores y botones en equipos ESPHome con el servidor web."
+      },
+      "vendor": "ESPHome",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "switch",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "switch_toggle",
+          "label": {
+            "en": "Switch toggle",
+            "es": "Alternar interruptor"
+          },
+          "icon": "switch",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "switch_on",
+          "label": {
+            "en": "Switch on",
+            "es": "Encender interruptor"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "switch_off",
+          "label": {
+            "en": "Switch off",
+            "es": "Apagar interruptor"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "light_toggle",
+          "label": {
+            "en": "Light toggle",
+            "es": "Alternar luz"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "light_on",
+          "label": {
+            "en": "Light brightness",
+            "es": "Brillo de la luz"
+          },
+          "icon": "brightness_up",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "light_off",
+          "label": {
+            "en": "Light off",
+            "es": "Apagar luz"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "fan_toggle",
+          "label": {
+            "en": "Fan toggle",
+            "es": "Alternar ventilador"
+          },
+          "icon": "fan",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "press",
+          "label": {
+            "en": "Press button",
+            "es": "Presionar botón"
+          },
+          "icon": "dpad_center",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.falcon-player",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.falcon-player.json",
+      "sha256": "cbd8a240e53f54dfead2308370ad45258487f0bf14ee7ff086dedc3570b9ca14",
+      "name": {
+        "en": "Falcon Player",
+        "es": "Falcon Player"
+      },
+      "description": {
+        "en": "Start, stop and skip your light show playlists and set the volume on Falcon Player (FPP).",
+        "es": "Inicia, detén y salta listas de tu show de luces y ajusta el volumen en Falcon Player (FPP)."
+      },
+      "vendor": "Falcon Player (FPP)",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "play",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "start",
+          "label": {
+            "en": "Start show",
+            "es": "Iniciar espectáculo"
+          },
+          "icon": "play",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "stop_now",
+          "label": {
+            "en": "Stop now",
+            "es": "Detener ya"
+          },
+          "icon": "stop",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "stop_gracefully",
+          "label": {
+            "en": "Stop gracefully",
+            "es": "Detener al terminar"
+          },
+          "icon": "stop",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "next",
+          "label": {
+            "en": "Next item",
+            "es": "Siguiente elemento"
+          },
+          "icon": "next",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "previous",
+          "label": {
+            "en": "Previous item",
+            "es": "Elemento anterior"
+          },
+          "icon": "previous",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_set",
+          "label": {
+            "en": "Set volume",
+            "es": "Fijar volumen"
+          },
+          "icon": "speaker",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.hubitat-maker-api",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.hubitat-maker-api.json",
+      "sha256": "f35700460e36630b304d94e245a716be4f57154b0f19749bd5fa2e9a257c569a",
+      "name": {
+        "en": "Hubitat Maker API",
+        "es": "Hubitat Maker API"
+      },
+      "description": {
+        "en": "Turn Hubitat devices on and off and set dimmer levels through the Maker API app.",
+        "es": "Enciende y apaga dispositivos Hubitat y ajusta atenuadores con la app Maker API."
+      },
+      "vendor": "Hubitat",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "plug",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "set_level",
+          "label": {
+            "en": "Set level",
+            "es": "Ajustar nivel"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.hyperion",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.hyperion.json",
+      "sha256": "d752779ba0ddf3840f83a4952e393f79d11eab3a923e61dc6927c26616f0679b",
+      "name": {
+        "en": "Hyperion and HyperHDR",
+        "es": "Hyperion y HyperHDR"
+      },
+      "description": {
+        "en": "On, off, colour, effects and back to video for Hyperion and HyperHDR TV backlights.",
+        "es": "Encendido, color, efectos y vuelta al video para luces de TV con Hyperion y HyperHDR."
+      },
+      "vendor": "Hyperion / HyperHDR",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "lightbulb",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "video",
+          "label": {
+            "en": "Back to video",
+            "es": "Volver al video"
+          },
+          "icon": "input",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "colour",
+          "label": {
+            "en": "Solid colour",
+            "es": "Color fijo"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "effect",
+          "label": {
+            "en": "Effect",
+            "es": "Efecto"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "brightness",
+          "label": {
+            "en": "Brightness (Hyperion)",
+            "es": "Brillo (Hyperion)"
+          },
+          "icon": "brightness_up",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "tv_on",
+          "label": {
+            "en": "TV and LEDs on",
+            "es": "Encender TV y LED"
+          },
+          "icon": "wakeup",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "tv_off",
+          "label": {
+            "en": "TV and LEDs off",
+            "es": "Apagar TV y LED"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": true
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.ifttt-webhooks",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.ifttt-webhooks.json",
+      "sha256": "c4d1a0fe5ad07a0f016ed42d5da7c2848db8ad7a1e71841a300ebff66001ac07",
+      "name": {
+        "en": "IFTTT webhooks",
+        "es": "Webhooks de IFTTT"
+      },
+      "description": {
+        "en": "Trigger your IFTTT applets with the Webhooks service, which needs IFTTT Pro.",
+        "es": "Activa tus applets de IFTTT con el servicio Webhooks, que requiere IFTTT Pro."
+      },
+      "vendor": "IFTTT",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "link",
+      "engine": "http",
+      "network": "internet",
+      "buttons": [
+        {
+          "id": "trigger",
+          "label": {
+            "en": "Trigger event",
+            "es": "Activar evento"
+          },
+          "icon": "script",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.kodi",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.kodi.json",
+      "sha256": "a2e5604ddac57ff75c8aa7acbb1da1f304180ddfcd64bf6ebfb26b291b22c48d",
+      "name": {
+        "en": "Kodi",
+        "es": "Kodi"
+      },
+      "description": {
+        "en": "Navigation, playback and volume for Kodi over its web server's JSON-RPC.",
+        "es": "Navegación, reproducción y volumen para Kodi con JSON-RPC por su servidor web."
+      },
+      "vendor": "Kodi",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "menu",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "up",
+          "label": {
+            "en": "Up",
+            "es": "Arriba"
+          },
+          "icon": "dpad_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "down",
+          "label": {
+            "en": "Down",
+            "es": "Abajo"
+          },
+          "icon": "dpad_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "left",
+          "label": {
+            "en": "Left",
+            "es": "Izquierda"
+          },
+          "icon": "dpad_left",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "right",
+          "label": {
+            "en": "Right",
+            "es": "Derecha"
+          },
+          "icon": "dpad_right",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "select",
+          "label": {
+            "en": "Select",
+            "es": "Seleccionar"
+          },
+          "icon": "dpad_center",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "back",
+          "label": {
+            "en": "Back",
+            "es": "Atrás"
+          },
+          "icon": "back",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "home",
+          "label": {
+            "en": "Home",
+            "es": "Inicio"
+          },
+          "icon": "home",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "context_menu",
+          "label": {
+            "en": "Context menu",
+            "es": "Menú contextual"
+          },
+          "icon": "menu",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "info",
+          "label": {
+            "en": "Info",
+            "es": "Información"
+          },
+          "icon": "info",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "play_pause",
+          "label": {
+            "en": "Play/pause",
+            "es": "Reproducir/pausar"
+          },
+          "icon": "play_pause",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.lyrion",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.lyrion.json",
+      "sha256": "f6833b69d9028bf39979415a4a3517bd0bbf3c7f7b6e617999d35a090d406bc3",
+      "name": {
+        "en": "Lyrion Music Server",
+        "es": "Lyrion Music Server"
+      },
+      "description": {
+        "en": "Play, skip, volume, power and presets for one Squeezebox or squeezelite player on Lyrion.",
+        "es": "Reproducción, volumen, encendido y preajustes para un reproductor Squeezebox o squeezelite en Lyrion."
+      },
+      "vendor": "Lyrion Music Server",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "speaker",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "play_pause",
+          "label": {
+            "en": "Play/pause",
+            "es": "Reproducir/pausar"
+          },
+          "icon": "play_pause",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "next",
+          "label": {
+            "en": "Next",
+            "es": "Siguiente"
+          },
+          "icon": "next",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "previous",
+          "label": {
+            "en": "Previous",
+            "es": "Anterior"
+          },
+          "icon": "previous",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "power_on",
+          "label": {
+            "en": "Power on",
+            "es": "Encender"
+          },
+          "icon": "wakeup",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "power_off",
+          "label": {
+            "en": "Power off",
+            "es": "Apagar"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "preset",
+          "label": {
+            "en": "Preset",
+            "es": "Preajuste"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.shelly",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.shelly.json",
+      "sha256": "2c149ef0039933600bb60e028609388b4f13cd8560e587ae761d83a5e5b91c8a",
+      "name": {
+        "en": "Shelly",
+        "es": "Shelly"
+      },
+      "description": {
+        "en": "Switch and dim Shelly Gen2 and newer relays and dimmers on your network.",
+        "es": "Enciende, apaga y regula relés y atenuadores Shelly Gen2 o más nuevos en tu red."
+      },
+      "vendor": "Shelly",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "switch",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "toggle",
+          "label": {
+            "en": "Toggle",
+            "es": "Alternar"
+          },
+          "icon": "switch",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "dimmer_level",
+          "label": {
+            "en": "Dimmer level",
+            "es": "Nivel del atenuador"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.tasmota",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.tasmota.json",
+      "sha256": "fe09d050139088578d1bc476c92276c931bd6fb75305245e3987f1d3746f4adf",
+      "name": {
+        "en": "Tasmota",
+        "es": "Tasmota"
+      },
+      "description": {
+        "en": "Switch relays and dim lights on Tasmota plugs, switches and bulbs over the local HTTP API.",
+        "es": "Enciende relés y regula luces en enchufes, interruptores y focos Tasmota por la API HTTP local."
+      },
+      "vendor": "Tasmota",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "plug",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "toggle",
+          "label": {
+            "en": "Toggle",
+            "es": "Alternar"
+          },
+          "icon": "switch",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "dimmer",
+          "label": {
+            "en": "Brightness level",
+            "es": "Nivel de brillo"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "brightness_up",
+          "label": {
+            "en": "Brightness up",
+            "es": "Subir brillo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "brightness_down",
+          "label": {
+            "en": "Brightness down",
+            "es": "Bajar brillo"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.wled",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.wled.json",
+      "sha256": "ed4d6367dae531f40be47b9686e0b1fdfa8337c3849e714be49710a722270da7",
+      "name": {
+        "en": "WLED",
+        "es": "WLED"
+      },
+      "description": {
+        "en": "On, off, brightness and presets for WLED lights, like the strip behind your TV.",
+        "es": "Encendido, brillo y preajustes para luces WLED, como la tira detrás de la TV."
+      },
+      "vendor": "WLED",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "lightbulb",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "toggle",
+          "label": {
+            "en": "Toggle",
+            "es": "Alternar"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "dim",
+          "label": {
+            "en": "Dim",
+            "es": "Atenuar"
+          },
+          "icon": "brightness_down",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "brightness_up",
+          "label": {
+            "en": "Brightness up",
+            "es": "Subir brillo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "brightness_down",
+          "label": {
+            "en": "Brightness down",
+            "es": "Bajar brillo"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "preset",
+          "label": {
+            "en": "Preset",
+            "es": "Preajuste"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.yamaha-musiccast",
+      "version": "0.1.0",
+      "path": "packs/com.madewithbestpractice.yamaha-musiccast.json",
+      "sha256": "4c8dab5e7fa45a4561ff4773b01356becd21c3803e1eb165502a67a618f278d8",
+      "name": {
+        "en": "Yamaha MusicCast",
+        "es": "Yamaha MusicCast"
+      },
+      "description": {
+        "en": "Power, volume, inputs, sound programs and Clear Voice for Yamaha MusicCast receivers and soundbars.",
+        "es": "Encendido, volumen, entradas, programas de sonido y Clear Voice para equipos Yamaha MusicCast."
+      },
+      "vendor": "Yamaha",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "receiver",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "power_toggle",
+          "label": {
+            "en": "Power",
+            "es": "Encender/apagar"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "unmute",
+          "label": {
+            "en": "Unmute",
+            "es": "Quitar silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "input",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "icon": "input",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "sound_program",
+          "label": {
+            "en": "Sound program",
+            "es": "Programa de sonido"
+          },
+          "icon": "audio_track",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "clear_voice_on",
+          "label": {
+            "en": "Clear Voice on",
+            "es": "Activar Clear Voice"
+          },
+          "icon": "captions",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "clear_voice_off",
+          "label": {
+            "en": "Clear Voice off",
+            "es": "Desactivar Clear Voice"
+          },
+          "icon": "captions",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    }
+  ]
 }
