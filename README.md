@@ -2,8 +2,8 @@
 
 Button packs add ready-made custom buttons to
 [Demote](https://madewithbestpractice.com/demote/), the universal TV remote,
-for things Demote doesn't control on its own: an AV receiver, a Bitfocus
-Companion page, or Home Assistant service calls.
+for things Demote doesn't control on its own: an AV receiver, the lights
+behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 
 - **Data only.** A pack is a JSON file that describes buttons. It can't run
   code, and Demote never reads the replies.
@@ -15,8 +15,53 @@ Companion page, or Home Assistant service calls.
 - **Reviewed.** Anyone can open a pull request. Nothing reaches the app
   until it's reviewed and merged.
 
-> Button packs are coming to Demote in a future update. This repo is open
-> now so packs can be ready when it ships.
+> Button packs arrive in Demote's next update. The packs below are
+> published and ready for it.
+
+## Published packs
+
+| Pack | What it does |
+|---|---|
+| WLED | On, off, brightness and presets for WLED lights, like the strip behind your TV. |
+| Hyperion and HyperHDR | On, off, colour, effects and back to video for Hyperion and HyperHDR TV backlights. |
+| Kodi | Navigation, playback and volume for Kodi over its web server's JSON-RPC. |
+| Denon & Marantz receiver | Power, volume, inputs and sound modes for networked Denon and Marantz receivers. |
+| Yamaha MusicCast | Power, volume, inputs, sound programs and Clear Voice for MusicCast receivers and soundbars. |
+| Lyrion Music Server | Play, skip, volume, power and presets for a Squeezebox or squeezelite player. |
+| Shelly | Switch and dim Shelly Gen2 and newer relays and dimmers. |
+| Tasmota | Switch relays and dim lights on Tasmota plugs, switches and bulbs. |
+| ESPHome | Switches, lights, fans and buttons on ESPHome devices with the web server component. |
+| Hubitat Maker API | Turn Hubitat devices on and off and set dimmer levels. |
+| Falcon Player | Start, stop and skip light show playlists and set the volume on Falcon Player (FPP). |
+| Bitfocus Companion | Press any Companion button by its page, row and column. |
+| IFTTT webhooks | Trigger IFTTT applets with the Webhooks service (needs IFTTT Pro). |
+
+Each pack works on the devices and firmware its file describes. Packs are
+checked automatically and reviewed before they're listed, but not every
+model has been tried. If a button doesn't work on yours, please report it.
+
+Waiting in [`drafts/`](drafts/) for hardware tests: Sonos, IR devices through
+Home Assistant, and the Movie night, Game night, Bedtime and Projector night
+scene packs.
+
+## Using packs in Demote
+
+1. Open **Settings › Button Packs** and tap **Browse**.
+2. Find a pack and turn it on. Demote shows what it will contact first.
+3. Fill in its settings, such as the device's address, in the pack's box,
+   and test a button.
+4. In the Button Builder, the pack is now its own category. Put its buttons
+   on your remote or the game controller, or use them as macro steps.
+
+Home Assistant is built into Demote and turns on the same way, from
+Settings › Button Packs. Web request buttons, for anything else with a web
+address, are in the Button Builder.
+
+## Report a problem
+
+Use **Report a problem** on the pack's page in Demote, which opens a
+prefilled issue here, or email hello@madewithbestpractice.com if you don't
+have a GitHub account.
 
 ## Layout
 
