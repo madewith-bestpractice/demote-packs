@@ -1,0 +1,270 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.late-night",
+  "version": "0.1.0",
+  "name": {
+    "en": "Late night",
+    "es": "Trasnoche"
+  },
+  "description": {
+    "en": "Quiet the receiver, ease the TV down, turn the lights off and leave the hall light low, with Home Assistant.",
+    "es": "Suaviza el receptor, baja la TV, apaga las luces y deja el pasillo tenue, con Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "volume_down",
+  "accent": "purple",
+  "engine": "home_assistant",
+  "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "hall",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Hall light, if any",
+        "es": "Luz del pasillo, si tienes"
+      },
+      "domain": "light",
+      "optional": true
+    },
+    {
+      "id": "night_switch",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Receiver night mode switch, if any",
+        "es": "Interruptor de modo noche del receptor, si tienes"
+      },
+      "domain": "switch",
+      "optional": true
+    },
+    {
+      "id": "dialogue_switch",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Dialogue enhancement switch, if any",
+        "es": "Interruptor de realce de diálogos, si tienes"
+      },
+      "domain": "switch",
+      "optional": true
+    },
+    {
+      "id": "range_select",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Receiver dynamic range setting, if any",
+        "es": "Ajuste de rango dinámico del receptor, si tienes"
+      },
+      "domain": "select",
+      "optional": true
+    },
+    {
+      "id": "range_night",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Dynamic range at night",
+        "es": "Rango dinámico de noche"
+      },
+      "placeholder": "Min",
+      "optional": true
+    },
+    {
+      "id": "range_normal",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Dynamic range normally",
+        "es": "Rango dinámico normal"
+      },
+      "placeholder": "Max",
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "late_night",
+      "label": {
+        "en": "Late night",
+        "es": "Trasnoche"
+      },
+      "icon": "sleep",
+      "steps": [
+        { "button": "night_mode_on" },
+        { "button": "dialogue_on" },
+        { "button": "range_night" },
+        { "key": "volume_down", "repeat": 4, "delayMs": 200 },
+        { "button": "lights_off" },
+        { "button": "hall_low" }
+      ]
+    },
+    {
+      "id": "back_to_normal",
+      "label": {
+        "en": "Back to normal",
+        "es": "Volver a lo normal"
+      },
+      "icon": "receiver",
+      "steps": [
+        { "button": "night_mode_off" },
+        { "button": "dialogue_off" },
+        { "button": "range_normal" },
+        { "key": "volume_up", "repeat": 4, "delayMs": 200 }
+      ]
+    },
+    {
+      "id": "night_mode_on",
+      "label": {
+        "en": "Night mode on",
+        "es": "Modo noche sí"
+      },
+      "icon": "receiver",
+      "service": {
+        "action": "switch.turn_on",
+        "target": {
+          "entity_id": "{{night_switch}}"
+        }
+      }
+    },
+    {
+      "id": "night_mode_off",
+      "label": {
+        "en": "Night mode off",
+        "es": "Modo noche no"
+      },
+      "icon": "receiver",
+      "service": {
+        "action": "switch.turn_off",
+        "target": {
+          "entity_id": "{{night_switch}}"
+        }
+      }
+    },
+    {
+      "id": "dialogue_on",
+      "label": {
+        "en": "Dialogue boost on",
+        "es": "Diálogos sí"
+      },
+      "icon": "speaker",
+      "service": {
+        "action": "switch.turn_on",
+        "target": {
+          "entity_id": "{{dialogue_switch}}"
+        }
+      }
+    },
+    {
+      "id": "dialogue_off",
+      "label": {
+        "en": "Dialogue boost off",
+        "es": "Diálogos no"
+      },
+      "icon": "speaker",
+      "service": {
+        "action": "switch.turn_off",
+        "target": {
+          "entity_id": "{{dialogue_switch}}"
+        }
+      }
+    },
+    {
+      "id": "range_night",
+      "label": {
+        "en": "Night range",
+        "es": "Rango de noche"
+      },
+      "icon": "volume_down",
+      "needs": [
+        "range_night"
+      ],
+      "service": {
+        "action": "select.select_option",
+        "target": {
+          "entity_id": "{{range_select}}"
+        },
+        "data": {
+          "option": "{{range_night}}"
+        }
+      }
+    },
+    {
+      "id": "range_normal",
+      "label": {
+        "en": "Normal range",
+        "es": "Rango normal"
+      },
+      "icon": "volume_up",
+      "needs": [
+        "range_normal"
+      ],
+      "service": {
+        "action": "select.select_option",
+        "target": {
+          "entity_id": "{{range_select}}"
+        },
+        "data": {
+          "option": "{{range_normal}}"
+        }
+      }
+    },
+    {
+      "id": "lights_off",
+      "label": {
+        "en": "Lights off",
+        "es": "Apagar luces"
+      },
+      "icon": "brightness_down",
+      "service": {
+        "action": "light.turn_off",
+        "target": {
+          "entity_id": "{{lights}}"
+        }
+      }
+    },
+    {
+      "id": "hall_low",
+      "label": {
+        "en": "Hall light low",
+        "es": "Pasillo tenue"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 10
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{hall}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    }
+  ]
+}

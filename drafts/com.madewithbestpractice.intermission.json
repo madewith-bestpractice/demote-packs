@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.intermission",
+  "version": "0.1.0",
+  "name": {
+    "en": "Intermission",
+    "es": "Intermedio"
+  },
+  "description": {
+    "en": "Pause the TV and bring the lights up, then dim them and play again, with Home Assistant.",
+    "es": "Pausa la TV y sube las luces, luego atenúalas y vuelve a reproducir, con Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "pause",
+  "accent": "amber",
+  "engine": "home_assistant",
+  "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)"
+      },
+      "domain": "light"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "intermission",
+      "label": {
+        "en": "Intermission",
+        "es": "Intermedio"
+      },
+      "icon": "pause",
+      "steps": [
+        { "key": "pause" },
+        { "button": "lights_half" }
+      ]
+    },
+    {
+      "id": "resume",
+      "label": {
+        "en": "Resume",
+        "es": "Reanudar"
+      },
+      "icon": "play",
+      "steps": [
+        { "button": "lights_down", "delayMs": 1000 },
+        { "key": "play" }
+      ]
+    },
+    {
+      "id": "lights_half",
+      "label": {
+        "en": "Lights halfway",
+        "es": "Luces a medias"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 50
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "lights_up",
+      "label": {
+        "en": "Lights up",
+        "es": "Luces al máximo"
+      },
+      "icon": "brightness_up",
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "brightness_pct": 100
+        }
+      }
+    },
+    {
+      "id": "lights_down",
+      "label": {
+        "en": "Lights down",
+        "es": "Bajar luces"
+      },
+      "icon": "brightness_down",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 15
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "lights_off",
+      "label": {
+        "en": "Lights off",
+        "es": "Apagar luces"
+      },
+      "icon": "brightness_down",
+      "service": {
+        "action": "light.turn_off",
+        "target": {
+          "entity_id": "{{lights}}"
+        }
+      }
+    }
+  ]
+}
