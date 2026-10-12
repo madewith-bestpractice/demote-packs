@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.movie-night",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "name": {
     "en": "Movie night",
     "es": "Noche de película"

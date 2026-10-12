@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.game-night",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": {
     "en": "Game night",
     "es": "Noche de juegos"
@@ -116,7 +116,7 @@
           },
           "options": [
             {
-              "value": "purple",
+              "value": "darkviolet",
               "label": {
                 "en": "Purple",
                 "es": "Morado"
@@ -165,7 +165,7 @@
               }
             }
           ],
-          "default": "purple"
+          "default": "darkviolet"
         },
         {
           "id": "level",

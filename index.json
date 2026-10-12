@@ -2,6 +2,108 @@
   "schema": 1,
   "packs": [
     {
+      "id": "com.madewithbestpractice.bedtime",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.bedtime.json",
+      "sha256": "554cc4b66947d53985c45b0260b30f7a1b4ff66401016a0f9e01173b129cf0f6",
+      "name": {
+        "en": "Bedtime",
+        "es": "Hora de dormir"
+      },
+      "description": {
+        "en": "Turn off the TV and lights, leave the hall light low, and set the fan and thermostat with Home Assistant.",
+        "es": "Apaga la TV y las luces, deja el pasillo tenue y ajusta ventilador y termostato con Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "sleep",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "bedtime",
+          "label": {
+            "en": "Bedtime",
+            "es": "A dormir"
+          },
+          "icon": "sleep",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "wind_down",
+          "label": {
+            "en": "Wind down",
+            "es": "Relajarse"
+          },
+          "icon": "brightness_down",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "hall_light",
+          "label": {
+            "en": "Hall light",
+            "es": "Luz del pasillo"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "tv_off",
+          "label": {
+            "en": "TV off",
+            "es": "Apagar TV"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_off",
+          "label": {
+            "en": "Lights off",
+            "es": "Apagar luces"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "dim_lights",
+          "label": {
+            "en": "Dim lights",
+            "es": "Atenuar luces"
+          },
+          "icon": "brightness_down",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "fan_low",
+          "label": {
+            "en": "Fan low",
+            "es": "Ventilador bajo"
+          },
+          "icon": "fan",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "thermostat",
+          "label": {
+            "en": "Set thermostat",
+            "es": "Ajustar termostato"
+          },
+          "icon": "settings",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
       "id": "com.madewithbestpractice.bitfocus-companion",
       "version": "0.1.0",
       "path": "packs/com.madewithbestpractice.bitfocus-companion.json",
@@ -395,6 +497,108 @@
           },
           "icon": "speaker",
           "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.game-night",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.game-night.json",
+      "sha256": "490d5102c98525b9634a816781e6da4f9d33c43c0d68fc379a0fb6468e09d895",
+      "name": {
+        "en": "Game night",
+        "es": "Noche de juegos"
+      },
+      "description": {
+        "en": "Set game lighting, the receiver's game input and sound mode, and the fan with Home Assistant.",
+        "es": "Pon luces de juego, la entrada y el modo de sonido de juego del receptor y el ventilador con Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "scene",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "game_on",
+          "label": {
+            "en": "Game on",
+            "es": "A jugar"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "game_lights",
+          "label": {
+            "en": "Game lights",
+            "es": "Luces de juego"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "tv_light_on",
+          "label": {
+            "en": "Behind-TV light on",
+            "es": "Encender luz tras la TV"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "game_input",
+          "label": {
+            "en": "Game input",
+            "es": "Entrada de juego"
+          },
+          "icon": "input",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "game_sound",
+          "label": {
+            "en": "Game sound mode",
+            "es": "Modo de sonido de juego"
+          },
+          "icon": "speaker",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_normal",
+          "label": {
+            "en": "Lights normal",
+            "es": "Luces normales"
+          },
+          "icon": "brightness_up",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "fan_on",
+          "label": {
+            "en": "Fan on",
+            "es": "Encender ventilador"
+          },
+          "icon": "fan",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "fan_off",
+          "label": {
+            "en": "Fan off",
+            "es": "Apagar ventilador"
+          },
+          "icon": "fan",
+          "asks": false,
           "macro": false
         }
       ]
@@ -835,6 +1039,260 @@
           },
           "icon": "scene",
           "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.movie-night",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.movie-night.json",
+      "sha256": "256baee5522e281c4ef0f74bb92d24bc9b0586e8117f9ec0d6ae5aa0b452637f",
+      "name": {
+        "en": "Movie night",
+        "es": "Noche de película"
+      },
+      "description": {
+        "en": "Dim the lights, close the blinds and set the receiver, one at a time or in one tap.",
+        "es": "Baja las luces, cierra las persianas y prepara el receptor, de uno en uno o con un toque."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "scene",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "start_movie",
+          "label": {
+            "en": "Start movie",
+            "es": "Empezar película"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "intermission",
+          "label": {
+            "en": "Intermission",
+            "es": "Intermedio"
+          },
+          "icon": "pause",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "resume",
+          "label": {
+            "en": "Resume",
+            "es": "Reanudar"
+          },
+          "icon": "play",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "end_movie",
+          "label": {
+            "en": "End movie",
+            "es": "Terminar película"
+          },
+          "icon": "stop",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "dim_lights",
+          "label": {
+            "en": "Dim lights",
+            "es": "Atenuar luces"
+          },
+          "icon": "brightness_down",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "lights_up",
+          "label": {
+            "en": "Lights up",
+            "es": "Luces al máximo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_half",
+          "label": {
+            "en": "Lights to 50%",
+            "es": "Luces al 50 %"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "close_blinds",
+          "label": {
+            "en": "Close blinds",
+            "es": "Cerrar persianas"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "open_blinds",
+          "label": {
+            "en": "Open blinds",
+            "es": "Abrir persianas"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "tv_light_on",
+          "label": {
+            "en": "Behind-TV light on",
+            "es": "Encender luz tras la TV"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "tv_light_off",
+          "label": {
+            "en": "Behind-TV light off",
+            "es": "Apagar luz tras la TV"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "receiver_input",
+          "label": {
+            "en": "Receiver input",
+            "es": "Entrada del receptor"
+          },
+          "icon": "input",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "fan_off",
+          "label": {
+            "en": "Fan off",
+            "es": "Apagar ventilador"
+          },
+          "icon": "fan",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.projector-night",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.projector-night.json",
+      "sha256": "3db4fe88ef01e4e7e00100a941158218d41ccf596c0c4b2a0b0c86cb63ee1739",
+      "name": {
+        "en": "Projector night",
+        "es": "Noche de proyector"
+      },
+      "description": {
+        "en": "Lower the screen, turn on the projector, dim the room and set the receiver with Home Assistant.",
+        "es": "Baja la pantalla, enciende el proyector, oscurece la sala y prepara el receptor con Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "scene",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "showtime",
+          "label": {
+            "en": "Showtime",
+            "es": "Empieza la función"
+          },
+          "icon": "scene",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "screen_down",
+          "label": {
+            "en": "Screen down",
+            "es": "Bajar pantalla"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "screen_up",
+          "label": {
+            "en": "Screen up",
+            "es": "Subir pantalla"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "projector_on",
+          "label": {
+            "en": "Projector on",
+            "es": "Encender proyector"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "projector_on_ir",
+          "label": {
+            "en": "Projector on (IR)",
+            "es": "Encender proyector (IR)"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_off",
+          "label": {
+            "en": "Lights off",
+            "es": "Apagar luces"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_up",
+          "label": {
+            "en": "Lights up",
+            "es": "Luces al máximo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "receiver_input",
+          "label": {
+            "en": "Receiver input",
+            "es": "Entrada del receptor"
+          },
+          "icon": "input",
+          "asks": false,
           "macro": false
         }
       ]
