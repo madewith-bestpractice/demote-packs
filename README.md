@@ -35,14 +35,20 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 | Falcon Player | Start, stop and skip light show playlists and set the volume on Falcon Player (FPP). |
 | Bitfocus Companion | Press any Companion button by its page, row and column. |
 | IFTTT webhooks | Trigger IFTTT applets with the Webhooks service (needs IFTTT Pro). |
+| Movie night | Dim the lights, close the blinds and set the receiver with Home Assistant, one at a time or in one tap. |
+| Game night | Game lighting in a chosen colour, the receiver's game input and sound mode, and the fan with Home Assistant. |
+| Bedtime | Turn off the TV and lights, leave the hall light low, and set the fan and thermostat with Home Assistant. |
+| Projector night | Lower the screen, turn on the projector, dim the room and set the receiver with Home Assistant. |
 
 Each pack works on the devices and firmware its file describes. Packs are
 checked automatically and reviewed before they're listed, but not every
 model has been tried. If a button doesn't work on yours, please report it.
 
-Waiting in [`drafts/`](drafts/) for hardware tests: Sonos, IR devices through
-Home Assistant, and the Movie night, Game night, Bedtime and Projector night
-scene packs.
+The four scene packs (Movie night, Game night, Bedtime and Projector night)
+were tested against Home Assistant's demo devices, not real hardware.
+
+Waiting in [`drafts/`](drafts/) for hardware tests: Sonos and IR devices
+through Home Assistant.
 
 ## Using packs in Demote
 
