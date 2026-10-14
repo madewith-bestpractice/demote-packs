@@ -15,8 +15,7 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 - **Reviewed.** Anyone can open a pull request. Nothing reaches the app
   until it's reviewed and merged.
 
-> Button packs arrive in Demote's next update. The packs below are
-> published and ready for it.
+> Button packs are in Demote 2.1 and later.
 
 ## Published packs
 
@@ -27,6 +26,7 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 | Kodi | Navigation, playback and volume for Kodi over its web server's JSON-RPC. |
 | Denon & Marantz receiver | Power, volume, inputs and sound modes for networked Denon and Marantz receivers. |
 | Yamaha MusicCast | Power, volume, inputs, sound programs and Clear Voice for MusicCast receivers and soundbars. |
+| Sonos | Play, pause, volume, mute, night mode, speech enhancement and the TV input for a Sonos soundbar. |
 | Lyrion Music Server | Play, skip, volume, power and presets for a Squeezebox or squeezelite player. |
 | Shelly | Switch and dim Shelly Gen2 and newer relays and dimmers. |
 | Tasmota | Switch relays and dim lights on Tasmota plugs, switches and bulbs. |
@@ -35,20 +35,23 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 | Falcon Player | Start, stop and skip light show playlists and set the volume on Falcon Player (FPP). |
 | Bitfocus Companion | Press any Companion button by its page, row and column. |
 | IFTTT webhooks | Trigger IFTTT applets with the Webhooks service (needs IFTTT Pro). |
+| IR devices via Home Assistant | Send learned IR commands, such as power, volume and input, through a Home Assistant remote like a Broadlink. |
 | Movie night | Dim the lights, close the blinds and set the receiver with Home Assistant, one at a time or in one tap. |
 | Game night | Game lighting in a chosen colour, the receiver's game input and sound mode, and the fan with Home Assistant. |
 | Bedtime | Turn off the TV and lights, leave the hall light low, and set the fan and thermostat with Home Assistant. |
 | Projector night | Lower the screen, turn on the projector, dim the room and set the receiver with Home Assistant. |
+| Intermission | Pause the TV and bring the lights up, then dim them and play again, with Home Assistant. |
+| Late night | Quiet the receiver, ease the TV down, turn the lights off and leave the hall light low, with Home Assistant. |
 
 Each pack works on the devices and firmware its file describes. Packs are
 checked automatically and reviewed before they're listed, but not every
 model has been tried. If a button doesn't work on yours, please report it.
 
-The four scene packs (Movie night, Game night, Bedtime and Projector night)
-were tested against Home Assistant's demo devices, not real hardware.
-
-Waiting in [`drafts/`](drafts/) for hardware tests: Sonos and IR devices
-through Home Assistant.
+Some packs haven't been tried on real hardware yet. The six scene packs
+(Movie night, Game night, Bedtime, Projector night, Intermission and Late
+night) were tested against Home Assistant's demo devices, IR devices via Home
+Assistant against Home Assistant's own `remote.send_command`, and Sonos
+against its documented local control protocol.
 
 ## Using packs in Demote
 
