@@ -1,0 +1,283 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.govee",
+  "version": "0.1.0",
+  "name": {
+    "en": "Govee lights",
+    "es": "Luces Govee"
+  },
+  "description": {
+    "en": "On, off, brightness, colour and white for one Govee Wi-Fi light, through Govee's cloud API.",
+    "es": "Enciende, apaga, regula y cambia el color de una luz Govee wifi con la API en la nube de Govee."
+  },
+  "vendor": "Govee",
+  "author": "Made with Best Practice",
+  "icon": "lightbulb",
+  "accent": "pink",
+  "engine": "http",
+  "network": "internet",
+  "variables": [
+    {
+      "id": "key",
+      "scope": "pack",
+      "type": "secret",
+      "label": {
+        "en": "API key (Govee Home app › Settings › Apply for API Key)",
+        "es": "Clave de API (app Govee Home › Ajustes › Solicitar clave de API)"
+      }
+    },
+    {
+      "id": "sku",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Model (SKU), from Govee's device list",
+        "es": "Modelo (SKU), de la lista de equipos de Govee"
+      },
+      "placeholder": "H6159"
+    },
+    {
+      "id": "device",
+      "scope": "pack",
+      "type": "text",
+      "label": {
+        "en": "Device ID, from Govee's device list",
+        "es": "ID del equipo, de la lista de equipos de Govee"
+      },
+      "placeholder": "64:09:C5:32:37:36:2D:13"
+    }
+  ],
+  "buttons": [
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.on_off",
+              "instance": "powerSwitch",
+              "value": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "es": "Apagar"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.on_off",
+              "instance": "powerSwitch",
+              "value": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "brightness",
+      "label": {
+        "en": "Brightness",
+        "es": "Brillo"
+      },
+      "icon": "brightness_up",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 50
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.range",
+              "instance": "brightness",
+              "value": "{{level}}"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "colour",
+      "label": {
+        "en": "Colour",
+        "es": "Color"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "rgb",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Colour as an RGB number (0–16777215)",
+            "es": "Color como número RGB (0–16777215)"
+          },
+          "placeholder": "16711680 red, 65280 green, 255 blue",
+          "min": 0,
+          "max": 16777215,
+          "default": 16747520
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": "{{rgb}}"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "white",
+      "label": {
+        "en": "White",
+        "es": "Blanco"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "kelvin",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Colour temperature (K)",
+            "es": "Temperatura de color (K)"
+          },
+          "min": 2000,
+          "max": 9000,
+          "default": 2700
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorTemperatureK",
+              "value": "{{kelvin}}"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "tv_on",
+      "label": {
+        "en": "TV and lights on",
+        "es": "Encender TV y luces"
+      },
+      "icon": "wakeup",
+      "steps": [
+        {
+          "key": "wakeup",
+          "delayMs": 1000
+        },
+        {
+          "button": "on"
+        }
+      ]
+    },
+    {
+      "id": "tv_off",
+      "label": {
+        "en": "TV and lights off",
+        "es": "Apagar TV y luces"
+      },
+      "icon": "sleep",
+      "steps": [
+        {
+          "button": "off"
+        },
+        {
+          "key": "sleep"
+        }
+      ]
+    }
+  ]
+}

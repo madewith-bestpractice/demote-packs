@@ -1,0 +1,637 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.sony-audio",
+  "version": "0.1.0",
+  "name": {
+    "en": "Sony soundbar & receiver",
+    "es": "Barra de sonido y receptor Sony"
+  },
+  "description": {
+    "en": "Power, volume, inputs, sound field, night mode and voice for networked Sony soundbars and receivers.",
+    "es": "Encendido, volumen, entradas, campo de sonido, modo nocturno y voz para barras y receptores Sony en red."
+  },
+  "vendor": "Sony",
+  "author": "Made with Best Practice",
+  "icon": "receiver",
+  "accent": "blue",
+  "engine": "http",
+  "network": "local",
+  "variables": [
+    {
+      "id": "host",
+      "scope": "pack",
+      "type": "host",
+      "label": {
+        "en": "Soundbar or receiver address",
+        "es": "Dirección de la barra o el receptor"
+      },
+      "placeholder": "192.168.1.50"
+    },
+    {
+      "id": "port",
+      "scope": "pack",
+      "type": "port",
+      "label": {
+        "en": "Port",
+        "es": "Puerto"
+      },
+      "default": 10000
+    },
+    {
+      "id": "zone",
+      "scope": "pack",
+      "type": "choice",
+      "optional": true,
+      "label": {
+        "en": "Receiver zone (leave empty on a soundbar)",
+        "es": "Zona del receptor (vacía en una barra de sonido)"
+      },
+      "options": [
+        {
+          "value": "extOutput:zone?zone=1",
+          "label": {
+            "en": "Main zone",
+            "es": "Zona principal"
+          }
+        },
+        {
+          "value": "extOutput:zone?zone=2",
+          "label": {
+            "en": "Zone 2",
+            "es": "Zona 2"
+          }
+        },
+        {
+          "value": "extOutput:zone?zone=3",
+          "label": {
+            "en": "Zone 3",
+            "es": "Zona 3"
+          }
+        },
+        {
+          "value": "extOutput:zone?zone=4",
+          "label": {
+            "en": "Zone 4",
+            "es": "Zona 4"
+          }
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "id": "power_on",
+      "label": {
+        "en": "Power on",
+        "es": "Encender"
+      },
+      "icon": "power",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/system",
+        "contentType": "application/json",
+        "body": {
+          "method": "setPowerStatus",
+          "id": 1,
+          "params": [
+            {
+              "status": "active"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "power_off",
+      "label": {
+        "en": "Power off",
+        "es": "Apagar"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/system",
+        "contentType": "application/json",
+        "body": {
+          "method": "setPowerStatus",
+          "id": 1,
+          "params": [
+            {
+              "status": "off"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "volume_up",
+      "label": {
+        "en": "Volume up",
+        "es": "Subir volumen"
+      },
+      "icon": "volume_up",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setAudioVolume",
+          "id": 1,
+          "params": [
+            {
+              "volume": "+1",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "volume_down",
+      "label": {
+        "en": "Volume down",
+        "es": "Bajar volumen"
+      },
+      "icon": "volume_down",
+      "repeat": true,
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setAudioVolume",
+          "id": 1,
+          "params": [
+            {
+              "volume": "-1",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "set_volume",
+      "label": {
+        "en": "Set volume",
+        "es": "Fijar volumen"
+      },
+      "icon": "speaker",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "text",
+          "label": {
+            "en": "Volume level, such as 20",
+            "es": "Nivel de volumen, como 20"
+          },
+          "placeholder": "20",
+          "default": "20"
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setAudioVolume",
+          "id": 1,
+          "params": [
+            {
+              "volume": "{{level}}",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "mute",
+      "label": {
+        "en": "Mute",
+        "es": "Silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setAudioMute",
+          "id": 1,
+          "params": [
+            {
+              "mute": "on",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "unmute",
+      "label": {
+        "en": "Unmute",
+        "es": "Quitar silencio"
+      },
+      "icon": "mute",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setAudioMute",
+          "id": 1,
+          "params": [
+            {
+              "mute": "off",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "input",
+      "label": {
+        "en": "Input",
+        "es": "Entrada"
+      },
+      "icon": "input",
+      "variables": [
+        {
+          "id": "input",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "default": "extInput:tv",
+          "options": [
+            {
+              "value": "extInput:tv",
+              "label": {
+                "en": "TV (HDMI ARC or optical)",
+                "es": "TV (HDMI ARC u óptica)"
+              }
+            },
+            {
+              "value": "extInput:hdmi?port=1",
+              "label": {
+                "en": "HDMI 1",
+                "es": "HDMI 1"
+              }
+            },
+            {
+              "value": "extInput:hdmi?port=2",
+              "label": {
+                "en": "HDMI 2",
+                "es": "HDMI 2"
+              }
+            },
+            {
+              "value": "extInput:hdmi?port=3",
+              "label": {
+                "en": "HDMI 3",
+                "es": "HDMI 3"
+              }
+            },
+            {
+              "value": "extInput:btAudio",
+              "label": {
+                "en": "Bluetooth",
+                "es": "Bluetooth"
+              }
+            },
+            {
+              "value": "extInput:line",
+              "label": {
+                "en": "Analog in",
+                "es": "Entrada analógica"
+              }
+            },
+            {
+              "value": "extInput:bd-dvd",
+              "label": {
+                "en": "BD/DVD (receivers)",
+                "es": "BD/DVD (receptores)"
+              }
+            },
+            {
+              "value": "extInput:game",
+              "label": {
+                "en": "Game (receivers)",
+                "es": "Juegos (receptores)"
+              }
+            },
+            {
+              "value": "extInput:sat-catv",
+              "label": {
+                "en": "SAT/CATV (receivers)",
+                "es": "SAT/CATV (receptores)"
+              }
+            },
+            {
+              "value": "extInput:video?port=1",
+              "label": {
+                "en": "Video 1 (receivers)",
+                "es": "Video 1 (receptores)"
+              }
+            },
+            {
+              "value": "extInput:video?port=2",
+              "label": {
+                "en": "Video 2 (receivers)",
+                "es": "Video 2 (receptores)"
+              }
+            },
+            {
+              "value": "extInput:sacd-cd",
+              "label": {
+                "en": "SA-CD/CD (receivers)",
+                "es": "SA-CD/CD (receptores)"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/avContent",
+        "contentType": "application/json",
+        "body": {
+          "method": "setPlayContent",
+          "id": 1,
+          "params": [
+            {
+              "uri": "{{input}}",
+              "output": "{{zone}}"
+            }
+          ],
+          "version": "1.2"
+        }
+      }
+    },
+    {
+      "id": "sound_field",
+      "label": {
+        "en": "Sound field",
+        "es": "Campo de sonido"
+      },
+      "icon": "audio_track",
+      "variables": [
+        {
+          "id": "field",
+          "scope": "button",
+          "type": "choice",
+          "label": {
+            "en": "Sound field",
+            "es": "Campo de sonido"
+          },
+          "options": [
+            {
+              "value": "clearAudio",
+              "label": {
+                "en": "ClearAudio+",
+                "es": "ClearAudio+"
+              }
+            },
+            {
+              "value": "standard",
+              "label": {
+                "en": "Standard",
+                "es": "Estándar"
+              }
+            },
+            {
+              "value": "movie",
+              "label": {
+                "en": "Movie",
+                "es": "Película"
+              }
+            },
+            {
+              "value": "music",
+              "label": {
+                "en": "Music",
+                "es": "Música"
+              }
+            },
+            {
+              "value": "game",
+              "label": {
+                "en": "Game",
+                "es": "Juegos"
+              }
+            },
+            {
+              "value": "sports",
+              "label": {
+                "en": "Sports",
+                "es": "Deportes"
+              }
+            },
+            {
+              "value": "news",
+              "label": {
+                "en": "News",
+                "es": "Noticias"
+              }
+            },
+            {
+              "value": "auto",
+              "label": {
+                "en": "Auto",
+                "es": "Automático"
+              }
+            },
+            {
+              "value": "cinemaStudio",
+              "label": {
+                "en": "Cinema Studio (receivers)",
+                "es": "Cinema Studio (receptores)"
+              }
+            },
+            {
+              "value": "concertHallA",
+              "label": {
+                "en": "Concert Hall A (receivers)",
+                "es": "Sala de conciertos A (receptores)"
+              }
+            },
+            {
+              "value": "jazz",
+              "label": {
+                "en": "Jazz club (receivers)",
+                "es": "Club de jazz (receptores)"
+              }
+            },
+            {
+              "value": "live",
+              "label": {
+                "en": "Live concert (receivers)",
+                "es": "Concierto en vivo (receptores)"
+              }
+            },
+            {
+              "value": "stadium",
+              "label": {
+                "en": "Stadium (receivers)",
+                "es": "Estadio (receptores)"
+              }
+            },
+            {
+              "value": "portableAudio",
+              "label": {
+                "en": "Portable Audio (receivers)",
+                "es": "Audio portátil (receptores)"
+              }
+            }
+          ]
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setSoundSettings",
+          "id": 1,
+          "params": [
+            {
+              "settings": [
+                {
+                  "target": "soundField",
+                  "value": "{{field}}"
+                }
+              ]
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "night_on",
+      "label": {
+        "en": "Night mode on",
+        "es": "Activar modo nocturno"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setSoundSettings",
+          "id": 1,
+          "params": [
+            {
+              "settings": [
+                {
+                  "target": "nightMode",
+                  "value": "on"
+                }
+              ]
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "night_off",
+      "label": {
+        "en": "Night mode off",
+        "es": "Desactivar modo nocturno"
+      },
+      "icon": "sleep",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setSoundSettings",
+          "id": 1,
+          "params": [
+            {
+              "settings": [
+                {
+                  "target": "nightMode",
+                  "value": "off"
+                }
+              ]
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "voice_on",
+      "label": {
+        "en": "Voice on",
+        "es": "Activar voz"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setSoundSettings",
+          "id": 1,
+          "params": [
+            {
+              "settings": [
+                {
+                  "target": "voice",
+                  "value": "type2"
+                }
+              ]
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    },
+    {
+      "id": "voice_off",
+      "label": {
+        "en": "Voice off",
+        "es": "Desactivar voz"
+      },
+      "icon": "captions",
+      "request": {
+        "method": "POST",
+        "url": "http://{{host}}:{{port}}/sony/audio",
+        "contentType": "application/json",
+        "body": {
+          "method": "setSoundSettings",
+          "id": 1,
+          "params": [
+            {
+              "settings": [
+                {
+                  "target": "voice",
+                  "value": "type1"
+                }
+              ]
+            }
+          ],
+          "version": "1.1"
+        }
+      }
+    }
+  ]
+}

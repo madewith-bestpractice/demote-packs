@@ -1,8 +1,10 @@
 # Draft packs
 
 First-party packs by Made with Best Practice start here before they're
-published. There are no drafts right now: all 21 first-party packs are in
-`packs/`. This page keeps what each one still needs checked on real hardware.
+published. Two are drafts now, Govee lights and Sony soundbars and
+receivers (see [Ready to publish after protocol checks](#ready-to-publish-after-protocol-checks));
+the other 21 first-party packs are in `packs/`. This page keeps what each one
+still needs checked on real hardware.
 `tools/build_index.py` reads only `packs/`, so nothing in `drafts/` is in
 `index.json` or reaches the app.
 
@@ -41,6 +43,96 @@ dialogue and dynamic range settings. Still to check on real devices: a
 receiver that exposes these in Home Assistant (option names must match
 exactly; a wrong one fails), a light group, and the TV keys on a real TV.
 
+## Ready to publish after protocol checks
+
+Govee lights and Sony soundbars and receivers were drafted on 2026-10-13
+without hardware, like Sonos. Every request (URL, method, headers, body and
+value types) was checked against the vendor's published API and a reference
+implementation; nothing was sent to Govee's service or to a device.
+
+**Govee lights** (internet). Each button is `POST
+https://openapi.api.govee.com/router/api/v1/device/control` with a
+`Govee-API-Key` header and `{"requestId", "payload": {"sku", "device",
+"capability": {"type", "instance", "value"}}}`, as in Govee's
+[control reference](https://developer.govee.com/reference/control-you-devices)
+and govee2mqtt's
+[control_device](https://github.com/wez/govee2mqtt/blob/6f5a8449ca63da8bdc7cc696288a993681ff2a69/src/platform_api.rs#L101-L129),
+[set_brightness, set_color_temperature and set_color_rgb](https://github.com/wez/govee2mqtt/blob/6f5a8449ca63da8bdc7cc696288a993681ff2a69/src/platform_api.rs#L430-L486)
+and [the key header](https://github.com/wez/govee2mqtt/blob/6f5a8449ca63da8bdc7cc696288a993681ff2a69/src/platform_api.rs#L1071-L1104).
+Values go as JSON numbers: `powerSwitch` 1/0, `brightness` 1–100,
+`colorRgb` as one number (`R×65536 + G×256 + B`), `colorTemperatureK`
+2000–9000. The key comes from the Govee Home app (Settings › Apply for API
+Key, per [Govee's guide](https://developer.govee.com/reference/apply-you-govee-api-key)).
+The model (`sku`) and device ID (`device`) come from the
+[device list](https://developer.govee.com/reference/get-you-devices)
+(`GET /router/api/v1/user/devices` with the key), which the pack can't call
+for the user because Demote doesn't read replies. Limits: control is 2
+requests a second per device (burst 6) and 12 a second per account, with a
+429 past that, so no button holds to repeat.
+
+Left out: scenes. A light scene needs a `paramId` and `id` pair from
+[`POST /device/scenes`](https://developer.govee.com/reference/get-light-scene),
+per device, and DIY scenes and snapshots need ids from the device's
+capability list; the pack has no way to look them up. Also left out:
+segment colours, and a colour picker (packs can't turn R, G and B into one
+number, and a `choice` sends a string, which Govee's examples don't use).
+
+Still to check on real hardware: a Wi-Fi Govee strip and bulb (Bluetooth-only
+models aren't in the cloud API); that a wrong key or device ID shows as a
+failure in Demote (Govee may answer 200 with an error `code` in the body,
+which Demote doesn't read); whether Brightness and Colour turn on a light
+that's off; each light's own brightness and Kelvin range (they come from its
+capabilities, so 2000–9000 may be out of range on some); whether a 10,000
+requests a day account cap still applies (the current docs don't say); and
+how a user without a terminal finds the device ID, which is the weakest part
+of setup.
+
+**Sony soundbars and receivers** (local). Each button is `POST
+http://<address>:10000/sony/<system|audio|avContent>` with a JSON-RPC body
+`{"method", "id", "params": [{…}], "version"}`: `setPowerStatus` 1.1
+(`status` `active`/`off`), `setAudioVolume` 1.1 (`volume` as a string:
+`"+1"`, `"-1"` or a level), `setAudioMute` 1.1 (`on`/`off`), `setPlayContent`
+1.2 (`uri` such as `extInput:hdmi?port=1`), and `setSoundSettings` 1.1 for
+`soundField`, `nightMode` (`on`/`off`) and `voice` (`type2` on, `type1` off).
+On a receiver, the optional zone sends `output` (`extOutput:zone?zone=N`);
+left empty it's left out, which means every output. Sources: Sony's Audio
+Control API reference, now only on the
+[Wayback Machine](https://web.archive.org/web/20230325035250/https://developer.sony.com/develop/audio-control-api/api-references/api-overview-2)
+(developer.sony.com redirects away), with each method's request format,
+value list and the required settings; python-songpal's
+[request body](https://github.com/rytilahti/python-songpal/blob/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/songpal/service.py#L193-L225),
+[set_power](https://github.com/rytilahti/python-songpal/blob/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/songpal/device.py#L178-L185),
+[set_sound_settings](https://github.com/rytilahti/python-songpal/blob/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/songpal/device.py#L453-L456),
+[set_mute, set_volume](https://github.com/rytilahti/python-songpal/blob/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/songpal/containers.py#L357-L377)
+and [input activate](https://github.com/rytilahti/python-songpal/blob/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/songpal/containers.py#L454-L459),
+and its [device dumps](https://github.com/rytilahti/python-songpal/tree/b738847b8fafffefb7fda2cfc02b8c2511c6a5be/devinfos)
+(method versions, `xhrpost` on `audio`, `avContent` and `system`, and which
+models expose `nightMode` and `voice`); openHAB's sonyaudio
+[method versions](https://github.com/openhab/openhab-addons/blob/9bc040e31aa24e05e894dfd19852bdea45e75220/bundles/org.openhab.binding.sonyaudio/src/main/java/org/openhab/binding/sonyaudio/internal/protocol/SonyAudioMethod.java#L64-L370)
+and input URIs for
+[soundbars](https://github.com/openhab/openhab-addons/blob/9bc040e31aa24e05e894dfd19852bdea45e75220/bundles/org.openhab.binding.sonyaudio/src/main/java/org/openhab/binding/sonyaudio/internal/handler/HtSt5000Handler.java#L33-L55)
+and [the STR-DN1080](https://github.com/openhab/openhab-addons/blob/9bc040e31aa24e05e894dfd19852bdea45e75220/bundles/org.openhab.binding.sonyaudio/src/main/java/org/openhab/binding/sonyaudio/internal/handler/StrDn1080Handler.java#L43-L72);
+Home Assistant's [Songpal notes](https://www.home-assistant.io/integrations/songpal/).
+
+Models: Sony documents the HT-ST5000, HT-MT500, HT-CT800, HT-ZF9 and
+STR-DN1080; songpal and openHAB also report the HT-NT5, HT-XT2/XT3, HT-Z9F, STR-DN1060/1070,
+STR-AN1000 and STR-AZ/ZA ES receivers. Newer HT-A and BRAVIA Theatre bars
+aren't confirmed. Wireless speakers (SRS, port 54480) aren't a target. Power
+on needs Quick Start/Network Standby on (Remote Start for Wake-on-LAN, which
+packs can't send); Sony notes EU STR receivers don't take commands in standby
+at all.
+
+Still to check on real hardware: a soundbar (HT-ZF9 or HT-ST5000) and a
+receiver (STR-DN1080 or STR-AN1000). Demote counts any 2xx as success and
+Sony's errors may come back as 200 with an `error` array, so check each
+button actually changes the device: an input or sound field the model doesn't
+have, `voice` values (Sony lists `type1`–`type3`; some bars may take
+`on`/`off`), whether mute needs `toggle` on some models (Sony says to check
+`getVolumeInformation`), Set volume with a text level, volume steps on an
+HT-XT3 (Home Assistant notes step-down misbehaves there), the zone setting
+on a receiver (main zone and zone 2, and empty), Power off then Power on with
+Quick Start on, and that night mode and voice fail cleanly on a receiver.
+
 ## Published after protocol checks
 
 IR devices via Home Assistant and Sonos were published on 2026-10-13 without
@@ -54,10 +146,12 @@ against the local UPnP control on port 1400 (control URLs, quoted
 an Arc, a Beam or Ray and an Arc Ultra, Switch to TV on an HDMI eARC bar, and
 a grouped bar (AVTransport must go to the group coordinator).
 
-## Published, hardware still to check
+## Status
 
 | Pack id | Controls | Endpoint docs | Test on hardware | Status |
 |---|---|---|---|---|
+| `com.madewithbestpractice.govee` | One Govee Wi-Fi light through Govee's cloud API (internet pack): On, Off, Brightness (1–100), Colour (one RGB number), White (2000–9000 K), and macros TV and lights on (TV `wakeup`, 1 s, On) and TV and lights off (Off, TV `sleep`). POST `https://openapi.api.govee.com/router/api/v1/device/control` with a `Govee-API-Key` header. API key, model (`sku`) and device ID are pack settings. No scenes (they need a per-device lookup). | [Control](https://developer.govee.com/reference/control-you-devices), [device list](https://developer.govee.com/reference/get-you-devices), [scenes](https://developer.govee.com/reference/get-light-scene), [API key](https://developer.govee.com/reference/apply-you-govee-api-key); [govee2mqtt platform_api.rs](https://github.com/wez/govee2mqtt/blob/6f5a8449ca63da8bdc7cc696288a993681ff2a69/src/platform_api.rs#L101-L129). | A Govee Wi-Fi strip and bulb with an API key. See [above](#ready-to-publish-after-protocol-checks) for the list. | Draft — protocol checked, needs hardware test |
+| `com.madewithbestpractice.sony-audio` | Sony soundbars and AV receivers with the Audio Control API: Power on/off, Volume up/down (hold to repeat), Set volume, Mute, Unmute, Input (TV, HDMI 1–3, Bluetooth, analog, and receiver inputs), Sound field, Night mode on/off, Voice on/off. POST `/sony/{system,audio,avContent}` on port 10000, JSON-RPC. Optional receiver zone. | [Audio Control API reference (archived)](https://web.archive.org/web/20230325035250/https://developer.sony.com/develop/audio-control-api/api-references/api-overview-2); [python-songpal](https://github.com/rytilahti/python-songpal/tree/b738847b8fafffefb7fda2cfc02b8c2511c6a5be), [openHAB sonyaudio](https://github.com/openhab/openhab-addons/tree/9bc040e31aa24e05e894dfd19852bdea45e75220/bundles/org.openhab.binding.sonyaudio). | An HT-ZF9 or HT-ST5000 and an STR-DN1080 or STR-AN1000, Quick Start/Network Standby on. See [above](#ready-to-publish-after-protocol-checks) for the list. | Draft — protocol checked, needs hardware test |
 | `com.madewithbestpractice.denon-marantz` | Denon and Marantz AV receivers: power, volume, mute, inputs, sound modes, Dialogue Enhancer, and Zone 2 power, volume and input. GET `/goform/formiPhoneAppDirect.xml?<command>`. | Commands: [Denon AVR-X2000 protocol](https://assets.denon.com/documentmaster/uk/avrx2000_e400_protocol(1010)_v03.pdf), [AVR-1713 protocol](https://assets.denon.com/documentmaster/uk/avr1713_avr1613_protocol_v860.pdf). HTTP endpoint, ports, `PSDEH`, `PHONO`/`BT`/`AUTO` (community): [denonavr const.py](https://github.com/ol-iver/denonavr/blob/main/denonavr/const.py), [openHAB binding](https://github.com/openhab/openhab-addons/blob/main/bundles/org.openhab.binding.denonmarantz/README.md). Dialogue Enhancer: [AVR-X1800H manual](https://manuals.denon.com/AVRX1800H/EU/EN/WBSPSYnqlrpqii.php). | A 2016+ Denon AVR-X on port 8080 and a pre-2016 model on port 80; a Marantz. Check `SAT/CBL` (sent as `%2F`), modes with spaces (`%20`), Dialogue Enhancer (2022+ Denon only?), Zone 2, and that power-on works with Network Control set to Always On. | Published — needs hardware test |
 | `com.madewithbestpractice.yamaha-musiccast` | Yamaha MusicCast receivers and soundbars, in a chosen zone: power toggle, volume, mute, inputs, sound programs, Clear Voice. GET `/YamahaExtendedControl/v1/<zone>/…`. | [YXC API spec (Basic) v2.0](https://github.com/rsc-dev/pyamaha/blob/master/doc/YXC_API_Spec_Basic_v2.0.pdf) §5.3 setPower, §5.5 setVolume, §5.6 setMute, §5.7 setInput, §5.8 setSoundProgram, §5.18 setClearVoice, §12 ID list; [aiomusiccast](https://github.com/vigonotion/aiomusiccast/blob/main/aiomusiccast/pyamaha.py). | A MusicCast AV receiver (main and Zone 2) and a MusicCast soundbar. Volume up/down needs API 1.17+. Check which inputs and programs each model accepts (`/system/getFeatures`). | Published — needs hardware test |
 | `com.madewithbestpractice.wled` | WLED lights: toggle, on, off, set brightness, brightness up/down, preset. POST `/json/state`. | [WLED JSON API](https://kno.wled.ge/interfaces/json-api/); `"~"` relative brightness is in the 0.13.0 changelog and [util.cpp parseNumber](https://github.com/wled/WLED/blob/b374b2a52dcdfddb3479264a1c11d6e45033d137/wled00/util.cpp#L41-L100). | Any WLED 0.13.0+ controller (e.g. an ESP32 strip). Check Brightness down at low levels (it clamps to 0, which turns the light off). | Published — needs hardware test |
