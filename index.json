@@ -790,6 +790,170 @@
       ]
     },
     {
+      "id": "com.madewithbestpractice.intermission",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.intermission.json",
+      "sha256": "1c2987db63d5c2119201628fbf0a10ff8b2d8a0eed84e216e233a3e738e48017",
+      "name": {
+        "en": "Intermission",
+        "es": "Intermedio"
+      },
+      "description": {
+        "en": "Pause the TV and bring the lights up, then dim them and play again, with Home Assistant.",
+        "es": "Pausa la TV y sube las luces, luego atenúalas y vuelve a reproducir, con Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "pause",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "intermission",
+          "label": {
+            "en": "Intermission",
+            "es": "Intermedio"
+          },
+          "icon": "pause",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "resume",
+          "label": {
+            "en": "Resume",
+            "es": "Reanudar"
+          },
+          "icon": "play",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "lights_half",
+          "label": {
+            "en": "Lights halfway",
+            "es": "Luces a medias"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "lights_up",
+          "label": {
+            "en": "Lights up",
+            "es": "Luces al máximo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_down",
+          "label": {
+            "en": "Lights down",
+            "es": "Bajar luces"
+          },
+          "icon": "brightness_down",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "lights_off",
+          "label": {
+            "en": "Lights off",
+            "es": "Apagar luces"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.ir-home-assistant",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.ir-home-assistant.json",
+      "sha256": "58772b6c14c1857800d2090b71e670990945800a31b5f67670abc60072d03c94",
+      "name": {
+        "en": "IR devices via Home Assistant",
+        "es": "Equipos IR con Home Assistant"
+      },
+      "description": {
+        "en": "Send learned IR commands through a Home Assistant remote, such as a Broadlink.",
+        "es": "Envía comandos IR aprendidos con un control de Home Assistant, como un Broadlink."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "link",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "power",
+          "label": {
+            "en": "Power",
+            "es": "Encender/apagar"
+          },
+          "icon": "power",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "input",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "icon": "input",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "custom",
+          "label": {
+            "en": "Custom command",
+            "es": "Comando personalizado"
+          },
+          "icon": "script",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
       "id": "com.madewithbestpractice.kodi",
       "version": "0.1.0",
       "path": "packs/com.madewithbestpractice.kodi.json",
@@ -927,6 +1091,128 @@
           },
           "icon": "volume_down",
           "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.late-night",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.late-night.json",
+      "sha256": "e0a9a874d0f7adf13a0b99d6cf75978cedff56d9f65ccdc2f877aacc85579b28",
+      "name": {
+        "en": "Late night",
+        "es": "Trasnoche"
+      },
+      "description": {
+        "en": "Quiet the receiver, ease the TV down, turn the lights off and leave the hall light low, with Home Assistant.",
+        "es": "Suaviza el receptor, baja la TV, apaga las luces y deja el pasillo tenue, con Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "volume_down",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "late_night",
+          "label": {
+            "en": "Late night",
+            "es": "Trasnoche"
+          },
+          "icon": "sleep",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "back_to_normal",
+          "label": {
+            "en": "Back to normal",
+            "es": "Volver a lo normal"
+          },
+          "icon": "receiver",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "night_mode_on",
+          "label": {
+            "en": "Night mode on",
+            "es": "Modo noche sí"
+          },
+          "icon": "receiver",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "night_mode_off",
+          "label": {
+            "en": "Night mode off",
+            "es": "Modo noche no"
+          },
+          "icon": "receiver",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "dialogue_on",
+          "label": {
+            "en": "Dialogue boost on",
+            "es": "Diálogos sí"
+          },
+          "icon": "speaker",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "dialogue_off",
+          "label": {
+            "en": "Dialogue boost off",
+            "es": "Diálogos no"
+          },
+          "icon": "speaker",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "range_night",
+          "label": {
+            "en": "Night range",
+            "es": "Rango de noche"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "range_normal",
+          "label": {
+            "en": "Normal range",
+            "es": "Rango normal"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_off",
+          "label": {
+            "en": "Lights off",
+            "es": "Apagar luces"
+          },
+          "icon": "brightness_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "hall_low",
+          "label": {
+            "en": "Hall light low",
+            "es": "Pasillo tenue"
+          },
+          "icon": "lightbulb",
+          "asks": true,
           "macro": false
         }
       ]
@@ -1354,6 +1640,138 @@
             "es": "Nivel del atenuador"
           },
           "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.sonos",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.sonos.json",
+      "sha256": "560d05030d043696b65fbf1761767fe0128b9b47908132951506349caa5c5cf6",
+      "name": {
+        "en": "Sonos",
+        "es": "Sonos"
+      },
+      "description": {
+        "en": "Play, volume, night mode, speech enhancement and TV input for a Sonos soundbar.",
+        "es": "Reproducción, volumen, modo nocturno, mejora de voz y entrada de TV para una barra Sonos."
+      },
+      "vendor": "Sonos",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "speaker",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "play",
+          "label": {
+            "en": "Play",
+            "es": "Reproducir"
+          },
+          "icon": "play",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "pause",
+          "label": {
+            "en": "Pause",
+            "es": "Pausar"
+          },
+          "icon": "pause",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "unmute",
+          "label": {
+            "en": "Unmute",
+            "es": "Quitar silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "night_on",
+          "label": {
+            "en": "Night mode on",
+            "es": "Activar modo nocturno"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "night_off",
+          "label": {
+            "en": "Night mode off",
+            "es": "Desactivar modo nocturno"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "speech_on",
+          "label": {
+            "en": "Speech enhancement on",
+            "es": "Activar mejora de voz"
+          },
+          "icon": "captions",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "speech_off",
+          "label": {
+            "en": "Speech enhancement off",
+            "es": "Desactivar mejora de voz"
+          },
+          "icon": "captions",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "switch_to_tv",
+          "label": {
+            "en": "Switch to TV",
+            "es": "Cambiar a TV"
+          },
+          "icon": "input",
           "asks": true,
           "macro": false
         }

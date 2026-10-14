@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.ir-home-assistant",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": {
     "en": "IR devices via Home Assistant",
     "es": "Equipos IR con Home Assistant"

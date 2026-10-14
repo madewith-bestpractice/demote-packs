@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.sonos",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": {
     "en": "Sonos",
     "es": "Sonos"
@@ -273,7 +273,7 @@
             "en": "Player ID",
             "es": "ID del reproductor"
           },
-          "placeholder": "RINCON_000000000000001400"
+          "placeholder": "RINCON_XXXXXXXXXXXX01400"
         }
       ],
       "request": {
