@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.sony-audio",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": {
     "en": "Sony soundbar & receiver",
     "es": "Barra de sonido y receptor Sony"

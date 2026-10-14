@@ -1,14 +1,14 @@
 {
   "schema": 1,
   "id": "com.madewithbestpractice.govee",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": {
     "en": "Govee lights",
     "es": "Luces Govee"
   },
   "description": {
-    "en": "On, off, brightness, colour and white for one Govee Wi-Fi light, through Govee's cloud API.",
-    "es": "Enciende, apaga, regula y cambia el color de una luz Govee wifi con la API en la nube de Govee."
+    "en": "On, off, brightness, eight colours and white for one Govee Wi-Fi light, through Govee's cloud API.",
+    "es": "Enciende, apaga, regula y pon ocho colores o blanco en una luz Govee wifi, con la API en la nube de Govee."
   },
   "vendor": "Govee",
   "author": "Made with Best Practice",
@@ -41,8 +41,8 @@
       "scope": "pack",
       "type": "text",
       "label": {
-        "en": "Device ID, from Govee's device list",
-        "es": "ID del equipo, de la lista de equipos de Govee"
+        "en": "Device ID, from Govee's API device list",
+        "es": "ID del equipo, de la lista de equipos de la API de Govee"
       },
       "placeholder": "64:09:C5:32:37:36:2D:13"
     }
@@ -156,27 +156,12 @@
       }
     },
     {
-      "id": "colour",
+      "id": "red",
       "label": {
-        "en": "Colour",
-        "es": "Color"
+        "en": "Red",
+        "es": "Rojo"
       },
       "icon": "lightbulb",
-      "variables": [
-        {
-          "id": "rgb",
-          "scope": "button",
-          "type": "number",
-          "label": {
-            "en": "Colour as an RGB number (0–16777215)",
-            "es": "Color como número RGB (0–16777215)"
-          },
-          "placeholder": "16711680 red, 65280 green, 255 blue",
-          "min": 0,
-          "max": 16777215,
-          "default": 16747520
-        }
-      ],
       "request": {
         "method": "POST",
         "url": "https://openapi.api.govee.com/router/api/v1/device/control",
@@ -195,7 +180,224 @@
             "capability": {
               "type": "devices.capabilities.color_setting",
               "instance": "colorRgb",
-              "value": "{{rgb}}"
+              "value": 16711680
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "orange",
+      "label": {
+        "en": "Orange",
+        "es": "Naranja"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 16747520
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "yellow",
+      "label": {
+        "en": "Yellow",
+        "es": "Amarillo"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 16764928
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "green",
+      "label": {
+        "en": "Green",
+        "es": "Verde"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 65280
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "cyan",
+      "label": {
+        "en": "Cyan",
+        "es": "Cian"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 65535
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "blue",
+      "label": {
+        "en": "Blue",
+        "es": "Azul"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 255
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "purple",
+      "label": {
+        "en": "Purple",
+        "es": "Morado"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 9699539
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "pink",
+      "label": {
+        "en": "Pink",
+        "es": "Rosa"
+      },
+      "icon": "lightbulb",
+      "request": {
+        "method": "POST",
+        "url": "https://openapi.api.govee.com/router/api/v1/device/control",
+        "headers": [
+          {
+            "name": "Govee-API-Key",
+            "value": "{{key}}"
+          }
+        ],
+        "contentType": "application/json",
+        "body": {
+          "requestId": "demote",
+          "payload": {
+            "sku": "{{sku}}",
+            "device": "{{device}}",
+            "capability": {
+              "type": "devices.capabilities.color_setting",
+              "instance": "colorRgb",
+              "value": 16716947
             }
           }
         }

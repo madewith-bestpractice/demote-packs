@@ -27,6 +27,8 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 | Denon & Marantz receiver | Power, volume, inputs and sound modes for networked Denon and Marantz receivers. |
 | Yamaha MusicCast | Power, volume, inputs, sound programs and Clear Voice for MusicCast receivers and soundbars. |
 | Sonos | Play, pause, volume, mute, night mode, speech enhancement and the TV input for a Sonos soundbar. |
+| Sony soundbar & receiver | Power, volume, mute, inputs, sound field, night mode and voice for Sony soundbars and receivers. |
+| Govee lights | On, off, brightness, eight colours and white for a Govee Wi-Fi light, through Govee's cloud API. |
 | Lyrion Music Server | Play, skip, volume, power and presets for a Squeezebox or squeezelite player. |
 | Shelly | Switch and dim Shelly Gen2 and newer relays and dimmers. |
 | Tasmota | Switch relays and dim lights on Tasmota plugs, switches and bulbs. |
@@ -50,8 +52,8 @@ model has been tried. If a button doesn't work on yours, please report it.
 Some packs haven't been tried on real hardware yet. The six scene packs
 (Movie night, Game night, Bedtime, Projector night, Intermission and Late
 night) were tested against Home Assistant's demo devices, IR devices via Home
-Assistant against Home Assistant's own `remote.send_command`, and Sonos
-against its documented local control protocol.
+Assistant against Home Assistant's own `remote.send_command`, and Sonos,
+Sony and Govee against their documented control APIs.
 
 ## Using packs in Demote
 

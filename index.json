@@ -604,6 +604,168 @@
       ]
     },
     {
+      "id": "com.madewithbestpractice.govee",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.govee.json",
+      "sha256": "91915e0f6bc5b89515bc26ddf5f8077129786aaaedffebdff6875ffb1e41641a",
+      "name": {
+        "en": "Govee lights",
+        "es": "Luces Govee"
+      },
+      "description": {
+        "en": "On, off, brightness, eight colours and white for one Govee Wi-Fi light, through Govee's cloud API.",
+        "es": "Enciende, apaga, regula y pon ocho colores o blanco en una luz Govee wifi, con la API en la nube de Govee."
+      },
+      "vendor": "Govee",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "lightbulb",
+      "engine": "http",
+      "network": "internet",
+      "buttons": [
+        {
+          "id": "on",
+          "label": {
+            "en": "On",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Off",
+            "es": "Apagar"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "brightness",
+          "label": {
+            "en": "Brightness",
+            "es": "Brillo"
+          },
+          "icon": "brightness_up",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "red",
+          "label": {
+            "en": "Red",
+            "es": "Rojo"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "orange",
+          "label": {
+            "en": "Orange",
+            "es": "Naranja"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "yellow",
+          "label": {
+            "en": "Yellow",
+            "es": "Amarillo"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "green",
+          "label": {
+            "en": "Green",
+            "es": "Verde"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "cyan",
+          "label": {
+            "en": "Cyan",
+            "es": "Cian"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "blue",
+          "label": {
+            "en": "Blue",
+            "es": "Azul"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "purple",
+          "label": {
+            "en": "Purple",
+            "es": "Morado"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "pink",
+          "label": {
+            "en": "Pink",
+            "es": "Rosa"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "white",
+          "label": {
+            "en": "White",
+            "es": "Blanco"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "tv_on",
+          "label": {
+            "en": "TV and lights on",
+            "es": "Encender TV y luces"
+          },
+          "icon": "wakeup",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "tv_off",
+          "label": {
+            "en": "TV and lights off",
+            "es": "Apagar TV y luces"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": true
+        }
+      ]
+    },
+    {
       "id": "com.madewithbestpractice.hubitat-maker-api",
       "version": "0.1.0",
       "path": "packs/com.madewithbestpractice.hubitat-maker-api.json",
@@ -1773,6 +1935,158 @@
           },
           "icon": "input",
           "asks": true,
+          "macro": false
+        }
+      ]
+    },
+    {
+      "id": "com.madewithbestpractice.sony-audio",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.sony-audio.json",
+      "sha256": "8e4ea20a335b13f3e12926dcde8aa4117eac2ff2820cd1b19d94990e591d4051",
+      "name": {
+        "en": "Sony soundbar & receiver",
+        "es": "Barra de sonido y receptor Sony"
+      },
+      "description": {
+        "en": "Power, volume, inputs, sound field, night mode and voice for networked Sony soundbars and receivers.",
+        "es": "Encendido, volumen, entradas, campo de sonido, modo nocturno y voz para barras y receptores Sony en red."
+      },
+      "vendor": "Sony",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "receiver",
+      "engine": "http",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "power_on",
+          "label": {
+            "en": "Power on",
+            "es": "Encender"
+          },
+          "icon": "power",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "power_off",
+          "label": {
+            "en": "Power off",
+            "es": "Apagar"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_up",
+          "label": {
+            "en": "Volume up",
+            "es": "Subir volumen"
+          },
+          "icon": "volume_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "volume_down",
+          "label": {
+            "en": "Volume down",
+            "es": "Bajar volumen"
+          },
+          "icon": "volume_down",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "set_volume",
+          "label": {
+            "en": "Set volume",
+            "es": "Fijar volumen"
+          },
+          "icon": "speaker",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "mute",
+          "label": {
+            "en": "Mute",
+            "es": "Silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "unmute",
+          "label": {
+            "en": "Unmute",
+            "es": "Quitar silencio"
+          },
+          "icon": "mute",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "input",
+          "label": {
+            "en": "Input",
+            "es": "Entrada"
+          },
+          "icon": "input",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "sound_field",
+          "label": {
+            "en": "Sound field",
+            "es": "Campo de sonido"
+          },
+          "icon": "audio_track",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "night_on",
+          "label": {
+            "en": "Night mode on",
+            "es": "Activar modo nocturno"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "night_off",
+          "label": {
+            "en": "Night mode off",
+            "es": "Desactivar modo nocturno"
+          },
+          "icon": "sleep",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "voice_on",
+          "label": {
+            "en": "Voice on",
+            "es": "Activar voz"
+          },
+          "icon": "captions",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "voice_off",
+          "label": {
+            "en": "Voice off",
+            "es": "Desactivar voz"
+          },
+          "icon": "captions",
+          "asks": false,
           "macro": false
         }
       ]
