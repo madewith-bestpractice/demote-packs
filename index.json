@@ -766,6 +766,140 @@
       ]
     },
     {
+      "id": "com.madewithbestpractice.halloween-movie-night",
+      "version": "1.0.0",
+      "path": "packs/com.madewithbestpractice.halloween-movie-night.json",
+      "sha256": "0e66cac3acc72f61e733e974a56cf84156e4e6dee63523c0bae1c2b58ac3504e",
+      "name": {
+        "en": "Halloween movie night",
+        "es": "Noche de terror",
+        "pt": "Noite de terror"
+      },
+      "description": {
+        "en": "Turn the lights a low pumpkin orange, start the film and flash the lights for a jump scare, with Home Assistant.",
+        "es": "Luces en naranja calabaza tenue, empieza la película y un parpadeo de luces para el susto, con Home Assistant.",
+        "pt": "Luzes num laranja abóbora fraquinho, o filme começa e as luzes piscam para o susto, com o Home Assistant."
+      },
+      "vendor": "Home Assistant",
+      "author": "Made with Best Practice",
+      "firstParty": true,
+      "icon": "scene",
+      "engine": "home_assistant",
+      "network": "local",
+      "buttons": [
+        {
+          "id": "scary_movie",
+          "label": {
+            "en": "Scary movie",
+            "es": "Peli de terror",
+            "pt": "Filme de terror"
+          },
+          "icon": "scene",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "snack_break",
+          "label": {
+            "en": "Snack break",
+            "es": "Pausa para picar",
+            "pt": "Pausa pro lanche"
+          },
+          "icon": "pause",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "back_to_it",
+          "label": {
+            "en": "Back to the film",
+            "es": "Volver a la peli",
+            "pt": "Voltar ao filme"
+          },
+          "icon": "play",
+          "asks": true,
+          "macro": true
+        },
+        {
+          "id": "lights_on",
+          "label": {
+            "en": "Lights on",
+            "es": "Encender luces",
+            "pt": "Acender luzes"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": true
+        },
+        {
+          "id": "pumpkin_glow",
+          "label": {
+            "en": "Pumpkin glow",
+            "es": "Brillo calabaza",
+            "pt": "Brilho de abóbora"
+          },
+          "icon": "lightbulb",
+          "asks": true,
+          "macro": false
+        },
+        {
+          "id": "jump_scare",
+          "label": {
+            "en": "Jump scare",
+            "es": "Susto",
+            "pt": "Susto"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_half",
+          "label": {
+            "en": "Lights to 50%",
+            "es": "Luces al 50 %",
+            "pt": "Luzes em 50%"
+          },
+          "icon": "lightbulb",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "lights_up",
+          "label": {
+            "en": "Lights up",
+            "es": "Luces al máximo",
+            "pt": "Luzes no máximo"
+          },
+          "icon": "brightness_up",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "close_blinds",
+          "label": {
+            "en": "Close blinds",
+            "es": "Cerrar persianas",
+            "pt": "Fechar persianas"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        },
+        {
+          "id": "open_blinds",
+          "label": {
+            "en": "Open blinds",
+            "es": "Abrir persianas",
+            "pt": "Abrir persianas"
+          },
+          "icon": "blinds",
+          "asks": false,
+          "macro": false
+        }
+      ]
+    },
+    {
       "id": "com.madewithbestpractice.hubitat-maker-api",
       "version": "0.1.0",
       "path": "packs/com.madewithbestpractice.hubitat-maker-api.json",

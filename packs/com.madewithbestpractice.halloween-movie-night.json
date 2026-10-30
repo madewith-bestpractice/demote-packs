@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "id": "com.madewithbestpractice.halloween-movie-night",
+  "version": "1.0.0",
+  "name": {
+    "en": "Halloween movie night",
+    "es": "Noche de terror",
+    "pt": "Noite de terror"
+  },
+  "description": {
+    "en": "Turn the lights a low pumpkin orange, start the film and flash the lights for a jump scare, with Home Assistant.",
+    "es": "Luces en naranja calabaza tenue, empieza la película y un parpadeo de luces para el susto, con Home Assistant.",
+    "pt": "Luzes num laranja abóbora fraquinho, o filme começa e as luzes piscam para o susto, com o Home Assistant."
+  },
+  "vendor": "Home Assistant",
+  "author": "Made with Best Practice",
+  "icon": "scene",
+  "accent": "orange",
+  "engine": "home_assistant",
+  "network": "local",
+  "variables": [
+    {
+      "id": "lights",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Lights (a light or a group)",
+        "es": "Luces (una luz o un grupo)",
+        "pt": "Luzes (uma luz ou um grupo)"
+      },
+      "domain": "light"
+    },
+    {
+      "id": "blinds",
+      "scope": "pack",
+      "type": "ha_entity",
+      "label": {
+        "en": "Blinds, if any",
+        "es": "Persianas, si tienes",
+        "pt": "Persianas, se tiver"
+      },
+      "domain": "cover",
+      "optional": true
+    }
+  ],
+  "buttons": [
+    {
+      "id": "scary_movie",
+      "label": {
+        "en": "Scary movie",
+        "es": "Peli de terror",
+        "pt": "Filme de terror"
+      },
+      "icon": "scene",
+      "steps": [
+        {
+          "key": "wakeup",
+          "delayMs": 1500
+        },
+        {
+          "button": "pumpkin_glow"
+        },
+        {
+          "button": "close_blinds"
+        },
+        {
+          "key": "play"
+        }
+      ]
+    },
+    {
+      "id": "snack_break",
+      "label": {
+        "en": "Snack break",
+        "es": "Pausa para picar",
+        "pt": "Pausa pro lanche"
+      },
+      "icon": "pause",
+      "steps": [
+        {
+          "key": "pause"
+        },
+        {
+          "button": "lights_half"
+        }
+      ]
+    },
+    {
+      "id": "back_to_it",
+      "label": {
+        "en": "Back to the film",
+        "es": "Volver a la peli",
+        "pt": "Voltar ao filme"
+      },
+      "icon": "play",
+      "steps": [
+        {
+          "button": "pumpkin_glow",
+          "delayMs": 1000
+        },
+        {
+          "key": "play"
+        }
+      ]
+    },
+    {
+      "id": "lights_on",
+      "label": {
+        "en": "Lights on",
+        "es": "Encender luces",
+        "pt": "Acender luzes"
+      },
+      "icon": "brightness_up",
+      "steps": [
+        {
+          "button": "lights_up"
+        },
+        {
+          "button": "open_blinds"
+        }
+      ]
+    },
+    {
+      "id": "pumpkin_glow",
+      "label": {
+        "en": "Pumpkin glow",
+        "es": "Brillo calabaza",
+        "pt": "Brilho de abóbora"
+      },
+      "icon": "lightbulb",
+      "variables": [
+        {
+          "id": "level",
+          "scope": "button",
+          "type": "number",
+          "label": {
+            "en": "Brightness (%)",
+            "es": "Brillo (%)",
+            "pt": "Brilho (%)"
+          },
+          "min": 1,
+          "max": 100,
+          "default": 15
+        }
+      ],
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "color_name": "darkorange",
+          "brightness_pct": "{{level}}"
+        }
+      }
+    },
+    {
+      "id": "jump_scare",
+      "label": {
+        "en": "Jump scare",
+        "es": "Susto",
+        "pt": "Susto"
+      },
+      "icon": "lightbulb",
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "flash": "short"
+        }
+      }
+    },
+    {
+      "id": "lights_half",
+      "label": {
+        "en": "Lights to 50%",
+        "es": "Luces al 50 %",
+        "pt": "Luzes em 50%"
+      },
+      "icon": "lightbulb",
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "brightness_pct": 50
+        }
+      }
+    },
+    {
+      "id": "lights_up",
+      "label": {
+        "en": "Lights up",
+        "es": "Luces al máximo",
+        "pt": "Luzes no máximo"
+      },
+      "icon": "brightness_up",
+      "service": {
+        "action": "light.turn_on",
+        "target": {
+          "entity_id": "{{lights}}"
+        },
+        "data": {
+          "brightness_pct": 100,
+          "color_temp_kelvin": 3000
+        }
+      }
+    },
+    {
+      "id": "close_blinds",
+      "label": {
+        "en": "Close blinds",
+        "es": "Cerrar persianas",
+        "pt": "Fechar persianas"
+      },
+      "icon": "blinds",
+      "service": {
+        "action": "cover.close_cover",
+        "target": {
+          "entity_id": "{{blinds}}"
+        }
+      }
+    },
+    {
+      "id": "open_blinds",
+      "label": {
+        "en": "Open blinds",
+        "es": "Abrir persianas",
+        "pt": "Abrir persianas"
+      },
+      "icon": "blinds",
+      "service": {
+        "action": "cover.open_cover",
+        "target": {
+          "entity_id": "{{blinds}}"
+        }
+      }
+    }
+  ]
+}

@@ -44,6 +44,7 @@ behind your TV, a Kodi box, a smart plug or a Bitfocus Companion page.
 | Projector night | Lower the screen, turn on the projector, dim the room and set the receiver with Home Assistant. |
 | Intermission | Pause the TV and bring the lights up, then dim them and play again, with Home Assistant. |
 | Late night | Quiet the receiver, ease the TV down, turn the lights off and leave the hall light low, with Home Assistant. |
+| Halloween movie night | Pumpkin-orange lights, the film starting, a jump-scare flash of the lights and lights back on, with Home Assistant. |
 
 Each pack works on the devices and firmware its file describes. Packs are
 checked automatically and reviewed before they're listed, but not every
@@ -53,7 +54,9 @@ Some packs haven't been tried on real hardware yet. The six scene packs
 (Movie night, Game night, Bedtime, Projector night, Intermission and Late
 night) were tested against Home Assistant's demo devices, IR devices via Home
 Assistant against Home Assistant's own `remote.send_command`, and Sonos,
-Sony and Govee against their documented control APIs.
+Sony and Govee against their documented control APIs. Halloween movie night uses the same Home Assistant light and cover
+actions as Movie night (plus `flash` and `color_temp_kelvin`, both standard
+`light.turn_on` options) and was checked by the validators only.
 
 ## Using packs in Demote
 
